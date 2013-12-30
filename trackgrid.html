@@ -15,23 +15,22 @@
 	<table>
 		<tr>
 			<th>Name</th>
+			<th>Status</th>
+			<th>Last Updated</th>
 		</tr>
 		{% for r in rooms %}
 		{% if r.active %}
 		<tr>
 			<td>{{r.name}}</td>
+			<td>{{r.status}}</td>
+			<td>{{r.changed}}</td>
 		</tr>
 		{% endif %}
 		{% endfor %}
 	</table>
 	
 	<hr/>
-	<h2>New Room</h2>
-	<form action="/room?t={{t.key.id()}}" method="post">
-		<div>Name: <input name="room_name" /></div>
-		<div><input type="submit" value="Add"></div>
-	</form>
-
+	<h2>Control Panel</h2>
   </body>
 </html>
 {% endautoescape %}
