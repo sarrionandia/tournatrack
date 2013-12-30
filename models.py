@@ -23,4 +23,5 @@ class Room(ndb.Model):
 	active = ndb.BooleanProperty()
 	status = ndb.StringProperty()
 	changed = ndb.TimeProperty()
+	comment = ndb.StringProperty()
 	

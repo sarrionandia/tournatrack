@@ -16,6 +16,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Status</th>
+			<th>Comment</th>
 			<th>Last Updated</th>
 		</tr>
 		{% for r in rooms %}
@@ -23,6 +24,7 @@
 		<tr>
 			<td>{{r.name}}</td>
 			<td>{{r.status}}</td>
+			<td>{{r.comment}}</td>
 			<td>{{r.changed}}</td>
 		</tr>
 		{% endif %}
