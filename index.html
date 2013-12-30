@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		Tournament Tracker
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+
+	<p>
+		You can:
+		<ul>
+			<li><a href="/tournaments">Manage your tournaments</a></li>
+		</ul>
+	</p>
+  </body>
+</html>
+{% endautoescape %}

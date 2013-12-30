@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		Tournament List
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>{{t.name}}</h1>
+	<h2>Institutions -  Registered</h2>
+	
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Delete</th>
+		</tr>
+		{% for i in institutions %}
+		<tr>
+			<td>{{i.name}}</td>
+			<td><a href="/del_i?t={{t.key.id()}}&i={{i.key.id()}}">Delete</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	
+	<hr/>
+	<h2>New Institution</h2>
+	<form action="/institution?t={{t.key.id()}}" method="post">
+		<div>Name: <input name="institution_name" /></div>
+		<div><input type="submit" value="Add"></div>
+	</form>
+
+  </body>
+</html>
+{% endautoescape %}

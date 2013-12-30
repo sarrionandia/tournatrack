@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		Tournament List
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>{{t.name}}</h1>
+	<h2>Rooms</h2>
+	
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Modify</th>
+			<th>Delete</th>
+		</tr>
+		{% for r in rooms %}
+		<tr {% if r.active != True %}bgcolor="red"{% endif %}>
+			<td>{{r.name}}</td>
+			<td><a href="/toggle_room?t={{t.key.id()}}&r={{r.key.id()}}">{% if r.active %}Deactivate{% else %}Activate{%endif%}</a></td>
+			<td><a href="/del_r?t={{t.key.id()}}&r={{r.key.id()}}">Delete</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	
+	<hr/>
+	<h2>New Room</h2>
+	<form action="/room?t={{t.key.id()}}" method="post">
+		<div>Name: <input name="room_name" /></div>
+		<div><input type="submit" value="Add"></div>
+	</form>
+
+  </body>
+</html>
+{% endautoescape %}

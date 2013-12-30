@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		{{t.name}}
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>{{t.name}}</h1>
+	<h2>Tracking</h2>
+	<ul>
+		<li><a href="/trackgrid?t={{t.key.id()}}">View Tracking Grid</a></i>
+		<li><a href="/trackpin?t={{t.key.id()}}">Set tracking PIN</a></li>
+	</ul>
+	
+	<hr />
+	<h2>Modify Data</h2>
+	<ul>
+		<li><a href="/institution?t={{t.key.id()}}">Manage Institutions</a></li>
+		<li><a href="/room?t={{t.key.id()}}">Manage Rooms</a></li>
+	</ul>
+
+  </body>
+</html>
+{% endautoescape %}

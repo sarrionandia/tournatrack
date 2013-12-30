@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		Tournament List
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>Your Tournaments</h1>
+
+	<p>
+		<ul>
+		{% for t in tournaments %}
+			<li><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
+		{% endfor %}
+		</ul>
+	</p>
+	<hr />
+	<ul>
+		<li><a href="/new_tournament">Make a new tournament</a></li>
+	</ul>
+  </body>
+</html>
+{% endautoescape %}

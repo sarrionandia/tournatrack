@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		New Tournament
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>Your New Tournament</h1>
+
+	<form action="/new_tournament" method="post">
+		<div>Tournament Name: <input name="tournament_name" /></div>
+		<div><input type="submit" value="Create Tournament" /></div>
+	</form>
+		
+	
+  </body>
+</html>
+{% endautoescape %}
