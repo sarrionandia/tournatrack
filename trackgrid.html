@@ -23,9 +23,9 @@
 		{% if r.active %}
 		<tr>
 			<td>{{r.name}}</td>
-			<td>{{r.status}}</td>
-			<td>{{r.comment}}</td>
-			<td>{{r.changed}}</td>
+			<td>{% if r.status %}{{r.status}}{% endif %}</td>
+			<td>{% if r.comment %}{{r.comment}}{% endif %}</td>
+			<td>{% if r.changed %}{{r.changed}}{% endif %}</td>
 		</tr>
 		{% endif %}
 		{% endfor %}
