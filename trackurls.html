@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		Runner URLs
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>{{t.name}}</h1>
+	<h2>Runner URLs</h2>
+	
+	<p>
+		These URLs are based on your current tracking PIN, and should be used by runners to access the controls for each room. Runners can use these controls to inform the convenor and tabmaster about the status of their rooms.
+	
+	</p>
+	
+	{% for r in rooms %}
+	<div class="TrackerURL">
+	<h3>{{r.name}}</h3>
+	<a href="http://tournatrack.appspot.com/trackpanel?t={{t.key.id()}}&p={{t.trackpin}}&r={{r.key.id()}}">
+		http://tournatrack.appspot.com/trackpanel?t={{t.key.id()}}&p={{t.trackpin}}&r={{r.key.id()}}
+	</a>
+	</div>
+	{% endfor %}
+		
+	
+  </body>
+</html>
+{% endautoescape %}
