@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		{{room.name}}
+	</title>
+  </head>
+  <body>
+	
+	<h1>{{room.name}}</h1>
+	<table>
+		<tr>
+			<td>
+				Status:
+			</td>
+			<td>
+				{{room.status}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Comment:
+			</td>
+			<td>
+				{{room.comment}}
+			</td>
+		</tr>
+	</table>
+	<hr />
+	<form action="/trackpanel?t={{t.key.id()}}&r={{room.key.id()}}&p={{t.trackpin}}" method="post">
+		<div>
+			Change Status:
+			<select name="status">
+				<option value="Debating">Debate Started</option>
+				<option value="Judging">Judging Started</option>
+				<option value="Feedback">Feedback Started</option>
+				<option value="Problem">Problem: Send help</option>
+			</select>
+		</div>
+		<div>
+			Comment: 
+			<input name="comment" />
+		</div>
+		<div><input type="submit" value="Update Room" /> </div>
+	</form>
+		
+
+
+  </body>
+</html>
+{% endautoescape %}
