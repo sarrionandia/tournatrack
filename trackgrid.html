@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+	<title>
+		Tournament List
+	</title>
+  </head>
+  <body>
+    <p>Hello <emph>{{user.nickname()}}</emph></p>
+    <hr>
+	<h1>{{t.name}}</h1>
+	<h2>Rooms</h2>
+	
+	<table>
+		<tr>
+			<th>Name</th>
+		</tr>
+		{% for r in rooms %}
+		{% if r.active %}
+		<tr>
+			<td>{{r.name}}</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</table>
+	
+	<hr/>
+	<h2>New Room</h2>
+	<form action="/room?t={{t.key.id()}}" method="post">
+		<div>Name: <input name="room_name" /></div>
+		<div><input type="submit" value="Add"></div>
+	</form>
+
+  </body>
+</html>
+{% endautoescape %}

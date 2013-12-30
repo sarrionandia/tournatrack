@@ -21,4 +21,6 @@ class Room(ndb.Model):
 	"""Models a room in a tournament"""
 	name = ndb.StringProperty()
 	active = ndb.BooleanProperty()
+	status = ndb.StringProperty()
+	changed = ndb.TimeProperty()
 	

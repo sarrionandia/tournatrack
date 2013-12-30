@@ -8,6 +8,9 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
+
+- url: /trackgrid
+  script: trackgrid.app
   
 - url: /trackpin
   script: trackpin.app
