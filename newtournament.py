@@ -15,6 +15,8 @@
 import webapp2
 import jinja2
 import os
+import string
+import random
 
 from google.appengine.api import users
 
@@ -25,7 +27,12 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+def pin_gen(size=6, chars=string.ascii_uppercase + string.digits):
+	return ''.join(random.choice(chars) for x in range(size))
+
+
 class NewTournamentHandler(webapp2.RequestHandler):
+		
 	def get(self):
 		user = users.get_current_user()
 		
@@ -47,6 +54,7 @@ class NewTournamentHandler(webapp2.RequestHandler):
 			new_tournament = Tournament()
 			new_tournament.name = self.request.get('tournament_name')
 			new_tournament.owner.append(user)
+			new_tournament.trackpin = pin_gen()
 			new_tournament.put()
 			#Send the user back to the tournaments page
 			self.redirect('/tournaments')
