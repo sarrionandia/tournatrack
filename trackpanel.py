@@ -43,7 +43,6 @@ class PanelHandler(webapp2.RequestHandler):
 			r_key = ndb.Key('Tournament', int(tid), 'Room', int(rid))
 			room = r_key.get()
 			
-			
 			template_values = {
 				't' : t,
 				'room' : room
