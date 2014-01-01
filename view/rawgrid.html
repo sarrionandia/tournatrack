@@ -1,0 +1,18 @@
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Status</th>
+		<th>Comment</th>
+		<th>Last Updated</th>
+	</tr>
+	{% for r in rooms %}
+	{% if r.active %}
+	<tr>
+		<td>{{r.name}}</td>
+		<td>{% if r.status %}{{r.status}}{% endif %}</td>
+		<td>{% if r.comment %}{{r.comment}}{% endif %}</td>
+		<td>{% if r.changed %}{{r.changed}}{% endif %}</td>
+	</tr>
+	{% endif %}
+	{% endfor %}
+</table>

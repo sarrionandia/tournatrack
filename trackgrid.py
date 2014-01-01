@@ -45,7 +45,11 @@ class GridHandler(webapp2.RequestHandler):
 				't' : t,
 				'rooms' : q,
 			}
-			template = JINJA_ENVIRONMENT.get_template('view/trackgrid.html')
+			#Check if this is an AJAX request for the raw table
+			if (self.request.get('raw') == '1'):
+				template = JINJA_ENVIRONMENT.get_template('view/rawgrid.html')
+			else:
+				template = JINJA_ENVIRONMENT.get_template('view/trackgrid.html')
 			self.response.write(template.render(template_values))
 						
 		else:
