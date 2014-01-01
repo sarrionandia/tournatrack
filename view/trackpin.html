@@ -4,20 +4,45 @@
 {% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
-	<h1>{{t.name}} - Tracking PIN</h1>
+	<h1>{{t.name}} - Tracking Password</h1>
 	
 	<p>
-		When runners update the status of rooms, they do so via links/QR codes unique to your competition. These are made unique by reference to the Tracking PIN, which works a bit like a tournament password.
+		When runners update the status of rooms, they do so via links/QR codes unique to your competition. These are made unique by using your Tracking Password.
 		
-		Anybody with access to the unique URLs / QR codes can modify the status of rooms, so if one of your runners has gotten into the yucca early, you can change the Tracking PIN.
-		Note that changing the tracking PIN will obviously require you to redistribute QR Codes / URLs. 
+Anybody with access to the unique URLs / QR codes can modify the status of rooms, so if one of your runners has gotten into the yucca early, you can change the Tracking Password from the one Tournatrack randomly chose for you.
+		<br><br> 
+		
+		
+		
 	</p>
 	
-	<p><b>Your current tracking pin is: {{t.trackpin}}</b></p>
+	<p><b>Your current tracking password is: {{t.trackpin}}</b></p>
 	<hr/>
-	<h2>Change PIN</h2>
+
+	<div class="alert alert-warning">Changing the tracking PIN will require you to redistribute new QR Codes / URLs to your runners.</div>
+	<h2>Change Tracking Password</h2>
+	
 	<form action="/trackpin?t={{t.key.id()}}" method="post">
 		<div>New PIN: <input name="pin" /></div>
 		<div><input type="submit" value="Change PIN" /></div>
 	</form>
+	
+	<br><br>
+	
+	<form action="/trackpin?t={{t.key.id()}}" method="post">
+	<div class="row">
+
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="It should be long and unique, nonsense phrases are great.">
+      <span class="input-group-btn">
+      
+        <button class="btn btn-danger" type="button">Change Tracking Password</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+	
+	
+	
 {% endblock %}
