@@ -22,6 +22,9 @@
 	<h1 id="Title">Tournatrack - Debate Organisation Software</h1>
 	<ol class="breadcrumb">
 		<li><a href="/tournaments">Tournaments</a></li>
+		{% if t %}
+		<li><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
+		{% endif %}
 		{% block crumbs %}
 		{% endblock %}
 	</ol>
