@@ -1,5 +1,21 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Tournament List{% endblock %}
+
+{% block head_extra %}
+<script>
+	function DeleteTournament(t)
+	{
+		// Disable the button
+		$('#' + t + ' .tournament_row button').prop('disabled', true)
+		
+		// Call the deletion URL
+		$.get("delete_tournament?t="  + t, function(data, status) {
+			$('#' + t).remove();
+		});
+	}
+</script>
+{% endblock %}
+
 {% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
@@ -8,7 +24,23 @@
 		<div class="panel-heading">Your Tournaments</div>
 		<ul class="list-group">
 		{% for t in tournaments %}
-			<li><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
+			<li id="{{t.key.id()}}">
+				<div class="tournament_row">
+					<span style="float:left;">
+						<a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a>
+					</span>
+					<div class="btn-group" style="margin-left: 2em;">
+				  		<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+				    		Delete <span class="caret"></span>
+				  		</button>
+				  		<ul class="dropdown-menu" role="menu">
+				    		<li>There's no going back...</li>
+				    		<li class="divider"></li>
+				    		<li><a href="#" onclick="DeleteTournament({{t.key.id()}})">Permanently Delete Tournament</a></li>
+				  		</ul>
+					</div>
+				</div>
+			</li>
 		{% endfor %}
 		</ul>
 	</div>

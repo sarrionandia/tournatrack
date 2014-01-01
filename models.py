@@ -26,6 +26,13 @@ class Tournament(ndb.Model):
 		
 	def rooms(self):
 		return Room.query(ancestor=self.key).order(Room.name)
+		
+	def destroy(self):
+		for i in self.institutions():
+			i.key.delete()
+		for r in self.rooms():
+			r.key.delete()
+		self.key.delete()
 	
 class Institution(ndb.Model):
 	"""Models an institution"""

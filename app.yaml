@@ -8,9 +8,8 @@ handlers:
 - url: /style
   static_dir: static
   
-- url: /t\.css
-  static_files: /static/t.css
-  upload: /static/t\.css
+- url: /delete_tournament
+  script: deletetournament.app  
 
 - url: /reset_rooms
   script: resetrooms.app
