@@ -1,32 +1,29 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Tracking Grid{% endblock %}
 
+{% block head_extra %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+
+function request_table() {
+	$.get("trackgrid?t={{t.key.id()}}&raw=1",function(data, status) {
+		$('#grid').html(data);
+	});
+}
+
+$(document).ready(request_table());
+</script>
+{% endblock %}
 
 {% block content %}
+
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h1>{{t.name}}</h1>
 	<h2>Rooms</h2>
 	
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>Status</th>
-			<th>Comment</th>
-			<th>Last Updated</th>
-		</tr>
-		{% for r in rooms %}
-		{% if r.active %}
-		<tr>
-			<td>{{r.name}}</td>
-			<td>{% if r.status %}{{r.status}}{% endif %}</td>
-			<td>{% if r.comment %}{{r.comment}}{% endif %}</td>
-			<td>{% if r.changed %}{{r.changed}}{% endif %}</td>
-		</tr>
-		{% endif %}
-		{% endfor %}
-	</table>
-	
+	<div id="grid">
+	</div>
 	<hr/>
 	<h2>Control Panel</h2>
 	<ul>
