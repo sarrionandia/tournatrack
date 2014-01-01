@@ -3,16 +3,17 @@
 {% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
-	<h1>Your Tournaments</h1>
 
-	<p>
-		<ul>
+	<div class="panel panel-primary">
+		<div class="panel-heading">Your Tournaments</div>
+		<ul class="list-group">
 		{% for t in tournaments %}
 			<li><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
 		{% endfor %}
 		</ul>
-	</p>
+	</div>
 	<hr />
+	
 	<ul>
 		<li><a href="/new_tournament">Make a new tournament</a></li>
 	</ul>
