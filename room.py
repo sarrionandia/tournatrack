@@ -45,7 +45,7 @@ class RoomHandler(webapp2.RequestHandler):
 				't' : t,
 				'rooms' : q,
 			}
-			template = JINJA_ENVIRONMENT.get_template('room.html')
+			template = JINJA_ENVIRONMENT.get_template('view/room.html')
 			self.response.write(template.render(template_values))
 						
 		else:

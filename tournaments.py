@@ -38,7 +38,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 				'user' : user,
 				'tournaments' : q,
 			}
-			template = JINJA_ENVIRONMENT.get_template('tournaments.html')
+			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))
 		else:
 			self.redirect(users.create_login_url(self.request.uri))

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import webapp2
 import jinja2
 import os
@@ -46,7 +45,7 @@ class InstitutionHandler(webapp2.RequestHandler):
 				't' : t,
 				'institutions' : q,
 			}
-			template = JINJA_ENVIRONMENT.get_template('institution.html')
+			template = JINJA_ENVIRONMENT.get_template('view/institution.html')
 			self.response.write(template.render(template_values))
 						
 		else:

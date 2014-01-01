@@ -45,7 +45,7 @@ class GridHandler(webapp2.RequestHandler):
 				't' : t,
 				'rooms' : q,
 			}
-			template = JINJA_ENVIRONMENT.get_template('trackurls.html')
+			template = JINJA_ENVIRONMENT.get_template('view/trackurls.html')
 			self.response.write(template.render(template_values))
 						
 		else:

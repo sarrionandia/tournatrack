@@ -31,7 +31,7 @@ class MainHandler(webapp2.RequestHandler):
 			template_values = {
 				'user' : user,
 			}
-			template = JINJA_ENVIRONMENT.get_template('index.html')
+			template = JINJA_ENVIRONMENT.get_template('view/index.html')
 			self.response.write(template.render(template_values))
 		else:
 			self.redirect(users.create_login_url(self.request.uri))

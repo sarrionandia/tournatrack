@@ -45,7 +45,7 @@ class PanelHandler(webapp2.RequestHandler):
 				't' : t,
 				'room' : room
 			}
-			template = JINJA_ENVIRONMENT.get_template('trackpanel.html')
+			template = JINJA_ENVIRONMENT.get_template('view/trackpanel.html')
 			self.response.write(template.render(template_values))
 						
 		else:

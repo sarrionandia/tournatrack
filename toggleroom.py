@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import webapp2
-import jinja2
 import os
 
 from google.appengine.api import users
@@ -21,11 +20,6 @@ from google.appengine.ext import ndb
 
 from models import Tournament
 from models import Institution
-
-JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
 
 class RoomHandler(webapp2.RequestHandler):
 	def get(self):

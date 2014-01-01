@@ -42,7 +42,6 @@ class ResetRoomsHandler(webapp2.RequestHandler):
 				r.put()
 			self.redirect('/trackgrid?t=' + str(t_key.id()))
 			
-						
 		else:
 			self.redirect(users.create_login_url(self.request.uri))
 	

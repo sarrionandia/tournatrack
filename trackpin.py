@@ -41,7 +41,7 @@ class PinTracker(webapp2.RequestHandler):
 					'user' : user,
 					't' : t,
 				}
-				template = JINJA_ENVIRONMENT.get_template('trackpin.html')
+				template = JINJA_ENVIRONMENT.get_template('view/trackpin.html')
 				self.response.write(template.render(template_values))
 				
 			else:
