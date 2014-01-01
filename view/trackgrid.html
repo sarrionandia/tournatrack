@@ -11,7 +11,10 @@ function request_table() {
 	});
 }
 
-$(document).ready(request_table());
+$(document).ready(function () {
+	request_table();
+	setInterval("request_table()", 5000);
+});
 </script>
 {% endblock %}
 
