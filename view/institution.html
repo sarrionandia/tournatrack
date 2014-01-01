@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		Tournament List
-	</title>
-  </head>
-  <body>
-    <p>Hello <emph>{{user.nickname()}}</emph></p>
-    <hr>
-	<h1>{{t.name}}</h1>
-	<h2>Institutions -  Registered</h2>
-	
+{% extends "view/rootpage.html" %}
+{% block title %}Institution List{% endblock %}	
+
+{% block content %}
 	<table>
 		<tr>
 			<th>Name</th>
@@ -31,7 +21,4 @@
 		<div>Name: <input name="institution_name" /></div>
 		<div><input type="submit" value="Add"></div>
 	</form>
-
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}

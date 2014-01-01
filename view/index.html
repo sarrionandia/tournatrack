@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		The Tremendous Tournament Tracker
-	</title>
-  </head>
-  <body>
+{% extends "view/rootpage.html" %}
+{% block title %}Tournatrack{% endblock %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
-    <hr>
 
-	<p>
-		You can:
-		<ul>
-			<li><a href="/tournaments">Manage your tournaments</a></li>
-		</ul>
-	</p>
-  </body>
-</html>
-{% endautoescape %}
+{% block content %}
+<p>
+	You can:
+	<ul>
+		<li><a href="/tournaments">Manage your tournaments</a></li>
+	</ul>
+</p>
+{% endblock %}

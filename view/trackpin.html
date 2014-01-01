@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		Tracking PIN
-	</title>
-  </head>
-  <body>
+{% extends "view/rootpage.html" %}
+{% block title %}Tracking PIN{% endblock %}
+
+{% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h1>{{t.name}} - Tracking PIN</h1>
@@ -25,7 +20,4 @@
 		<div>New PIN: <input name="pin" /></div>
 		<div><input type="submit" value="Change PIN" /></div>
 	</form>
-
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}

@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		{{t.name}}
-	</title>
-  </head>
-  <body>
+{% extends "view/rootpage.html" %}
+{% block title %}{{t.name}}{% endblock %}
+
+{% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h1>{{t.name}}</h1>
@@ -23,7 +18,4 @@
 		<li><a href="/institution?t={{t.key.id()}}">Manage Institutions</a></li>
 		<li><a href="/room?t={{t.key.id()}}">Manage Rooms</a></li>
 	</ul>
-
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}

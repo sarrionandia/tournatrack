@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		Tracking Grid
-	</title>
-  </head>
-  <body>
+{% extends "view/rootpage.html" %}
+{% block title %}Tracking Grid{% endblock %}
+
+
+{% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h1>{{t.name}}</h1>
@@ -36,6 +32,4 @@
 	<ul>
 		<li><a href="/reset_rooms?t={{t.key.id()}}">Reset All Room Status</a></li>
 	</ul>
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}

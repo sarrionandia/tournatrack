@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="/t.css" />
+</head>
+<body>
+
+<div id="headerbox">
+	<h1 id="Title">Tournatrack - Debate Organisation Software</h1>
+</div>
+
+<div id="content">
+	{% block content %}
+	{% endblock %}
+</div>
+
+
+</body>
+</html>
+ {% endautoescape %}

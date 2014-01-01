@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		Runner URLs
-	</title>
-  </head>
-  <body>
+{% extends "view/rootpage.html" %}
+{% block title %}Runner URLs{% endblock %}
+
+{% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h1>{{t.name}}</h1>
@@ -28,8 +23,4 @@
 	</a>
 	</div>
 	{% endfor %}
-		
-	
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}

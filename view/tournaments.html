@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		Tournament List
-	</title>
-  </head>
-  <body>
+{% extends "view/rootpage.html" %}
+{% block title %}Tournament List{% endblock %}
+{% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h1>Your Tournaments</h1>
@@ -22,6 +16,4 @@
 	<ul>
 		<li><a href="/new_tournament">Make a new tournament</a></li>
 	</ul>
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}
