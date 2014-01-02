@@ -21,12 +21,19 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Your Tournaments</div>
 		<table class="table table-striped">
+			<tr>
+				<th>Tournament</th>
+				<th>Start</th>
+				<th>End</th>
+				<th>Delete</th>
 		{% for t in tournaments %}
 			<tr id="{{t.key.id()}}">
 				<div class="tournament_row">
 					<td>
 						<a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a>
 					</td>
+					<td>{{t.start}}</td>
+					<td>{{t.end}}</td>
 					<td>
 					<div class="btn-group">
 				  		<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
