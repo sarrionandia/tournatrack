@@ -59,9 +59,17 @@ class TournamentsHandler(webapp2.RequestHandler):
 			new_tournament.name = self.request.get('name')
 			new_tournament.owner.append(user)
 			new_tournament.trackpin = pin_gen()
-			new_tournament.start = datetime.datetime.strptime(self.request.get('start'), '%Y-%m-%d').date()
-			new_tournament.end = datetime.datetime.strptime(self.request.get('end'), '%Y-%m-%d').date()
-			new_tournament.put()
+						
+			dates_valid = True
+			
+			try:
+				new_tournament.start = datetime.datetime.strptime(self.request.get('start'), '%Y-%m-%d').date()
+				new_tournament.end = datetime.datetime.strptime(self.request.get('end'), '%Y-%m-%d').date()
+			except ValueError:
+				dates_valid = False
+				
+			if (dates_valid and len(new_tournament.start) > 5):
+				new_tournament.put()
 			#Send the user back to the tournaments page
 			self.redirect('/tournaments')
 			
