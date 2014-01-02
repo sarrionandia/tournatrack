@@ -2,18 +2,12 @@
 {% block title %}{{t.name}}{% endblock %}
 
 {% block content %}
-	<h2>{{t.name}}</h2>
-	<h3>Tracking</h3>
-	<ul>
-		<li><a href="/trackgrid?t={{t.key.id()}}">View Tracking Grid</a></i>
-		<li><a href="/trackpin?t={{t.key.id()}}">Set tracking PIN</a></li>
-		<li><a href="/trackurls?t={{t.key.id()}}">Generate runner URLs</a></li>
-	</ul>
-	
-	<hr />
-	<h2>Modify Data</h2>
-	<ul>
-		<li><a href="/institution?t={{t.key.id()}}">Manage Institutions</a></li>
-		<li><a href="/room?t={{t.key.id()}}">Manage Rooms</a></li>
-	</ul>
+	<h1>{{t.name}}</h1>
+
+<h2><a href="/trackgrid?t={{t.key.id()}}"><i class="fa fa-table fa-fw"></i> View tracking grid</a></i><br>
+<a href="/trackpin?t={{t.key.id()}}"><i class="fa fa-asterisk fa-fw"></i> Tracking Password</a><br>
+<a href="/trackurls?t={{t.key.id()}}"><i class="fa fa-link fa-fw"></i> Runner links</a></li><br>
+<a href="/institution?t={{t.key.id()}}"><i class="fa fa-building-o fa-fw"></i> Institutions</a><br>
+<a href="/room?t={{t.key.id()}}"><i class="fa fa-gavel fa-fw "></i> Rooms</a></h2>
+
 {% endblock %}
