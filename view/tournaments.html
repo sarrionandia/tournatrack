@@ -19,14 +19,15 @@
 {% block content %}
 	<div class="panel panel-primary">
 		<div class="panel-heading">Your Tournaments</div>
-		<ul class="list-group">
+		<table class="table">
 		{% for t in tournaments %}
-			<li id="{{t.key.id()}}">
+			<tr id="{{t.key.id()}}">
 				<div class="tournament_row">
-					<span style="float:left;">
+					<td>
 						<a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a>
-					</span>
-					<div class="btn-group" style="margin-left: 2em;">
+					</td>
+					<td>
+					<div class="btn-group">
 				  		<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
 				    		Delete <span class="caret"></span>
 				  		</button>
@@ -36,10 +37,11 @@
 				    		<li><a href="#" onclick="DeleteTournament({{t.key.id()}})">Permanently Delete Tournament</a></li>
 				  		</ul>
 					</div>
+					</td>
 				</div>
-			</li>
+			</tr>
 		{% endfor %}
-		</ul>
+		</table>
 	</div>
 	<hr />
 	
