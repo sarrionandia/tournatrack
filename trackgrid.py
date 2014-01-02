@@ -16,6 +16,7 @@ import webapp2
 import jinja2
 import os
 import logging
+import datetime
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -52,6 +53,27 @@ class GridHandler(webapp2.RequestHandler):
 				template = JINJA_ENVIRONMENT.get_template('view/trackgrid.html')
 			self.response.write(template.render(template_values))
 						
+		else:
+			self.redirect(users.create_login_url(self.request.uri))
+			
+	def post(self):
+		user = users.get_current_user()
+		#Get the requested tournament
+		tid = self.request.get('t')
+		t_key = ndb.Key('Tournament', int(tid))
+		t = t_key.get()
+				
+		if (user and user in t.owner):
+			rid = self.request.get('r')
+			r_key = ndb.Key('Tournament', int(tid), 'Room', int(rid))
+			room = r_key.get()
+		
+			room.status = self.request.get('status')
+			room.comment = self.request.get('comment')
+			room.changed = datetime.datetime.now().time()
+		
+			room.put()
+			self.redirect('/trackgrid?t=' + str(t_key.id()))
 		else:
 			self.redirect(users.create_login_url(self.request.uri))
 	

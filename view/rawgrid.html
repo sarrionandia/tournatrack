@@ -7,7 +7,7 @@
 	</tr>
 	{% for r in rooms %}
 	{% if r.active %}
-	<tr>
+	<tr onclick="roomclick({{r.key.id()}}, '{{r.name}}', '{{r.status}}', '{{r.comment}}')">
 		<td>{{r.name}}</td>
 		<td>{% if r.status %}{{r.status}}{% endif %}</td>
 		<td>{% if r.comment %}{{r.comment}}{% endif %}</td>

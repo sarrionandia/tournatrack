@@ -1,8 +1,6 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Tracking Grid{% endblock %}
-
 {% block crumbs %}<li class="active">Tracking Grid</li>{% endblock %}
-
 {% block head_extra %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
@@ -17,6 +15,16 @@ $(document).ready(function () {
 	request_table();
 	setInterval("request_table()", 5000);
 });
+
+function roomclick(rid, name, status, comment)
+{
+	$('#myModalLabel').text(name);
+	$('#roomstatus option[value="'+status+'"]').prop('selected',true);
+	$('#roomcomment').val(comment);
+	$('#roomid').attr("value", rid);
+	$('#myModal').modal();
+}
+
 </script>
 {% endblock %}
 
@@ -32,4 +40,37 @@ $(document).ready(function () {
 	<ul>
 		<li><a href="/reset_rooms?t={{t.key.id()}}">Reset All Room Status</a></li>
 	</ul>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+		<form method="post" action="/trackgrid?t={{t.key.id()}}">
+	      <div class="modal-body">
+			<label class="control-label">Status</label>
+			<select class="form-control" id="roomstatus" name="status">
+				<option value="Debating">Debate Started</option>
+				<option value="Judging">Judging Started</option>
+				<option value="Feedback">Feedback Started</option>
+				<option value="Problem">Problem: Send help</option>
+			</select>
+			
+			<label class="control-label">Comment</label>
+			<input type="hidden" id="roomid" name="r" value=""/>
+			<input type="text" id="roomcomment" name="comment" type="form-control" placeholder="Optional"/>
+			
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+	</form>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
 {% endblock %}
