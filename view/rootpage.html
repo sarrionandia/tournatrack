@@ -2,11 +2,9 @@
 <html>
   <head>
 	<title>{% block title %}{% endblock %}</title>
-	<link rel="stylesheet" href="/style/t.css" />
-	<link href='http://fonts.googleapis.com/css?family=Prosto+One&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
 	{% block head_extra %}
 	{% endblock %}
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="style/css/bootstrap.min.css" rel="stylesheet">
@@ -17,18 +15,47 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+    
+    
   </head>
-  <div id="headerbox" class="panel">
-	<h1 id="Title">Tournatrack - Debate Organisation Software</h1>
-	<ol class="breadcrumb">
-		<li><a href="/tournaments">Tournaments</a></li>
-		{% if t %}
-		<li><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
-		{% endif %}
-		{% block crumbs %}
-		{% endblock %}
-	</ol>
-</div>
+  
+<nav class="navbar navbar-default navbar" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"><b>Tournatrack</b></a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class=""><a href="/tournaments"><i class="fa fa-arrow-circle-o-left"></i> All Tournaments</a></li>
+   {% if t %}
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-clock-o"></i> Tracking <b class="caret"></b></a>
+       <ul class="dropdown-menu">
+          <li><a href="/trackgrid?t={{t.key.id()}}"><i class="fa fa-table"></i> View tracking grid</a></li>
+                    <li><a href="/trackpin?t={{t.key.id()}}"><i class="fa fa-asterisk"></i> Set Tracking Password</a></li>
+          <li><a href="/trackurls?t={{t.key.id()}}"><i class="fa fa-link"></i> Generate runner URLs</a></li>
+        </ul>
+          <li class=""><a href="/institution?t={{t.key.id()}}"><i class="fa fa-building-o"></i> Institutions</a></li>
+          <li class=""><a href="/room?t={{t.key.id()}}"></i><i class="fa fa-gavel"></i> Rooms</a></li>
+{% endif %}
+      </li>
+    </ul>
+       <ul class="nav navbar-nav navbar-right">
+      <p class="navbar-text">Hey {{user.nickname()}}</p>
+        </ul>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+  
 
 <div id="content">
 	{% block content %}

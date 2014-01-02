@@ -2,9 +2,8 @@
 {% block title %}Tracking PIN{% endblock %}
 
 {% block content %}
-    <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
-	<h1>{{t.name}} - Tracking Password</h1>
+	<h2>{{t.name}} - Tracking Password</h2>
 	
 	<p>
 		When runners update the status of rooms, they do so via links/QR codes unique to your competition. These are made unique by using your Tracking Password.
@@ -20,17 +19,7 @@ Anybody with access to the unique URLs / QR codes can modify the status of rooms
 	<hr/>
 
 	<div class="alert alert-warning">Changing the tracking PIN will require you to redistribute new QR Codes / URLs to your runners.</div>
-	<h2>Change Tracking Password</h2>
-	
-	<form action="/trackpin?t={{t.key.id()}}" method="post">
-		<div>New PIN: <input name="pin" /></div>
-		<div><input type="submit" value="Change PIN" /></div>
-	</form>
-	
-	<br><br>
-	
-	<form action="/trackpin?t={{t.key.id()}}" method="post">
-	<div class="row">
+	<h3>Change Tracking Password</h3>
 
   <div class="col-lg-6">
     <div class="input-group">

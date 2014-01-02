@@ -2,10 +2,8 @@
 {% block title %}{{t.name}}{% endblock %}
 
 {% block content %}
-    <p>Hello <emph>{{user.nickname()}}</emph></p>
-    <hr>
-	<h1>{{t.name}}</h1>
-	<h2>Tracking</h2>
+	<h2>{{t.name}}</h2>
+	<h3>Tracking</h3>
 	<ul>
 		<li><a href="/trackgrid?t={{t.key.id()}}">View Tracking Grid</a></i>
 		<li><a href="/trackpin?t={{t.key.id()}}">Set tracking PIN</a></li>
