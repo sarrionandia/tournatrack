@@ -1,8 +1,6 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Tracking Grid{% endblock %}
 
-{% block crumbs %}<li class="active">Tracking Grid</li>{% endblock %}
-
 {% block head_extra %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
@@ -21,6 +19,7 @@ $(document).ready(function () {
 {% endblock %}
 
 {% block content %}
+	<h2><i class="fa fa-table"></i> Tracking Grid</h2>
 	<div class="panel panel-primary">
 	<div class="panel-heading">Rooms</div>
 		<div id="grid" class="panel-body">
