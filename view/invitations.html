@@ -1,0 +1,41 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Invitations{% endblock %}
+{% block head_extra %}
+{% endblock %}
+
+{% block content %}
+	<h2></i><i class="fa fa-gavel"></i> Invitations</h2>
+	<div class="panel panel-primary">
+	<div class="panel-heading">Open Invitations</div>
+	<div class="panel-body">
+	<table id="roomtable" class="table table-striped">
+		<tr>
+			<th>Email</th>
+			<th>Invited</th>
+			<th>Revoke</th>
+		</tr>
+		{% for i in invitations %}
+		<tr id="{{t.key.id()}}">
+			<td>{{i.email}}</td>
+			<td>{{i.invited}}</td>
+			<td>Revoke</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+	<div class="table-footer">
+		
+	</div>
+	<form id="inviteform" method="post" action="/invitations?t={{t.key.id()}}">
+    <div class="input-group">
+      <input type="text" name="email" id="field_email" class="form-control" placeholder="Email Address">
+      <span class="input-group-btn">
+
+        <button class="btn btn-success" id="btn_add" type="submit"><i class="fa fa-plus"></i> Invite User</button>
+      </span>
+    </div><!-- /input-group -->
+  </form>
+  
+	</div>
+	
+{% endblock %}

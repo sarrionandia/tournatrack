@@ -27,12 +27,21 @@ class Tournament(ndb.Model):
 	def rooms(self):
 		return Room.query(ancestor=self.key).order(Room.name)
 		
+	def invitations(self):
+		return OwnerInvitation.query(ancestor=self.key)
+		
 	def destroy(self):
 		for i in self.institutions():
 			i.key.delete()
 		for r in self.rooms():
 			r.key.delete()
 		self.key.delete()
+
+class OwnerInvitation(ndb.Model):
+	"""Models an invitation to become a tournament owner"""
+	email = ndb.StringProperty();
+	pin = ndb.StringProperty();
+	invited = ndb.DateTimeProperty();
 	
 class Institution(ndb.Model):
 	"""Models an institution"""
