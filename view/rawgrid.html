@@ -7,7 +7,8 @@
 	</tr>
 	{% for r in rooms %}
 	{% if r.active %}
-	<tr onclick="roomclick({{r.key.id()}}, '{{r.name}}', '{{r.status}}', '{{r.comment}}')">
+	<tr onclick="roomclick({{r.key.id()}}, '{{r.name}}', '{{r.status}}', '{{r.comment}}')"
+	{% if r.status == 'Problem' %}class="danger"{% endif %}>
 		<td>{{r.name}}</td>
 		<td>{% if r.status %}{{r.status}}{% endif %}</td>
 		<td>{% if r.comment %}{{r.comment}}{% endif %}</td>
