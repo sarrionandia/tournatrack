@@ -7,10 +7,11 @@ function newRoom(){
 	$.post( '/room?t={{t.key.id()}}', $('form#roomform').serialize(), function(data, status) {
 		arg_string = "t={{t.key.id()}}&r=" + data.id;
 		$("#roomtable > tbody").append("<tr><td>" + data.name + "</td><td><a href='toggle_room?" + arg_string + "'>Deactivate</a></td><td><a href='/del_r?" + arg_string + "'>Delete</a></td></tr>");
+		$('#field_name').val('');
 	       },
 	       'json' // I expect a JSON response
 	    );
-	    
+	return false;
 }
 </script>
 {% endblock %}
@@ -39,7 +40,7 @@ function newRoom(){
 	<div class="table-footer">
 		
 	</div>
-	<form id="roomform">
+	<form id="roomform" onsubmit="return newRoom()">
     <div class="input-group">
       <input type="text" name="room_name" id="field_name" class="form-control">
       <span class="input-group-btn">
