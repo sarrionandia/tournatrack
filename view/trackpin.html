@@ -21,6 +21,7 @@ Anybody with access to the unique URLs / QR codes can modify the status of rooms
 	<div class="alert alert-warning">Changing the tracking PIN will require you to redistribute new QR Codes / URLs to your runners.</div>
 	<h3>Change Tracking Password</h3>
 
+  <form method="post" target="/trackpin?t={{t.key.id()}}">
   <div class="col-lg-6">
     <div class="input-group">
       <input type="text" name="pin" class="form-control" placeholder="It should be long and unique, nonsense phrases are great.">
@@ -30,6 +31,7 @@ Anybody with access to the unique URLs / QR codes can modify the status of rooms
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
+</form>
 </div><!-- /.row -->
 	
 	
