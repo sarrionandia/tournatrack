@@ -15,10 +15,16 @@
 import webapp2
 import jinja2
 import os
+import string
+import random
+import datetime
 
 from google.appengine.api import users
 
 from models import Tournament
+
+def pin_gen(size=6, chars=string.ascii_uppercase + string.digits):
+	return ''.join(random.choice(chars) for x in range(size))
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -43,6 +49,35 @@ class TournamentsHandler(webapp2.RequestHandler):
 		else:
 			self.redirect(users.create_login_url(self.request.uri))
 
+	#Create a new tournament object
+	def post(self):
+		user = users.get_current_user()
+
+		if user:
+			#Create the tournament object
+			new_tournament = Tournament()
+			new_tournament.name = self.request.get('name')
+			new_tournament.owner.append(user)
+			new_tournament.trackpin = pin_gen()
+			new_tournament.start = datetime.datetime.strptime(self.request.get('start'), '%Y-%m-%d').date()
+			new_tournament.end = datetime.datetime.strptime(self.request.get('end'), '%Y-%m-%d').date()
+			new_tournament.put()
+			#Send the user back to the tournaments page
+			self.redirect('/tournaments')
+			
+			#Reserve the list of tournaments
+			q = Tournament.query(Tournament.owner == user)
+			
+			template_values = {
+				'user' : user,
+				'tournaments' : q,
+			}
+			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
+			self.response.write(template.render(template_values))
+			
+		else:
+			self.redirect(users.create_login_url(self.request.uri))
+	
 
 app = webapp2.WSGIApplication([
 	('/tournaments', TournamentsHandler)

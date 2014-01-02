@@ -20,6 +20,8 @@ class Tournament(ndb.Model):
 	name = ndb.StringProperty()
 	owner = ndb.UserProperty(repeated=True)
 	trackpin = ndb.StringProperty()
+	start = ndb.DateProperty()
+	end = ndb.DateProperty()
 	
 	def institutions(self):
 		return Institution.query(ancestor=self.key).order(Institution.name)
