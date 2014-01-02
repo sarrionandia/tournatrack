@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block content %}
+<h2>Welcome to Tournatrack</h2>
 	<div class="panel panel-primary">
 		<div class="panel-heading">Your Tournaments</div>
 		<table class="table table-striped">
@@ -32,7 +33,7 @@
 				    		Delete <span class="caret"></span>
 				  		</button>
 				  		<ul class="dropdown-menu" role="menu">
-				    		<li>There's no going back...</li>
+				    		<li> There's no going back...</li>
 				    		<li class="divider"></li>
 				    		<li><a href="#" onclick="DeleteTournament({{t.key.id()}})">Permanently Delete Tournament</a></li>
 				  		</ul>
