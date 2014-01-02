@@ -68,7 +68,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			except ValueError:
 				dates_valid = False
 				
-			if (dates_valid and len(new_tournament.start) > 5):
+			if (dates_valid and len(new_tournament.name) > 5):
 				new_tournament.put()
 			#Send the user back to the tournaments page
 			self.redirect('/tournaments')
