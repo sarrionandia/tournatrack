@@ -4,9 +4,9 @@
 	<h2><i class="fa fa-asterisk"></i> Tracking Password</h2>
 	
 	<p>
-		When runners update the status of rooms, they do so via links/QR codes unique to your competition. These are made unique by using your Tracking Password.
+		When runners update the status of rooms, they do so via links/QR codes unique to your competition. These are made unique with the Tracking Password.
 		
-Anybody with access to these modify the status of rooms, so if one of your runners has gotten into the yucca early, you can change the Tracking Password from the one Tournatrack randomly chose for you.
+Anybody with access to these links can modify the status of rooms, so if one of your runners has gotten into the yucca early, you can change the Tracking Password from the one Tournatrack randomly chose for you.
 		<br>
 		
 	</p>
@@ -14,13 +14,13 @@ Anybody with access to these modify the status of rooms, so if one of your runne
 	<p><b>Your current tracking password is: {{t.trackpin}}</b></p>
 	<hr/>
 
-	<div class="alert alert-warning">Changing the tracking PIN will require you to redistribute new QR Codes / URLs to your runners.</div>
+	<div class="alert alert-warning">Changing the Tracking Password will require you to redistribute new QR codes / links to your runners.</div>
 	<h3>Change Tracking Password</h3>
 
   <form method="post" target="/trackpin?t={{t.key.id()}}">
   <div class="col-lg-6">
     <div class="input-group">
-      <input type="text" name="pin" class="form-control" placeholder="It should be long and unique, nonsense phrases are great.">
+      <input type="text" name="pin" class="form-control" placeholder="It should be long and unique. Nonsense phrases are great.">
       <span class="input-group-btn">
       
         <button class="btn btn-danger" type="submit">Change Tracking Password</button>

@@ -2,12 +2,15 @@
 {% block title %}New Tournament{% endblock %}
 
 {% block content %}
-    <p>Hello <emph>{{user.nickname()}}</emph></p>
-    <hr>
-	<h1>Your New Tournament</h1>
-
-	<form action="/new_tournament" method="post">
-		<div>Tournament Name: <input name="tournament_name" /></div>
-		<div><input type="submit" value="Create Tournament" /></div>
-	</form>
+	<h2>It's all in the name.</h2>
+<p>Okay, so it's really not, but hey, you try coming up with things to make this part interesting.</p>
+<form method="post" target="/new_tournament">
+  <div class="col-lg">
+    <div class="input-group">
+      <input type="text" input name="tournament_name" class="form-control" placeholder="Tournament Name">
+      <span class="input-group-btn">
+      
+        <button class="btn btn-primary" type="submit">Create Tournament</button>
+	
+	
 {% endblock %}
