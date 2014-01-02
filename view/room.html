@@ -18,9 +18,10 @@ function newRoom(){
 {% block crumbs %}<li class="active">Manage Rooms</li>{%endblock%}
 
 {% block content %}
-	<h3>Rooms</h3>
-	
-	<table id="roomtable">
+	<div class="panel panel-primary">
+	<div class="panel-heading">Rooms</div>
+	<div class="panel-body">
+	<table id="roomtable" class="table">
 		<tr>
 			<th>Name</th>
 			<th>Modify</th>
@@ -34,12 +35,11 @@ function newRoom(){
 		</tr>
 		{% endfor %}
 	</table>
-	
-	<hr/>
-	
-	<h2>New Room</h2>
-  <form id="roomform">
-  <div class="col-lg-6">
+	</div>
+	<div class="table-footer">
+		
+	</div>
+	<form id="roomform">
     <div class="input-group">
       <input type="text" name="room_name" id="field_name" class="form-control">
       <span class="input-group-btn">
@@ -47,7 +47,8 @@ function newRoom(){
         <button class="btn btn-success" id="btn_add" type="button" onclick="newRoom()">Add Room</button>
       </span>
     </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
   </form>
-
+  
+	</div>
+	
 {% endblock %}
