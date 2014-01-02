@@ -35,16 +35,16 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
    {% if t %}
-	<li class=""><a href="/tournament_instance?t_key={{t.key.id()}}"><i class="fa fa-arrow-circle-o-left"></i>{{t.name}}</a></li>
+	<li class=""><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-clock-o"></i> Tracking <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-clock-o fa-lg"></i> Tracking <b class="caret"></b></a>
        <ul class="dropdown-menu">
           <li><a href="/trackgrid?t={{t.key.id()}}"><i class="fa fa-table"></i> View tracking grid</a></li>
-                    <li><a href="/trackpin?t={{t.key.id()}}"><i class="fa fa-asterisk"></i> Set Tracking Password</a></li>
-          <li><a href="/trackurls?t={{t.key.id()}}"><i class="fa fa-link"></i> Generate runner URLs</a></li>
+                    <li><a href="/trackpin?t={{t.key.id()}}"><i class="fa fa-asterisk"></i> Tracking Password</a></li>
+          <li><a href="/trackurls?t={{t.key.id()}}"><i class="fa fa-link"></i> Runner links</a></li>
         </ul>
-          <li class=""><a href="/institution?t={{t.key.id()}}"><i class="fa fa-building-o"></i> Institutions</a></li>
-          <li class=""><a href="/room?t={{t.key.id()}}"></i><i class="fa fa-gavel"></i> Rooms</a></li>
+          <li class=""><a href="/institution?t={{t.key.id()}}"><i class="fa fa-building-o fa-lg"></i> Institutions</a></li>
+          <li class=""><a href="/room?t={{t.key.id()}}"></i><i class="fa fa-gavel fa-lg"></i> Rooms</a></li>
 {% endif %}
       </li>
     </ul>
@@ -56,14 +56,16 @@
   </div><!-- /.navbar-collapse -->
 </nav>
   
-
+    <div class="container">
 <div id="content">
 	{% block content %}
 	{% endblock %}
 </div>
+</div> <!-- /container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="style/js/bootstrap.min.js"></script>
+    
   </body>
 </html>
