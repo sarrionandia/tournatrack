@@ -28,18 +28,15 @@ function roomclick(rid, name, status, comment)
 {% endblock %}
 
 {% block content %}
-	<h2><i class="fa fa-table"></i> Tracking Grid</h2>
+	<h2><i class="fa fa-table"></i> Tracking Grid</h2> 
 	<div class="panel panel-primary">
 	<div class="panel-heading">Rooms</div>
 		<div id="grid" class="panel-body">
 			Loading...
 		</div>
 	</div>
-	<hr/>
-	<h2>Control Panel</h2>
-	<ul>
-		<li><a href="/reset_rooms?t={{t.key.id()}}">Reset All Room Status</a></li>
-	</ul>
+	
+<a href="/reset_rooms?t={{t.key.id()}}"button type="button" class="btn btn-primary">Reset All Room Status</button></a>
 	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
