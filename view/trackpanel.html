@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-	<title>
-		{{room.name}}
-	</title>
-  </head>
-  <body>
-	
-	<h1>{{room.name}}</h1>
-	<table>
+{% extends 'view/rootpage.html' %}
+
+{% block title %}{{room.name}}{% endblock %}
+
+{% block content %}
+
+	<div class="panel panel-default">
+	<div class="panel-heading">{{room.name}}</div>
+	<table class="table">
 		<tr>
 			<td>
 				Status:
@@ -27,26 +24,26 @@
 			</td>
 		</tr>
 	</table>
-	<hr />
-	<form action="/trackpanel?t={{t.key.id()}}&r={{room.key.id()}}&p={{t.trackpin}}" method="post">
-		<div>
-			Change Status:
-			<select name="status">
+	</div>
+	
+	<div class="panel panel-success">
+	<div class="panel-heading">Update Room Status</div>
+	<form action="/trackpanel?t={{t.key.id()}}&r={{room.key.id()}}&p={{t.trackpin}}" method="post" role="form">
+		<div class="form-group">
+			<label for="status" class="col-sm-2 control-label">Status</label>
+			<select name="status" class="form-control" id="status">
 				<option value="Debating">Debate Started</option>
 				<option value="Judging">Judging Started</option>
 				<option value="Feedback">Feedback Started</option>
 				<option value="Problem">Problem: Send help</option>
 			</select>
 		</div>
-		<div>
-			Comment: 
-			<input name="comment" />
+		<div class="form-group">
+			<label for="comment" class="col-sm-2 control-label">Comment</label>
+			<input name="comment" class="form-control" placeholder="optional"/>
 		</div>
-		<div><input type="submit" value="Update Room" /> </div>
+      <button type="submit" class="btn btn-primary">Update Room</button>
 	</form>
+	</div>
 		
-
-
-  </body>
-</html>
-{% endautoescape %}
+{% endblock %}

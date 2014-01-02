@@ -34,6 +34,7 @@ class PanelHandler(webapp2.RequestHandler):
 		tid = self.request.get('t')
 		t_key = ndb.Key('Tournament', int(tid))
 		t = t_key.get()
+		user = users.get_current_user()
 				
 		if (t):
 			#Get the current room
@@ -43,7 +44,8 @@ class PanelHandler(webapp2.RequestHandler):
 			
 			template_values = {
 				't' : t,
-				'room' : room
+				'room' : room,
+				'user' : user,
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/trackpanel.html')
 			self.response.write(template.render(template_values))
