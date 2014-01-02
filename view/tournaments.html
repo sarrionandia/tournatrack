@@ -19,7 +19,7 @@
 {% block content %}
 	<div class="panel panel-primary">
 		<div class="panel-heading">Your Tournaments</div>
-		<table class="table">
+		<table class="table table-striped">
 		{% for t in tournaments %}
 			<tr id="{{t.key.id()}}">
 				<div class="tournament_row">
