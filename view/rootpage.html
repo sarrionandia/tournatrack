@@ -37,14 +37,14 @@
    {% if t %}
 	<li class=""><a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a></li>
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-clock-o"></i> Tracking <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-clock-o fa-lg"></i> Tracking <b class="caret"></b></a>
        <ul class="dropdown-menu">
           <li><a href="/trackgrid?t={{t.key.id()}}"><i class="fa fa-table"></i> View tracking grid</a></li>
                     <li><a href="/trackpin?t={{t.key.id()}}"><i class="fa fa-asterisk"></i> Tracking Password</a></li>
           <li><a href="/trackurls?t={{t.key.id()}}"><i class="fa fa-link"></i> Runner links</a></li>
         </ul>
-          <li class=""><a href="/institution?t={{t.key.id()}}"><i class="fa fa-building-o"></i> Institutions</a></li>
-          <li class=""><a href="/room?t={{t.key.id()}}"></i><i class="fa fa-gavel"></i> Rooms</a></li>
+          <li class=""><a href="/institution?t={{t.key.id()}}"><i class="fa fa-building-o fa-lg"></i> Institutions</a></li>
+          <li class=""><a href="/room?t={{t.key.id()}}"></i><i class="fa fa-gavel fa-lg"></i> Rooms</a></li>
 {% endif %}
       </li>
     </ul>
