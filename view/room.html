@@ -1,20 +1,36 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Rooms{% endblock %}
 
+{% block head_extra %}
+<script>
+function newRoom(){
+	$.post( '/room?t={{t.key.id()}}', $('form#roomform').serialize(), function(data, status) {
+		arg_string = "t={{t.key.id()}}&r=" + data.id;
+		$("#roomtable > tbody").append("<tr><td>" + data.name + "</td><td><a href='toggle_room?" + arg_string + "'>Deactivate</a></td><td><a href='/del_r?" + arg_string + "'>Delete</a></td></tr>");
+	       },
+	       'json' // I expect a JSON response
+	    );
+	    
+}
+</script>
+{% endblock %}
+
+{% block crumbs %}<li class="active">Manage Rooms</li>{%endblock%}
+
 {% block content %}
     <p>Hello <emph>{{user.nickname()}}</emph></p>
     <hr>
 	<h2>{{t.name}}</h2>
 	<h3>Rooms</h3>
 	
-	<table>
+	<table id="roomtable">
 		<tr>
 			<th>Name</th>
 			<th>Modify</th>
 			<th>Delete</th>
 		</tr>
 		{% for r in rooms %}
-		<tr {% if r.active != True %}bgcolor="red"{% endif %}>
+		<tr id="{{t.key.id()}}">
 			<td>{{r.name}}</td>
 			<td><a href="/toggle_room?t={{t.key.id()}}&r={{r.key.id()}}">{% if r.active %}Deactivate{% else %}Activate{%endif%}</a></td>
 			<td><a href="/del_r?t={{t.key.id()}}&r={{r.key.id()}}">Delete</a></td>
@@ -23,10 +39,18 @@
 	</table>
 	
 	<hr/>
+	
 	<h2>New Room</h2>
-	<form action="/room?t={{t.key.id()}}" method="post">
-		<div>Name: <input name="room_name" /></div>
-		<div><input type="submit" value="Add"></div>
-	</form>
+  <form id="roomform">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" name="room_name" id="field_name" class="form-control">
+      <span class="input-group-btn">
+
+        <button class="btn btn-success" id="btn_add" type="button" onclick="newRoom()">Add Room</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+  </form>
 
 {% endblock %}

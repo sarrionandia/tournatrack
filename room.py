@@ -65,8 +65,13 @@ class RoomHandler(webapp2.RequestHandler):
 			room.name = self.request.get('room_name')
 			room.active = True
 			room.put()
-			#Sent the user back to the list of institutions
-			self.redirect('/room?t=' + str(t_key.id()))
+			
+			#Return the new room
+			template_values = {
+				'room' : room,
+			}
+			template = JINJA_ENVIRONMENT.get_template('view/json/room.json')
+			self.response.write(template.render(template_values))
 			
 		else:
 			self.redirect(users.create_login_url(self.request.uri))
