@@ -12,9 +12,6 @@ handlers:
 - url: /style
   static_dir: static
   
-- url: /invitations
-  script: invitations.app  
-  
 - url: /delete_tournament
   script: deletetournament.app  
 

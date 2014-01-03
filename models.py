@@ -39,12 +39,6 @@ class Tournament(ndb.Model):
 			r.key.delete()
 		self.key.delete()
 
-class OwnerInvitation(ndb.Model):
-	"""Models an invitation to become a tournament owner"""
-	email = ndb.StringProperty();
-	pin = ndb.StringProperty();
-	invited = ndb.DateTimeProperty();
-	
 class Institution(ndb.Model):
 	"""Models an institution"""
 	name = ndb.StringProperty()
