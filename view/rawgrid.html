@@ -12,7 +12,7 @@
 		<td>{{r.name}}</td>
 		<td>{% if r.status %}{{r.status}}{% endif %}</td>
 		<td>{% if r.comment %}{{r.comment}}{% endif %}</td>
-		<td>{% if r.changed %}{{r.changed}}{% endif %}</td>
+		<td>{% if r.changed %}{{r.changed.strftime('%H:%M:%S')}}{% endif %}</td>
 	</tr>
 	{% endif %}
 	{% endfor %}
