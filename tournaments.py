@@ -43,6 +43,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			template_values = {
 				'user' : user,
 				'tournaments' : q,
+				'logout' : users.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))
@@ -79,6 +80,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			template_values = {
 				'user' : user,
 				'tournaments' : q,
+				'logout' : users.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))

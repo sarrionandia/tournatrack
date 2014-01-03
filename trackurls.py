@@ -44,6 +44,7 @@ class GridHandler(webapp2.RequestHandler):
 				'user' : user,
 				't' : t,
 				'rooms' : q,
+				'logout' : users.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/trackurls.html')
 			self.response.write(template.render(template_values))

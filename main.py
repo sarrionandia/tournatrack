@@ -30,6 +30,7 @@ class MainHandler(webapp2.RequestHandler):
 		if user:
 			template_values = {
 				'user' : user,
+				'logout' : users.create_logout_url('/')
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/index.html')
 			self.response.write(template.render(template_values))

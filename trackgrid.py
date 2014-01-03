@@ -45,6 +45,7 @@ class GridHandler(webapp2.RequestHandler):
 				'user' : user,
 				't' : t,
 				'rooms' : q,
+				'logout' : users.create_logout_url('/'),
 			}
 			#Check if this is an AJAX request for the raw table
 			if (self.request.get('raw') == '1'):

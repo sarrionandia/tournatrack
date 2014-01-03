@@ -42,6 +42,7 @@ class InstitutionHandler(webapp2.RequestHandler):
 			
 			template_values = {
 				'user' : user,
+				'logout', users.create_logout_url('/')
 				't' : t,
 				'institutions' : q,
 			}

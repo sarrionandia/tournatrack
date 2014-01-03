@@ -39,6 +39,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			if (t and user in t.owner):
 				template_values = {
 					'user' : user,
+					'logout' : users.create_logout_url('/'),
 					't' : t,
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/tournament.html')

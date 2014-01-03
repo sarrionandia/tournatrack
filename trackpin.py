@@ -40,6 +40,7 @@ class PinTracker(webapp2.RequestHandler):
 				template_values = {
 					'user' : user,
 					't' : t,
+					'logout' : users.create_logout_url('/'),
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/trackpin.html')
 				self.response.write(template.render(template_values))

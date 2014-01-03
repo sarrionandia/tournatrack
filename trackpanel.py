@@ -46,6 +46,7 @@ class PanelHandler(webapp2.RequestHandler):
 				't' : t,
 				'room' : room,
 				'user' : user,
+				'logout' : users.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/trackpanel.html')
 			self.response.write(template.render(template_values))
