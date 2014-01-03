@@ -36,7 +36,7 @@ class PanelHandler(webapp2.RequestHandler):
 		t = t_key.get()
 		user = users.get_current_user()
 				
-		if (t):
+		if (t.trackpin == self.request.get('p')):
 			#Get the current room
 			rid = self.request.get('r')
 			r_key = ndb.Key('Tournament', int(tid), 'Room', int(rid))
