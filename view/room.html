@@ -3,6 +3,8 @@
 {% block head_extra %}
 <script>
 function newRoom(){
+	if ($('#field_name').val().length > 0)
+	{
 	$.post( '/room?t={{t.key.id()}}', $('form#roomform').serialize(), function(data, status) {
 		arg_string = "t={{t.key.id()}}&r=" + data.id;
 		$("#roomtable > tbody").append("<tr><td>" + data.name + "</td><td><a href='toggle_room?" + arg_string + "'>Deactivate</a></td><td><a href='/del_r?" + arg_string + "'>Delete</a></td></tr>");
@@ -11,6 +13,7 @@ function newRoom(){
 	       'json' // I expect a JSON response
 	    );
 	return false;
+}
 }
 </script>
 {% endblock %}
