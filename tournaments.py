@@ -19,6 +19,7 @@ import string
 import random
 import datetime
 
+from google.appengine.ext import ndb
 from google.appengine.api import users
 
 from models import Tournament
@@ -55,8 +56,11 @@ class TournamentsHandler(webapp2.RequestHandler):
 		user = users.get_current_user()
 
 		if user:
-			#Create the tournament object
-			new_tournament = Tournament()
+			#Check if we are modifying a tournament or making a new one
+			if self.request.get('id'):
+				new_tournament = ndb.Key('Tournament', int(self.request.get('id'))).get()
+			else:
+				new_tournament = Tournament()
 			new_tournament.name = self.request.get('name')
 			new_tournament.owner.append(user)
 			new_tournament.trackpin = pin_gen()

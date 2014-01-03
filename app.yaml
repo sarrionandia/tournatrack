@@ -44,10 +44,7 @@ handlers:
   
 - url: /tournaments
   script: tournaments.app
- 
-- url: /institution
-  script: institution.app
-  
+   
 - url: /tournament_instance
   script: tournamentinstance.app
 
