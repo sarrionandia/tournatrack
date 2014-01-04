@@ -2,6 +2,20 @@
 {% block title %}Tournament List{% endblock %}
 
 {% block head_extra %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    (function($) {
+        $(document).ready(function(){
+            $(".datepicker").datepicker();
+	        $(".datepicker").datepicker( "option", "dateFormat", "yy-mm-dd");
+
+        });
+    })(jQuery);
+</script>
+
 <script>
 	function DeleteTournament(t)
 	{
@@ -98,13 +112,19 @@
 			  <div class="form-group">
 			    <label for="start" class="col-sm-2 control-label">Starts on</label>
 			    <div class="col-sm-10">
-			      <input type="date" class="form-control" id="start" name="start" required>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			     		<input type="text" class="form-control datepicker" id="start" name="start" placeholder="yyyy-mm-dd" required>
+					</div>
 			    </div>
 			  </div>
 	          <div class="form-group">
 			    <label for="end" class="col-sm-2 control-label">Ends on</label>
 			    <div class="col-sm-10">
-			      <input type="date" class="form-control" id="end" name="end" required>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			     		<input type="text" class="form-control datepicker" id="end" name="end" placeholder="yyyy-mm-dd" required>
+					</div>
 			    </div>
 			  </div>
 			
