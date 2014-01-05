@@ -1,13 +1,30 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Runner Links{% endblock %}
 
+{% block head_extra %}
+<script>
+function printQR()
+{
+	w=window.open();
+	w.document.write($('#myModal').html());
+	w.print();
+	w.close();
+}
+</script>
+
+{% endblock %}
+
 {% block content %}
 	<h2><i class="fa fa-link"></i> Runner Links</h2>
 	
 	<p>
 		These links are based on your current Tracking Password, and should be used by runners to access the controls for each room. Runners can use these controls to inform the convenor and tabmaster about the status of their rooms.
-	
 	</p>
+	
+		<div class="alert alert-info" onclick="$('#myModal').modal();">
+	  		<span class="glyphicon glyphicon-list"></span> <a target="#">Smaller tournaments might prefer to use one single QR code to control
+			all of the rooms.</a>
+		</div>
 	
 	{% for r in rooms %}
 	<div class="panel panel-default">
@@ -22,4 +39,41 @@
 	</div>
 	</div>
 	{% endfor %}
+	
+	<!-- Magic QR Code modal-->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Scan Me... You know you want to</h4>
+	      </div>
+	      <div class="modal-body">
+			<div class="row">
+				<div class="col-md-4">
+	        		<img src="http://chart.apis.google.com/chart?chs=200x200&cht=qr&chld=|1&chl=http%3A%2F%2Ftournatrack.appspot.com%2Ftrackpanel%3Ft%3D{{t.key.id()}}%26p%3D{{t.trackpin}}"/>
+				</div>
+				<div class="col-md-8">
+					<p>This QR code controls all of the rooms for the {{t.name}}. With great power, comes great responsibility.</p>
+					
+					<p>Based on Code: <strong>{{t.trackpin}}</strong></p>
+					
+					<p>
+					<a href="/trackpanel?t={{t.key.id()}}&p={{t.trackpin}}">
+						http://tournatrack.appspot.com/trackpanel?t={{t.key.id()}}&p={{t.trackpin}}
+					</a>
+					</p>
+				</div>
+			</div>
+			
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="btn_print" onclick="printQR();"><span class="glyphicon glyphicon-print"/> Print</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+
 {% endblock %}
