@@ -37,19 +37,31 @@ class PanelHandler(webapp2.RequestHandler):
 		user = users.get_current_user()
 				
 		if (t.trackpin == self.request.get('p')):
-			#Get the current room
-			rid = self.request.get('r')
-			r_key = ndb.Key('Tournament', int(tid), 'Room', int(rid))
-			room = r_key.get()
+			#Check if they want a specific room, or a list of all of the rooms
+			if(not self.request.get('r')):
+				template_values = {
+					't' : t,
+					'user' : user,
+					'logout' : users.create_logout_url('/'),
+					'rooms' : t.rooms(),
+					}
+				template = JINJA_ENVIRONMENT.get_template('view/alltrackpanels.html')
+				self.response.write(template.render(template_values))
+				
+			else:
+				#Get the current room
+				rid = self.request.get('r')
+				r_key = ndb.Key('Tournament', int(tid), 'Room', int(rid))
+				room = r_key.get()
 			
-			template_values = {
-				't' : t,
-				'room' : room,
-				'user' : user,
-				'logout' : users.create_logout_url('/'),
-			}
-			template = JINJA_ENVIRONMENT.get_template('view/trackpanel.html')
-			self.response.write(template.render(template_values))
+				template_values = {
+					't' : t,
+					'room' : room,
+					'user' : user,
+					'logout' : users.create_logout_url('/'),
+					}
+				template = JINJA_ENVIRONMENT.get_template('view/trackpanel.html')
+				self.response.write(template.render(template_values))
 						
 		else:
 			self.redirect('/')
