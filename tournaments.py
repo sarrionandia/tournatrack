@@ -62,6 +62,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			else:
 				new_tournament = Tournament()
 			new_tournament.name = self.request.get('name')
+			new_tournament.owner = [user]
 			new_tournament.owner.append(user)
 			new_tournament.trackpin = pin_gen()
 						
