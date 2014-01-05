@@ -1,8 +1,6 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Tracking Grid{% endblock %}
 {% block head_extra %}
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 
 function request_table() {
@@ -59,7 +57,7 @@ function roomclick(rid, name, status, comment)
 			
 			<label class="control-label">Comment</label>
 			<input type="hidden" id="roomid" name="r" value=""/>
-			<input type="text" id="roomcomment" name="comment" type="form-control" placeholder="Optional"/>
+			<input type="text" id="roomcomment" name="comment" class="form-control" placeholder="Optional"/>
 			
 	      </div>
 	      <div class="modal-footer">
