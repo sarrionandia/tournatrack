@@ -1,0 +1,1 @@
+{"name": "{{room.name}}","id": "{{room.key.id()}}"}

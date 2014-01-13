@@ -1,0 +1,35 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Pre-Registration Control{% endblock %}
+{% block content %}
+	<h2><i class="fa fa-keyboard-o"></i> Pre-Registration</h2>	
+	
+	{% if r.open %}		
+		<div class="alert alert-success">
+			<strong>Reg Link:</strong>
+			<a href="/reg?t={{t.key.id()}}">
+			 	http://tournatrack.appspot.com/reg?t={{t.key.id()}}
+			</a>
+			<br />
+			<div class="btn-group">
+			  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+			    Registration is Open <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu">
+			    <li><a href="/toggle_pre_reg?t={{t.key.id()}}&o=0">Close Registration</a></li>
+			  </ul>
+			</div>
+			
+		</div>
+	{% else %}
+		<div class="btn-group">
+		  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+		    Registration is Closed <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+		    <li><a href="/toggle_pre_reg?t={{t.key.id()}}&o=1">Open Registration</a></li>
+		  </ul>
+		</div>
+		
+	{% endif %}
+	
+{% endblock %}

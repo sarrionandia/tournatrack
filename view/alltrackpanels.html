@@ -1,0 +1,13 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Room Controls{% endblock %}
+
+{% block content %}
+<h1>All Rooms</h1>
+
+<div class="list-group">
+  {% for r in rooms %}
+  <a href="/trackpanel?t={{t.key.id()}}&p={{t.trackpin}}&r={{r.key.id()}}" class="list-group-item">{{r.name}}</a>
+  {% endfor %}
+</div>
+
+{% endblock %}
