@@ -5,6 +5,24 @@
 	
 	{% if user %}
 	
+	{% if r.open %}
+	<div class="panel panel-success">
+		<div class="panel panel-heading">
+			Make a new registration
+		</div>
+		<div class="panel panel-body">
+			<div class="btn-group btn-group-lg">
+	  			<button type="button" class="btn btn-default"><i class="fa fa-building-o"></i> Institution</button>
+	  			<button type="button" class="btn btn-default"><i class="fa fa-gavel"></i> Independent Adjudicator</button>
+	  			<button type="button" class="btn btn-default"><i class="fa fa-users"></i> Composite / Open Team</button>
+			</div>
+		</div>
+	</div>
+	
+	{% else %}
+	<p>Sorry, registration for this tournament is currently closed</p>
+	{% endif %}
+	
 	{% else %}
 	
 		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
