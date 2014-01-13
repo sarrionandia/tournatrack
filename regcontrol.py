@@ -71,7 +71,7 @@ class RegToggleHandler(webapp2.RequestHandler):
 			t = key.get()
 			o = self.request.get('o') == '1'
 			
-			if (t and user in t.owner):
+			if (t and user.key in t.owner):
 				reg = t.preRegRecord().get()
 				reg.open = o
 				reg.put()
