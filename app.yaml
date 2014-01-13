@@ -12,6 +12,9 @@ handlers:
 - url: /style
   static_dir: static
   
+- url: /reg
+  script: reg.app
+  
 - url: /toggle_pre_reg
   script: regcontrol.app
 
