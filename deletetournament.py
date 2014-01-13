@@ -15,7 +15,7 @@
 import webapp2
 import os
 
-from google.appengine.api import users
+import tusers
 from google.appengine.ext import ndb
 
 from models import Tournament
@@ -23,13 +23,13 @@ from models import Institution
 
 class InstitutionHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		#Get the requested tournament
 		tid = self.request.get('t')
 		t_key = ndb.Key('Tournament', int(tid))
 		t = t_key.get()
 				
-		if (user and user in t.owner):
+		if (user and user.key in t.owner):
 			#Get the institution in question
 			tid = self.request.get('t')
 			t_key = ndb.Key('Tournament', int(tid))

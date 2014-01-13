@@ -17,7 +17,7 @@ import jinja2
 import os
 
 from google.appengine.ext import ndb
-from google.appengine.api import users
+import tusers
 
 from models import Tournament
 
@@ -28,7 +28,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class TournamentsHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		
 		if user:
 			#Get the requested tournament
@@ -36,10 +36,10 @@ class TournamentsHandler(webapp2.RequestHandler):
 			key = ndb.Key('Tournament', int(tid))
 			t = key.get()
 			
-			if (t and user in t.owner):
+			if (t and user.key in t.owner):
 				template_values = {
 					'user' : user,
-					'logout' : users.create_logout_url('/'),
+					'logout' : tusers.create_logout_url('/'),
 					't' : t,
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/tournament.html')
@@ -48,7 +48,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			else:
 				self.redirect('/tournaments')
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 
 
 app = webapp2.WSGIApplication([

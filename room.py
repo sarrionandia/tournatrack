@@ -17,7 +17,7 @@ import jinja2
 import os
 import logging
 
-from google.appengine.api import users
+import tusers
 from google.appengine.ext import ndb
 
 from models import Tournament
@@ -30,13 +30,13 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class RoomHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		#Get the requested tournament
 		tid = self.request.get('t')
 		t_key = ndb.Key('Tournament', int(tid))
 		t = t_key.get()
 				
-		if (user and user in t.owner):
+		if (user and user.key in t.owner):
 			#Get all of the rooms whose parent is the current tournament
 			q = t.rooms()
 			
@@ -44,23 +44,23 @@ class RoomHandler(webapp2.RequestHandler):
 				'user' : user,
 				't' : t,
 				'rooms' : q,
-				'logout' : users.create_logout_url('/'),
+				'logout' : tusers.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/room.html')
 			self.response.write(template.render(template_values))
 						
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 	
 	def post(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		
 		#Get the requested tournament
 		tid = self.request.get('t')
 		t_key = ndb.Key('Tournament', int(tid))
 		t = t_key.get()
 				
-		if (user and user in t.owner):
+		if (user and user.key in t.owner):
 			#Create a new Room object whose parent is the tournament
 			room = Room(parent=t_key)
 			room.name = self.request.get('room_name')
@@ -75,7 +75,7 @@ class RoomHandler(webapp2.RequestHandler):
 			self.response.write(template.render(template_values))
 			
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 		
 
 

@@ -15,10 +15,15 @@
 from google.appengine.ext import ndb
 import logging
 
+class TUser(ndb.Model):
+	"""Models a user account"""
+	g_user = ndb.UserProperty()
+	nickname = ndb.StringProperty()
+
 class Tournament(ndb.Model):
 	"""Models an individual tournament"""
 	name = ndb.StringProperty()
-	owner = ndb.UserProperty(repeated=True)
+	owner = ndb.KeyProperty(kind='TUser', repeated=True)
 	trackpin = ndb.StringProperty()
 	start = ndb.DateProperty()
 	end = ndb.DateProperty()
@@ -57,5 +62,4 @@ class Room(ndb.Model):
 class PreRegRecord(ndb.Model):
 	"""Models the pre-registration of a tournament"""
 	open = ndb.BooleanProperty()
-	teamCap = ndb.IntegerProperty()
-	
+	teamCap = ndb.IntegerProperty()	

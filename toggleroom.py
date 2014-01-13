@@ -15,7 +15,7 @@
 import webapp2
 import os
 
-from google.appengine.api import users
+import tusers
 from google.appengine.ext import ndb
 
 from models import Tournament
@@ -23,13 +23,13 @@ from models import Institution
 
 class RoomHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		#Get the requested tournament
 		tid = self.request.get('t')
 		t_key = ndb.Key('Tournament', int(tid))
 		t = t_key.get()
 				
-		if (user and user in t.owner):
+		if (user and user.key in t.owner):
 			#Get the room in question
 			rid = self.request.get('r')
 			r_key = ndb.Key('Tournament', int(tid), 'Room', int(rid))
@@ -43,7 +43,7 @@ class RoomHandler(webapp2.RequestHandler):
 			self.redirect('/room?t=' + str(t_key.id()))
 						
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 	
 
 app = webapp2.WSGIApplication([

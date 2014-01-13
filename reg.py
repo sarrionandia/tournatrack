@@ -17,7 +17,7 @@ import jinja2
 import os
 
 from google.appengine.ext import ndb
-from google.appengine.api import users
+import tusers
 
 from models import Tournament
 from models import PreRegRecord
@@ -29,7 +29,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class RegHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		
 		#Get the requested tournament
 		tid = self.request.get('t')
@@ -41,8 +41,8 @@ class RegHandler(webapp2.RequestHandler):
 		template_values = {
 			'user' : user,
 			't' : t,
-			'logout' : users.create_logout_url('/'),
-			'login' : users.create_login_url('/reg?t=' + tid),
+			'logout' : tusers.create_logout_url('/'),
+			'login' : tusers.create_login_url('/reg?t=' + tid),
 			'r' : reg,
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/reg.html')

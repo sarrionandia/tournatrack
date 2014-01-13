@@ -20,7 +20,7 @@ import random
 import datetime
 
 from google.appengine.ext import ndb
-from google.appengine.api import users
+import tusers
 
 from models import Tournament
 
@@ -34,26 +34,26 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class TournamentsHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		
 		if user:
 			
 			#Get a list of tournaments that the user owns
-			q = Tournament.query(Tournament.owner == user)
+			q = Tournament.query(Tournament.owner == user.key)	
 			
 			template_values = {
 				'user' : user,
 				'tournaments' : q,
-				'logout' : users.create_logout_url('/'),
+				'logout' : tusers.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 
 	#Create a new tournament object
 	def post(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 
 		if user:
 			#Check if we are modifying a tournament or making a new one
@@ -62,7 +62,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			else:
 				new_tournament = Tournament()
 			new_tournament.name = self.request.get('name')
-			new_tournament.owner = [user]
+			new_tournament.owner = [user.key]
 			new_tournament.trackpin = pin_gen()
 						
 			dates_valid = True
@@ -79,18 +79,18 @@ class TournamentsHandler(webapp2.RequestHandler):
 			self.redirect('/tournaments')
 			
 			#Reserve the list of tournaments
-			q = Tournament.query(Tournament.owner == user)
+			q = Tournament.query(Tournament.owner == user.key)
 			
 			template_values = {
 				'user' : user,
 				'tournaments' : q,
-				'logout' : users.create_logout_url('/'),
+				'logout' : tusers.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))
 			
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 	
 
 app = webapp2.WSGIApplication([

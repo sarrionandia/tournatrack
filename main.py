@@ -16,7 +16,7 @@ import webapp2
 import jinja2
 import os
 
-from google.appengine.api import users
+import tusers
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -25,17 +25,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class MainHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
-		
+		user = tusers.get_current_user()
 		if user:
 			template_values = {
 				'user' : user,
-				'logout' : users.create_logout_url('/')
+				'logout' : tusers.create_logout_url('/')
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/index.html')
 			self.response.write(template.render(template_values))
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 
 
 app = webapp2.WSGIApplication([

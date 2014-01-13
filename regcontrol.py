@@ -17,7 +17,7 @@ import jinja2
 import os
 
 from google.appengine.ext import ndb
-from google.appengine.api import users
+import tusers
 
 from models import Tournament
 from models import PreRegRecord
@@ -29,7 +29,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class RegControlHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		
 		if user:
 			#Get the requested tournament
@@ -37,7 +37,7 @@ class RegControlHandler(webapp2.RequestHandler):
 			key = ndb.Key('Tournament', int(tid))
 			t = key.get()
 			
-			if (t and user in t.owner):
+			if (t and user.key in t.owner):
 				reg = t.preRegRecord().get()
 				if (reg == None):
 					reg = PreRegRecord(parent=key)
@@ -47,7 +47,7 @@ class RegControlHandler(webapp2.RequestHandler):
 				template_values = {
 					'user' : user,
 					't' : t,
-					'logout' : users.create_logout_url('/'),
+					'logout' : tusers.create_logout_url('/'),
 					'r' : reg,
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/regcontrol.html')
@@ -56,13 +56,13 @@ class RegControlHandler(webapp2.RequestHandler):
 			else:
 				self.redirect('/tournaments')
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 
 
 			
 class RegToggleHandler(webapp2.RequestHandler):
 	def get(self):
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 		
 		if user:
 			#Get the requested tournament
@@ -80,7 +80,7 @@ class RegToggleHandler(webapp2.RequestHandler):
 			else:
 				self.redirect('/tournaments')
 		else:
-			self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(tusers.create_login_url(self.request.uri))
 	
 
 app = webapp2.WSGIApplication([

@@ -18,7 +18,7 @@ import os
 import logging
 import datetime
 
-from google.appengine.api import users
+import tusers
 from google.appengine.ext import ndb
 
 from models import Tournament
@@ -34,7 +34,7 @@ class PanelHandler(webapp2.RequestHandler):
 		tid = self.request.get('t')
 		t_key = ndb.Key('Tournament', int(tid))
 		t = t_key.get()
-		user = users.get_current_user()
+		user = tusers.get_current_user()
 				
 		if (t.trackpin == self.request.get('p')):
 			#Check if they want a specific room, or a list of all of the rooms
@@ -42,7 +42,7 @@ class PanelHandler(webapp2.RequestHandler):
 				template_values = {
 					't' : t,
 					'user' : user,
-					'logout' : users.create_logout_url('/'),
+					'logout' : tusers.create_logout_url('/'),
 					'rooms' : t.rooms(),
 					}
 				template = JINJA_ENVIRONMENT.get_template('view/alltrackpanels.html')
@@ -58,7 +58,7 @@ class PanelHandler(webapp2.RequestHandler):
 					't' : t,
 					'room' : room,
 					'user' : user,
-					'logout' : users.create_logout_url('/'),
+					'logout' : tusers.create_logout_url('/'),
 					}
 				template = JINJA_ENVIRONMENT.get_template('view/trackpanel.html')
 				self.response.write(template.render(template_values))
