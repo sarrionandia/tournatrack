@@ -40,7 +40,7 @@ class RegControlHandler(webapp2.RequestHandler):
 			if (t and user in t.owner):
 				reg = t.preRegRecord().get()
 				if (reg == None):
-					reg = PreRegRecod(parent=key)
+					reg = PreRegRecord(parent=key)
 					reg.open = False
 					reg.put()
 					
