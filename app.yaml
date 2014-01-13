@@ -12,6 +12,12 @@ handlers:
 - url: /style
   static_dir: static
   
+- url: /toggle_pre_reg
+  script: regcontrol.app
+
+- url: /reg_control
+  script: regcontrol.app
+  
 - url: /delete_tournament
   script: deletetournament.app  
 

@@ -31,6 +31,9 @@ class Tournament(ndb.Model):
 		
 	def invitations(self):
 		return OwnerInvitation.query(ancestor=self.key)
+	
+	def preRegRecord(self):
+		return PreRegRecord.query(ancestor=self.key)
 		
 	def destroy(self):
 		for i in self.institutions():
@@ -50,4 +53,9 @@ class Room(ndb.Model):
 	status = ndb.StringProperty()
 	changed = ndb.TimeProperty()
 	comment = ndb.StringProperty()
+	
+class PreRegRecord(ndb.Model):
+	"""Models the pre-registration of a tournament"""
+	open = ndb.BooleanProperty()
+	teamCap = ndb.IntegerProperty()
 	
