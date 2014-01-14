@@ -8,9 +8,15 @@
 	{% if r.open %}
 	<div class="panel panel-success">
 		<div class="panel panel-heading">
-			<i class="fa fa-gavel"></i> Independent Adjudicator Registration
+			<ul class="nav nav-tabs">
+			  <li><a href="#"><i class="fa fa-building-o"></i> Institution</a></li>
+			  <li class="active"><a href="/reg/judge?t={{t.key.id()}}"><i class="fa fa-gavel"></i> Independent Adjudicator</a></li>
+			  <li><a href="#"><i class="fa fa-users"></i> Open Team</a></li>
+			</ul>
 		</div>
 		<div class="panel panel-body">
+			
+			<h3>Judge not that ye be not judged</h3>
 			
 			<form role="form" action="/reg/judge?t={{t.key.id()}}" method="post">
 				
