@@ -8,16 +8,14 @@
 	{% if r.open %}
 	<div class="panel panel-success">
 		<div class="panel panel-heading">
-			Make a new registration
+			<ul class="nav nav-tabs">
+			  <li><a href="#"><i class="fa fa-building-o"></i> Institution</a></li>
+			  <li><a href="#"><i class="fa fa-gavel"></i> Independent Adjudicator</a></li>
+			  <li><a href="#"><i class="fa fa-users"></i> Open Team</a></li>
+			</ul>
 		</div>
 		<div class="panel panel-body">
-			<div class="btn-group btn-group-lg">
-	  			<button type="button" class="btn btn-default"><i class="fa fa-building-o"></i> Institution</button>
-				<a href="/reg/judge?t={{t.key.id()}}">
-	  				<button type="button" class="btn btn-default"><i class="fa fa-gavel"></i> Independent Adjudicator</button>
-				</a>
-	  			<button type="button" class="btn btn-default"><i class="fa fa-users"></i> Composite / Open Team</button>
-			</div>
+			<p class="lead">Registration is currently open. Choose a registration type from the tabs above.</p>
 		</div>
 	</div>
 	
