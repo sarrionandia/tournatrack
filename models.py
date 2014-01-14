@@ -63,3 +63,29 @@ class PreRegRecord(ndb.Model):
 	"""Models the pre-registration of a tournament"""
 	open = ndb.BooleanProperty()
 	teamCap = ndb.IntegerProperty()	
+	
+	def indyJudges(self):
+		return RegisteredIndependentJudge.query(ancestor=self.key)
+	
+	
+class RegisteredIndependentJudge(ndb.Model):
+	"""Models a participant in the tournament"""
+	name = ndb.StringProperty()
+	cv = ndb.TextProperty()
+	email = ndb.StringProperty()
+	phone = ndb.StringProperty()
+	
+	def prefs(self):
+		return RegisteredPreferences.query(ancestor=self.key).get()
+	
+
+class RegisteredPreferences(ndb.Model):
+	"""The preferences of a registered participant"""
+	vegetarian = ndb.BooleanProperty()
+	glutenfree = ndb.BooleanProperty()
+	vegan = ndb.BooleanProperty()
+	halal = ndb.BooleanProperty()
+	kosher = ndb.BooleanProperty()
+	special = ndb.StringProperty()
+		
+	

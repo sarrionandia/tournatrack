@@ -1,0 +1,55 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Register for the {{t.name}}{% endblock %}
+{% block content %}
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Registration</h2>	
+	
+	{% if user %}
+	
+	{% if r.open %}
+	<div class="panel panel-success">
+		<div class="panel panel-heading">
+			<i class="fa fa-gavel"></i> Independent Adjudicator Registration
+		</div>
+		<div class="panel panel-body">
+			
+			<form role="form" action="/reg/judge?t={{t.key.id()}}" method="post">
+				
+				<div class="form-group col-md-12">
+			    	<label for="name">Your Name</label>
+			    	<input type="text" class="form-control" id="name" placeholder="Your Name" required>
+			  	</div>
+			  
+				<div class="form-group col-md-6">
+			    	<label for="name">Your Email</label>
+			    	<input type="email" class="form-control" id="email" placeholder="Email Address" required>
+			  	</div>
+			
+				<div class="form-group col-md-6">
+			    	<label for="name">Your Phone Number</label>
+			    	<input type="tel" class="form-control" id="phone" placeholder="Call me maybe" required>
+			  	</div>
+			
+				<div class="form-group col-md-12">
+			    	<label for="name">Your judging CV</label>
+			    	<textarea  class="form-control" id="cv" placeholder="Don't be modest..." rows="5"></textarea>
+			  	</div>
+			
+			    	<button type="submit" class="btn btn-primary">Submit</button>
+			
+			</form>
+			
+		</div>
+	</div>
+	
+	{% else %}
+	<p>Sorry, registration for this tournament is currently closed</p>
+	{% endif %}
+	
+	{% else %}
+	
+		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
+	
+	{% endif %}
+	
+		
+{% endblock %}
