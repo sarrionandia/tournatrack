@@ -15,12 +15,17 @@
 import webapp2
 import jinja2
 import os
+import re
+import logging
 
 from google.appengine.ext import ndb
 import tusers
 
 from models import Tournament
 from models import PreRegRecord
+from models import RegisteredIndependentJudge
+
+EMAIL_REGEX = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -49,7 +54,51 @@ class RegHandler(webapp2.RequestHandler):
 		self.response.write(template.render(template_values))
 				
 
-
+	def post(self):
+		user = tusers.get_current_user()
+		#Get the requested tournament
+		tid = self.request.get('t')
+		key = ndb.Key('Tournament', int(tid))
+		t = key.get()
+					
+		if user:
+			name = self.request.get('name')
+			email = self.request.get('email')
+			phone = self.request.get('phone')
+			cv = self.request.get('cv')
+			
+			
+			#Validate the form inputs
+			name_valid = len(name)>0
+			email_valid = EMAIL_REGEX.match(email) != None
+			phone_valid = len(phone)>0
+			
+			#If valid, create the new judge object
+			if (name_valid & phone_valid & email_valid):
+				reg = t.preRegRecord().get()
+				judge = RegisteredIndependentJudge(parent=reg.key)
+				judge.name = name
+				judge.phone = phone
+				judge.email = email
+				if len(cv)>0:
+					judge.cv = cv
+				judge.user = user.key
+				judge.put()
+				
+				template_values = {
+					'user' : user,
+					't' : t,
+					'logout' : tusers.create_logout_url('/'),
+					'login' : tusers.create_login_url('/reg/judge?t=' + tid),
+					'r' : reg,
+				}
+				template = JINJA_ENVIRONMENT.get_template('view/regsuccess.html')
+				self.response.write(template.render(template_values))
+			else:
+				logging.warning('Invalid form submission')
+						
+		
+	
 app = webapp2.WSGIApplication([
 	('/reg/judge', RegHandler)
 ], debug=True)

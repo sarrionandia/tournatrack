@@ -74,6 +74,7 @@ class RegisteredIndependentJudge(ndb.Model):
 	cv = ndb.TextProperty()
 	email = ndb.StringProperty()
 	phone = ndb.StringProperty()
+	user = ndb.KeyProperty(kind='TUser')
 	
 	def prefs(self):
 		return RegisteredPreferences.query(ancestor=self.key).get()
