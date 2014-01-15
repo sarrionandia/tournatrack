@@ -43,13 +43,16 @@ class RegControlHandler(webapp2.RequestHandler):
 					reg = PreRegRecord(parent=key)
 					reg.open = False
 					reg.put()
+				
+				iJudges = reg.indyJudges()
 					
 				template_values = {
 					'user' : user,
 					't' : t,
 					'logout' : tusers.create_logout_url('/'),
 					'r' : reg,
-					'ijudges' : reg.indyJudges(),
+					'ijudges' : iJudges,
+					'jcount' : iJudges.count(limit=500)
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/regcontrol.html')
 				self.response.write(template.render(template_values))
