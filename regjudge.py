@@ -49,6 +49,10 @@ class RegHandler(webapp2.RequestHandler):
 			'logout' : tusers.create_logout_url('/'),
 			'login' : tusers.create_login_url('/reg/judge?t=' + tid),
 			'r' : reg,
+			'nval' : True,
+			'pval' : True,
+			'eval' : True
+			
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
 		self.response.write(template.render(template_values))
@@ -72,10 +76,10 @@ class RegHandler(webapp2.RequestHandler):
 			name_valid = len(name)>0
 			email_valid = EMAIL_REGEX.match(email) != None
 			phone_valid = len(phone)>0
+			reg = t.preRegRecord().get()
 			
 			#If valid, create the new judge object
 			if (name_valid & phone_valid & email_valid):
-				reg = t.preRegRecord().get()
 				judge = RegisteredIndependentJudge(parent=reg.key)
 				judge.name = name
 				judge.phone = phone
@@ -95,8 +99,20 @@ class RegHandler(webapp2.RequestHandler):
 				template = JINJA_ENVIRONMENT.get_template('view/regsuccess.html')
 				self.response.write(template.render(template_values))
 			else:
-				logging.warning('Invalid form submission')
-						
+				template_values = {
+					'user' : user,
+					't' : t,
+					'logout' : tusers.create_logout_url('/'),
+					'login' : tusers.create_login_url('/reg/judge?t=' + tid),
+					'r' : reg,
+					'nval' : name_valid,
+					'pval' : phone_valid,
+					'eval' : email_valid
+				}
+				template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
+				self.response.write(template.render(template_values))
+		else:
+			self.redirect('/reg?t=' + tid)
 		
 	
 app = webapp2.WSGIApplication([
