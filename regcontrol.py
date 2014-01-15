@@ -49,6 +49,7 @@ class RegControlHandler(webapp2.RequestHandler):
 					't' : t,
 					'logout' : tusers.create_logout_url('/'),
 					'r' : reg,
+					'ijudges' : reg.indyJudges(),
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/regcontrol.html')
 				self.response.write(template.render(template_values))

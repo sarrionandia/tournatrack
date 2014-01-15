@@ -15,7 +15,13 @@
 			</ul>
 		</div>
 		<div class="panel panel-body">
+			{% if not regd %}
 			<p class="lead">Registration is currently open. Choose a registration type from the tabs above.</p>
+			{% else %}
+				{% if isj %}
+				<p> You have registered for this tournament as a judge </p>
+				{% endif %}
+			{% endif %}
 		</div>
 	</div>
 	

@@ -27,10 +27,7 @@ class Tournament(ndb.Model):
 	trackpin = ndb.StringProperty()
 	start = ndb.DateProperty()
 	end = ndb.DateProperty()
-	
-	def institutions(self):
-		return Institution.query(ancestor=self.key).order(Institution.name)
-		
+			
 	def rooms(self):
 		return Room.query(ancestor=self.key).order(Room.name)
 		
@@ -47,10 +44,6 @@ class Tournament(ndb.Model):
 			r.key.delete()
 		self.key.delete()
 
-class Institution(ndb.Model):
-	"""Models an institution"""
-	name = ndb.StringProperty()
-	
 class Room(ndb.Model):
 	"""Models a room in a tournament"""
 	name = ndb.StringProperty()
@@ -66,6 +59,10 @@ class PreRegRecord(ndb.Model):
 	
 	def indyJudges(self):
 		return RegisteredIndependentJudge.query(ancestor=self.key)
+		
+	def isJudge(self, tuser):
+		return RegisteredIndependentJudge.query(ancestor=self.key)
+		
 	
 	
 class RegisteredIndependentJudge(ndb.Model):

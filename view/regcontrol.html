@@ -1,5 +1,28 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Pre-Registration Control{% endblock %}
+
+{% block head_extra %}
+
+<script>
+$('#insttab a').click(function (e) {
+  e.preventDefault()
+})
+$('#insttab a').tab('show')
+
+$('#teamtab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+$('#judgetab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+
+</script>
+
+{% endblock %}
 {% block content %}
 	<h2><i class="fa fa-keyboard-o"></i> Pre-Registration</h2>	
 	
@@ -31,5 +54,42 @@
 		</div>
 		
 	{% endif %}
+	
+	<h3>Who has registered</h3>
+	<ul class="nav nav-tabs">
+	  <li id="insttab" class="active"><a href="#inst" data-toggle="tab">Institutions</a></li>
+	  <li id="judgetab"><a href="#judge" data-toggle="tab">Judges</a></li>
+	  <li id="teamtab"><a href="#team" data-toggle="tab">Teams</a></li>
+	</ul>
+	
+	<div class="tab-content">
+	  <div class="tab-pane fade" id="inst">...</div>
+	  <div class="tab-pane fade" id="judge">
+	
+		<div class="panel panel-default">
+		  <div class="panel-heading">Judges</div>
+		  <table class="table table-striped">
+		    <tr>
+				<th>Name</th>
+				<th>Institution</th>
+				<th>Email</th>
+				<th>Phone</th>
+			</tr>
+			{% for j in ijudges %}
+			<tr>
+				<td>{{j.name}}</td>
+				<td><emph>Independent</emph></td>
+				<td>{{j.email}}</td>
+				<td>{{j.phone}}</td>
+			</tr>
+			{% endfor %}
+		  </table>
+		</div>
+	
+	  </div>
+	  <div class="tab-pane fade" id="team">...</div>
+	</div>
+	
+	
 	
 {% endblock %}
