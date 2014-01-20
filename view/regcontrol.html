@@ -19,7 +19,6 @@ $('#judgetab a').click(function (e) {
   $(this).tab('show')
 })
 
-
 </script>
 
 {% endblock %}
@@ -77,7 +76,7 @@ $('#judgetab a').click(function (e) {
 			</tr>
 			{% for j in ijudges %}
 			<tr>
-				<td>{{j.name}}&nbsp;{%if j.cv%}<a id="myLink" href="/judgecv?t={{t.key.id()}}&j={{j.key.id()}}" data-toggle="modal" data-target="#modal"><span class="badge">CV</span></a>{%endif%}</td>
+				<td>{{j.name}}&nbsp;{%if j.cv%}<a id="myLink" href="/judgecv?t={{t.key.id()}}&j={{j.key.id()}}" data-toggle="modal" data-target="#myModal"><span class="badge">CV</span></a>{%endif%}</td>
 				<td><emph>Independent</emph></td>
 				<td>{{j.email}}</td>
 				<td>{{j.phone}}</td>
@@ -90,22 +89,15 @@ $('#judgetab a').click(function (e) {
 	  <div class="tab-pane fade" id="team">...</div>
 	</div>
 	
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="modalTitle"></h4>
-	      </div>
-	      <div class="modal-body">
-	        <p id="modalBody">
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
 	</div><!-- /.modal -->
+	
+	<script>
+	$('#myModal').on('hidden.bs.modal', function (e) {
+	  $(this).removeData('bs.modal');
+	})
+	
+	</script>
 	
 	
 {% endblock %}
