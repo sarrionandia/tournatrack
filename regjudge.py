@@ -80,7 +80,11 @@ class RegHandler(webapp2.RequestHandler):
 			
 			#If valid, create the new judge object
 			if (name_valid & phone_valid & email_valid):
-				judge = RegisteredIndependentJudge(parent=reg.key)
+				#Check if we are updating an existing judge
+				if not self.request.get('j'):
+					judge = RegisteredIndependentJudge(parent=reg.key)
+				else:
+					judge = ndb.Key('Tournament', int(tid), 'PreRegRecord', reg.key.id(), 'RegisteredIndependentJudge', int(self.request.get('j'))).get()
 				judge.name = name
 				judge.phone = phone
 				judge.email = email
@@ -89,15 +93,7 @@ class RegHandler(webapp2.RequestHandler):
 				judge.user = user.key
 				judge.put()
 				
-				template_values = {
-					'user' : user,
-					't' : t,
-					'logout' : tusers.create_logout_url('/'),
-					'login' : tusers.create_login_url('/reg/judge?t=' + tid),
-					'r' : reg,
-				}
-				template = JINJA_ENVIRONMENT.get_template('view/regsuccess.html')
-				self.response.write(template.render(template_values))
+				self.redirect('/reg?t=' + tid)
 			else:
 				template_values = {
 					'user' : user,
