@@ -61,10 +61,13 @@ class PreRegRecord(ndb.Model):
 		return RegisteredIndependentJudge.query(ancestor=self.key)
 		
 	def isJudge(self, tuser):
-		q = RegisteredIndependentJudge.query(ancestor=self.key)
-		q = q.filter(RegisteredIndependentJudge.user == tuser.key)
+		if tuser:
+			q = RegisteredIndependentJudge.query(ancestor=self.key)
+			q = q.filter(RegisteredIndependentJudge.user == tuser.key)
 		
-		return q
+			return q.get()
+		else:
+			return None
 		
 	
 	
