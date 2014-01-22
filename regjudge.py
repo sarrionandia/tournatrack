@@ -80,9 +80,14 @@ class RegHandler(webapp2.RequestHandler):
 			
 			#If valid, create the new judge object
 			if (name_valid & phone_valid & email_valid):
+				
 				#Check if we are updating an existing judge
 				if not self.request.get('j'):
 					judge = RegisteredIndependentJudge(parent=reg.key)
+					#Check we are authorised
+					if not ((judge.user == user.key) or (user.key in t.owner)):
+						judge = None
+						self.redirect('/')
 				else:
 					judge = ndb.Key('Tournament', int(tid), 'PreRegRecord', reg.key.id(), 'RegisteredIndependentJudge', int(self.request.get('j'))).get()
 				judge.name = name
