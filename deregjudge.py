@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import webapp2
-import jinja2
 import os
 
 from google.appengine.ext import ndb
@@ -22,13 +21,8 @@ import tusers
 from models import Tournament
 from models import PreRegRecord
 
-JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
-
-class RegHandler(webapp2.RequestHandler):
-	def get(self):
+class DeregHandler(webapp2.RequestHandler):
+	def post(self):
 		user = tusers.get_current_user()
 		
 		#Get the requested tournament
@@ -39,21 +33,13 @@ class RegHandler(webapp2.RequestHandler):
 		reg = t.preRegRecord().get()
 		
 		isj = reg.isJudge(user).get()
-				
-		template_values = {
-			'user' : user,
-			't' : t,
-			'logout' : tusers.create_logout_url('/'),
-			'login' : tusers.create_login_url('/reg?t=' + tid),
-			'r' : reg,
-			'isj' : isj,
-			'regd' : isj!=None
-		}
-		template = JINJA_ENVIRONMENT.get_template('view/reg.html')
-		self.response.write(template.render(template_values))
-				
+		
+		if (isj):
+			isj.key.delete()
+		self.redirect('/reg?t=' + tid)
+								
 
 
 app = webapp2.WSGIApplication([
-	('/reg', RegHandler)
+	('/dereg/judge', DeregHandler)
 ], debug=True)

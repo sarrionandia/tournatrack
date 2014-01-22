@@ -3,8 +3,45 @@
 {% block content %}
 	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Registration</h2>	
 	
+	
 	{% if user %}
 	
+	{% if regd %}
+	{% if isj %}
+	<div class="alert alert-success">
+		You have already registered for this tournament as a judge.
+		<br /><br />
+		<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
+	</div>
+	
+	<div class="modal fade" id="deregmod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="deregmodLabel">Are you quite sure that this is wise?</h4>
+	      </div>
+	      <div class="modal-body">
+	        Once you deregister from a tournament, there is no guarantee that you will be able to re-register. Registration may have since
+	 		closed, or filled up. But, if you're sure...
+	      </div>
+	      <div class="modal-footer">
+			<form method="post" action="/dereg/judge">
+				<input type="hidden" name="t" value="{{t.key.id()}}" />
+				<input type="hidden" name="r" value="{{r.key.id()}}" />
+				<input type="hidden" name="j" value="{{isj.key.id()}}" />
+	        	<button type="submit" class="btn btn-danger">Deregister</button>
+			</form>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	{% endif %}
+	
+	
+	{% else %}
+		
 	{% if r.open %}
 	<div class="panel panel-success">
 		<div class="panel panel-heading">
@@ -15,19 +52,18 @@
 			</ul>
 		</div>
 		<div class="panel panel-body">
-			{% if not regd %}
-			<p class="lead">Registration is currently open. Choose a registration type from the tabs above.</p>
-			{% else %}
-				{% if isj %}
-				<p> You have registered for this tournament as a judge </p>
-				{% endif %}
-			{% endif %}
+			<p class="lead">
+				Registration is currently open. Choose a registration type from the tabs above.
+			</p>
 		</div>
 	</div>
 	
 	{% else %}
-	<p>Sorry, registration for this tournament is currently closed</p>
+	<p>Sorry, registration for this tournament is currently closed.</p>
 	{% endif %}
+	
+	{% endif %}
+	
 	
 	{% else %}
 	
