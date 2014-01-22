@@ -15,6 +15,7 @@
 import webapp2
 import jinja2
 import os
+import logging
 
 from google.appengine.ext import ndb
 import tusers
@@ -39,6 +40,7 @@ class RegHandler(webapp2.RequestHandler):
 		reg = t.preRegRecord().get()
 		
 		isj = reg.isJudge(user).get()
+		
 				
 		template_values = {
 			'user' : user,
