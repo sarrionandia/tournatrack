@@ -39,7 +39,8 @@ class RegHandler(webapp2.RequestHandler):
 			
 		reg = t.preRegRecord().get()
 		
-		isj = reg.isJudge(user).get()
+		if user:
+			isj = reg.isJudge(user).get()
 		
 				
 		template_values = {
