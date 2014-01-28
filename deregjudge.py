@@ -32,7 +32,7 @@ class DeregHandler(webapp2.RequestHandler):
 			
 		reg = t.preRegRecord().get()
 		
-		isj = reg.isJudge(user).get()
+		isj = reg.isJudge(user)
 		
 		if (isj):
 			isj.key.delete()
