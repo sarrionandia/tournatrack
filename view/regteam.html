@@ -1,0 +1,92 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Register for the {{t.name}}{% endblock %}
+
+{% block content %}
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Registration</h2>	
+	
+	{% if user %}
+	
+	{% if r.open %}
+	<div class="panel panel-success">
+		<div class="panel panel-heading">
+			<ul class="nav nav-tabs">
+			  <li><a href="#"><i class="fa fa-building-o"></i> Institution</a></li>
+			  <li><a href="/reg/judge?t={{t.key.id()}}"><i class="fa fa-gavel"></i> Independent Adjudicator</a></li>
+			  <li class="active"><a href="/reg/team?t={{t.key.id()}}"><i class="fa fa-users"></i> Open Team</a></li>
+			</ul>
+		</div>
+		<div class="panel panel-body">
+			
+			<h3>Speak Now, or forever hold your peace.</h3>
+			
+			<form role="form" action="/reg/team?t={{t.key.id()}}" method="post">
+				
+				<div class="form-group col-md-12">
+			    	<label for="name">Lead Person's Name</label>
+			    	<input type="text" name="leadName" class="form-control" id="leadName" placeholder="Who can we get in touch with?" required>
+			  	</div>
+			  
+				<div class="form-group col-md-6">
+			    	<label for="email">Email</label>
+			    	<input type="email" name="email" class="form-control" id="email" placeholder="Email Address" required>
+			  	</div>
+			
+				<div class="form-group col-md-6">
+			    	<label for="phone">Phone Number</label>
+			    	<input type="tel" name="phone" class="form-control" id="phone" placeholder="Call me maybe" required>
+			  	</div>
+			
+				<div class="form-group col-md-12">
+			    	<label for="teamName">Your Team Name</label>
+			    	<input  name="teamName" class="form-control" id="teamName" placeholder="The best ones contain in-jokes" rows="5"></textarea>
+			  	</div>
+			
+				<div class="well well-lg col-md-6">
+					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 1</h2>
+					<div class="form-group">
+						<label for="sp1Name">Name</label>
+						<input name="sp1Name" class="form-control" id="sp1Name" placeholder="Speaker 1 Name" value="Speaker 1" required>
+					</div>
+					<label class="col-md-3">
+					    Novice? <input type="checkbox" name="sp1Novice">
+					</label>
+					<label class="col-md-3">
+					    ESL? <input type="checkbox" name="sp1ESL">
+					</label>
+				</div>
+				<div class="well well-lg col-md-6">
+					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 2</h2>
+					<div class="form-group">
+						<label for="sp2Name">Name</label>
+						<input name="sp2Name" class="form-control" id="sp2Name" placeholder="Speaker 2 Name" value="Speaker 2" required>
+					</div>
+					<label class="col-md-3">
+					    Novice? <input type="checkbox" name="sp2Novice">
+					</label>
+					<label class="col-md-3">
+					    ESL? <input type="checkbox" name="sp2ESL">
+					</label>
+					
+				</div>
+				
+			
+			
+			    	<button type="submit" class="btn btn-primary">Submit</button>
+			
+			</form>
+			
+		</div>
+	</div>
+	
+	{% else %}
+	<p>Sorry, registration for this tournament is currently closed</p>
+	{% endif %}
+	
+	{% else %}
+	
+		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
+	
+	{% endif %}
+	
+		
+{% endblock %}

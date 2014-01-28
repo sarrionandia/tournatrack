@@ -82,6 +82,19 @@ class RegisteredIndependentJudge(ndb.Model):
 	def prefs(self):
 		return RegisteredPreferences.query(ancestor=self.key).get()
 	
+class RegisteredOpenTeam(ndb.Model):
+	"""Models an open team in the tournament"""
+	leadName = ndb.StringProperty()
+	email = ndb.StringProperty()
+	phone = ndb.StringProperty()
+	user = ndb.KeyProperty(kind='TUser')
+	teamName = ndb.StringProperty()
+	sp1Name = ndb.StringProperty()
+	sp2Name = ndb.StringProperty()
+	sp1ESL = ndb.BooleanProperty()
+	sp2ESL = ndb.BooleanProperty()
+	sp1Novice = ndb.BooleanProperty()
+	sp2Novice = ndb.BooleanProperty()
 
 class RegisteredPreferences(ndb.Model):
 	"""The preferences of a registered participant"""
