@@ -19,59 +19,67 @@
 			
 			<h3>Speak Now, or forever hold your peace.</h3>
 			
+			{% if form.errors %}
+			    <ul class="errors">
+			        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+			            {% for error in field_errors %}
+			                <li>{{ form[field_name].label }}: {{ error }}</li>
+			            {% endfor %}
+			        {% endfor %}
+			    </ul>
+			{% endif %}
+			
 			<form role="form" action="/reg/team?t={{t.key.id()}}" method="post">
 				
 				<div class="form-group col-md-12">
 			    	<label for="name">Lead Person's Name</label>
-			    	<input type="text" name="leadName" class="form-control" id="leadName" placeholder="Who can we get in touch with?" required>
+			    	{{form.leadName(class="form-control", placeholder="Who can we get in touch with?")}}
 			  	</div>
 			  
 				<div class="form-group col-md-6">
 			    	<label for="email">Email</label>
-			    	<input type="email" name="email" class="form-control" id="email" placeholder="Email Address" required>
+					{{form.email(class="form-control", placeholder="Email Address")}}
 			  	</div>
 			
 				<div class="form-group col-md-6">
 			    	<label for="phone">Phone Number</label>
-			    	<input type="tel" name="phone" class="form-control" id="phone" placeholder="Call me maybe" required>
+					{{form.phone(class="form-control", placeholder="Call me maybe")}}
 			  	</div>
 			
 				<div class="form-group col-md-12">
 			    	<label for="teamName">Your Team Name</label>
-			    	<input  name="teamName" class="form-control" id="teamName" placeholder="The best ones contain in-jokes" rows="5"></textarea>
+					{{form.teamName(class="form-control", placeholder="The best ones contain in-jokes")}}
 			  	</div>
 			
 				<div class="well well-lg col-md-6">
 					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 1</h2>
 					<div class="form-group">
 						<label for="sp1Name">Name</label>
-						<input name="sp1Name" class="form-control" id="sp1Name" placeholder="Speaker 1 Name" value="Speaker 1" required>
+						{{form.sp1Name(class="form-control", value="Speaker 1")}}
 					</div>
 					<label class="col-md-3">
-					    Novice? <input type="checkbox" name="sp1Novice">
+					    Novice? {{form.sp1Novice(class="form-control")}}
 					</label>
 					<label class="col-md-3">
-					    ESL? <input type="checkbox" name="sp1ESL">
+					    ESL? {{form.sp1ESL(class="form-control")}}
 					</label>
 				</div>
 				<div class="well well-lg col-md-6">
 					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 2</h2>
 					<div class="form-group">
 						<label for="sp2Name">Name</label>
-						<input name="sp2Name" class="form-control" id="sp2Name" placeholder="Speaker 2 Name" value="Speaker 2" required>
+						{{form.sp2Name(class="form-control", value="Speaker 2")}}
 					</div>
 					<label class="col-md-3">
-					    Novice? <input type="checkbox" name="sp2Novice">
+					    Novice? {{form.sp2Novice(class="form-control")}}
 					</label>
 					<label class="col-md-3">
-					    ESL? <input type="checkbox" name="sp2ESL">
+					    ESL? {{form.sp2ESL(class="form-control")}}
 					</label>
 					
 				</div>
 				
-			
-			
-			    	<button type="submit" class="btn btn-primary">Submit</button>
+			   	<button type="submit" class="btn btn-primary">Submit</button>
 			
 			</form>
 			

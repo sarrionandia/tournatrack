@@ -21,9 +21,9 @@ import logging
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament
-from models import PreRegRecord
-from models import RegisteredIndependentJudge
+from wtforms import Form, BooleanField, TextField, validators
+
+from models import Tournament, PreRegRecord, RegisteredOpenTeam
 
 EMAIL_REGEX = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
 
@@ -31,6 +31,19 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
+class TeamRegForm(Form):
+	leadName = TextField('leadName', [validators.Required()])
+	email = TextField('email', [validators.Email()])
+	phone = TextField('phone', [validators.Required()])
+	teamName = TextField('teamName', [validators.Required()])
+	sp1Name = TextField('sp1Name')
+	sp1Novice = BooleanField('sp1Novice')
+	sp1ESL = BooleanField('sp1ESL')
+	sp2Name = TextField('sp2Name')
+	sp2Novice = BooleanField('sp2Novice')
+	sp2ESL = BooleanField('sp2ESL')
+	
 
 class RegHandler(webapp2.RequestHandler):
 	def get(self):
@@ -42,13 +55,16 @@ class RegHandler(webapp2.RequestHandler):
 		t = key.get()
 			
 		reg = t.preRegRecord().get()
+		
+		form = TeamRegForm()
 					
 		template_values = {
 			'user' : user,
 			't' : t,
 			'logout' : tusers.create_logout_url('/'),
 			'login' : tusers.create_login_url('/reg/team?t=' + tid),
-			'r' : reg			
+			'r' : reg,
+			'form' : form		
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/regteam.html')
 		self.response.write(template.render(template_values))
@@ -60,54 +76,45 @@ class RegHandler(webapp2.RequestHandler):
 		tid = self.request.get('t')
 		key = ndb.Key('Tournament', int(tid))
 		t = key.get()
+		reg = t.preRegRecord().get()
 					
 		if user:
-			name = self.request.get('name')
-			email = self.request.get('email')
-			phone = self.request.get('phone')
-			cv = self.request.get('cv')
-			
-			
-			#Validate the form inputs
-			name_valid = len(name)>0
-			email_valid = EMAIL_REGEX.match(email) != None
-			phone_valid = len(phone)>0
-			reg = t.preRegRecord().get()
-			
-			#If valid, create the new judge object
-			if (name_valid & phone_valid & email_valid):
+			form = TeamRegForm(self.request.POST)
+			if (form.validate()):
 				
-				#Check if we are updating an existing judge
-				if not self.request.get('j'):
-					judge = RegisteredIndependentJudge(parent=reg.key)
-					#Check we are authorised
-					if not ((judge.user == user.key) or (user.key in t.owner)):
-						judge = None
-						self.redirect('/')
-				else:
-					judge = ndb.Key('Tournament', int(tid), 'PreRegRecord', reg.key.id(), 'RegisteredIndependentJudge', int(self.request.get('j'))).get()
-				judge.name = name
-				judge.phone = phone
-				judge.email = email
-				if len(cv)>0:
-					judge.cv = cv
-				judge.user = user.key
-				judge.put()
+				#Create a new team registration
+				team = RegisteredOpenTeam(parent=reg.key)
+				
+				team.leadName = form.leadName.data
+				team.phone = form.phone.data
+				team.email = form.email.data
+				team.teamName = form.teamName.data
+				team.sp1Name = form.sp1Name.data
+				team.sp2Name = form.sp2Name.data
+				team.sp1ESL = form.sp1ESL.data
+				team.sp2ESL = form.sp2ESL.data
+				team.sp1Novice = form.sp1Novice.data
+				team.sp2Novice = form.sp2Novice.data
+				team.leadname = form.leadName.data
+				team.user = user.key
+				
+				team.put()
 				
 				self.redirect('/reg?t=' + tid)
 			else:
+				logging.info('invalid form')
 				template_values = {
 					'user' : user,
 					't' : t,
 					'logout' : tusers.create_logout_url('/'),
-					'login' : tusers.create_login_url('/reg/judge?t=' + tid),
+					'login' : tusers.create_login_url('/reg/team?t=' + tid),
 					'r' : reg,
-					'nval' : name_valid,
-					'pval' : phone_valid,
-					'eval' : email_valid
+					'form' : form		
 				}
-				template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
+				template = JINJA_ENVIRONMENT.get_template('view/regteam.html')
 				self.response.write(template.render(template_values))
+			
+			
 		else:
 			self.redirect('/reg?t=' + tid)
 		
