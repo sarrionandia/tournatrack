@@ -39,7 +39,7 @@ class RegHandler(webapp2.RequestHandler):
 			
 		reg = t.preRegRecord().get()
 		isj = reg.isJudge(user)
-		
+		ist = reg.isOpenTeam(user)
 				
 		template_values = {
 			'user' : user,
@@ -48,7 +48,8 @@ class RegHandler(webapp2.RequestHandler):
 			'login' : tusers.create_login_url('/reg?t=' + tid),
 			'r' : reg,
 			'isj' : isj,
-			'regd' : isj!=None
+			'ist' : ist,
+			'regd' : (isj!=None) or (ist!=None)
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/reg.html')
 		self.response.write(template.render(template_values))

@@ -68,8 +68,15 @@ class PreRegRecord(ndb.Model):
 			return q.get()
 		else:
 			return None
-		
 	
+	def isOpenTeam(self, tuser):
+		if tuser:
+			q = RegisteredOpenTeam.query(ancestor=self.key)
+			q = q.filter(RegisteredOpenTeam.user == tuser.key)
+			
+			return q.get()
+		else:
+			return None
 	
 class RegisteredIndependentJudge(ndb.Model):
 	"""Models a participant in the tournament"""
