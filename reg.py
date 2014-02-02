@@ -20,8 +20,10 @@ import logging
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament
-from models import PreRegRecord
+from models import Tournament, PreRegRecord
+from regteam import TeamRegForm
+
+from wtforms import Form, BooleanField, TextField, validators
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -40,6 +42,21 @@ class RegHandler(webapp2.RequestHandler):
 		reg = t.preRegRecord().get()
 		isj = reg.isJudge(user)
 		ist = reg.isOpenTeam(user)
+		
+		if (ist):
+			form = TeamRegForm()
+			form.leadName.data = ist.leadName
+			form.email.data = ist.email
+			form.phone.data = ist.phone
+			form.teamName.data = ist.teamName
+			form.sp1Name.data = ist.sp1Name
+			form.sp2Name.data = ist.sp2Name
+			form.sp1Novice.data = ist.sp1Novice
+			form.sp1Novice.data = ist.sp1Novice
+			form.sp1ESL.data = ist.sp1ESL
+			form.sp2ESL.data = ist.sp2ESL
+		else:
+			form = None
 				
 		template_values = {
 			'user' : user,
@@ -49,6 +66,7 @@ class RegHandler(webapp2.RequestHandler):
 			'r' : reg,
 			'isj' : isj,
 			'ist' : ist,
+			'form' : form,
 			'regd' : (isj!=None) or (ist!=None)
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/reg.html')
