@@ -92,6 +92,30 @@
 		<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
 	</div>
 	
+	<div class="modal fade" id="chgregmod" tabindex="-1" role="dialog" aria-labelledby="chgregmodaLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="chgregmodLabel"><a target="_blank" href="http://www.youtube.com/watch?v=pl3vxEudif8">Ch-Ch-Ch-Changes</a></h4>
+	      </div>
+			<form method="post" action="/reg/team">
+	
+	      <div class="modal-body">
+			
+	      </div>
+	      <div class="modal-footer">
+				<input type="hidden" name="t" value="{{t.key.id()}}" />
+				<input type="hidden" name="r" value="{{r.key.id()}}" />
+				<input type="hidden" name="team" value="{{ist.key.id()}}" />
+	        	<button type="submit" class="btn btn-warning">Update Information</button>
+			</form>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	
 	<div class="modal fade" id="deregmod" tabindex="-1" role="dialog" aria-labelledby="deregmodLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
