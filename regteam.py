@@ -82,8 +82,18 @@ class RegHandler(webapp2.RequestHandler):
 			form = TeamRegForm(self.request.POST)
 			if (form.validate()):
 				
-				#Create a new team registration
-				team = RegisteredOpenTeam(parent=reg.key)
+				#If we are updating an existing registration, update it.
+				teamkey = (self.request.get('teamkey'))
+				if teamkey != None:
+					team = ndb.Key(urlsafe=teamkey).get()
+					
+					#Check they own it
+					if team.user != user.key:
+						self.redirect('/reg?t=' + tid)
+				
+				#Otherwise, make a new team registration
+				else:
+					team = RegisteredOpenTeam(parent=reg.key)
 				
 				team.leadName = form.leadName.data
 				team.phone = form.phone.data
