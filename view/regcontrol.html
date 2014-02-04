@@ -19,6 +19,9 @@ $('#judgetab a').click(function (e) {
   $(this).tab('show')
 })
 
+$( document ).ready(function() {
+    $('.tooltip-act').tooltip();
+});
 </script>
 
 {% endblock %}
@@ -96,6 +99,8 @@ $('#judgetab a').click(function (e) {
 				<th>Contact</th>
 				<th>Email</th>
 				<th>Phone</th>
+				<th>Speaker 1</th>
+				<th>Speaker 2</th>
 			</tr>
 			{% for t in teams %}
 			<tr>
@@ -104,6 +109,31 @@ $('#judgetab a').click(function (e) {
 				<td>{{t.leadName}}</td>
 				<td>{{t.email}}</td>
 				<td>{{t.phone}}</td>
+				<td>
+					{% if t.sp1ESL %}
+					<a href="#" class="tooltip-act" title="English as a Second Language" data-original-title="Tooltip">
+					<i class="fa fa-globe"></i>
+					</a>
+					{% endif %}
+					{% if t.sp1Novice %}
+					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
+					<i class="fa fa-certificate"></i>
+					</a>
+					{% endif %}
+					{{t.sp1Name}}
+				</td>
+				<td>
+					{% if t.sp2ESL %}
+					<a href="#" class="tooltip-act" title="English as a Second Language" data-original-title="Tooltip">
+					<i class="fa fa-globe" id="globe"></i>
+					</a>
+					{% endif %}
+					{% if t.sp2Novice %}
+					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
+					<i class="fa fa-certificate"></i>
+					</a>
+					{% endif %}
+					{{t.sp2Name}}</td>
 			</tr>
 			{% endfor %}
 		  </table>
