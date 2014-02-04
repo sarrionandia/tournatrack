@@ -38,10 +38,9 @@ class Tournament(ndb.Model):
 		return PreRegRecord.query(ancestor=self.key)
 		
 	def destroy(self):
-		for i in self.institutions():
-			i.key.delete()
 		for r in self.rooms():
 			r.key.delete()
+		self.preRegRecord().destroy()
 		self.key.delete()
 
 class Room(ndb.Model):
@@ -56,6 +55,13 @@ class PreRegRecord(ndb.Model):
 	"""Models the pre-registration of a tournament"""
 	open = ndb.BooleanProperty()
 	teamCap = ndb.IntegerProperty()	
+	
+	def destroy(self):
+		for j in self.indyJudges():
+			j.key.delete()
+		for t in self.teams():
+			t.key.delete()
+		self.key.delete()
 	
 	def indyJudges(self):
 		return RegisteredIndependentJudge.query(ancestor=self.key)
