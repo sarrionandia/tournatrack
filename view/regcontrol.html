@@ -88,7 +88,28 @@ $('#judgetab a').click(function (e) {
 		</div>
 	
 	  </div>
-	  <div class="tab-pane fade" id="team">...</div>
+	  <div class="tab-pane fade" id="team">
+	  	  <table class="table table-striped">
+		    <tr>
+				<th>Institution</th>
+				<th>Name</th>
+				<th>Contact</th>
+				<th>Email</th>
+				<th>Phone</th>
+			</tr>
+			{% for t in teams %}
+			<tr>
+				<td><emph>Independent</emph></td>
+				<td>{{t.teamName}}</td>
+				<td>{{t.leadName}}</td>
+				<td>{{t.email}}</td>
+				<td>{{t.email}}</td>
+			</tr>
+			{% endfor %}
+		  </table>
+		
+		
+	  </div>
 	</div>
 	
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
