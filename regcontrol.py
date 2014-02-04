@@ -45,6 +45,7 @@ class RegControlHandler(webapp2.RequestHandler):
 					reg.put()
 				
 				iJudges = reg.indyJudges()
+				teams = reg.teams()
 					
 				template_values = {
 					'user' : user,
@@ -52,7 +53,9 @@ class RegControlHandler(webapp2.RequestHandler):
 					'logout' : tusers.create_logout_url('/'),
 					'r' : reg,
 					'ijudges' : iJudges,
-					'jcount' : iJudges.count(limit=500)
+					'jcount' : iJudges.count(limit=500),
+					'teams' : teams,
+					'tcount' : teams.count(limit=500)
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/regcontrol.html')
 				self.response.write(template.render(template_values))

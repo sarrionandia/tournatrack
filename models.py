@@ -77,6 +77,8 @@ class PreRegRecord(ndb.Model):
 			return q.get()
 		else:
 			return None
+	def teams(self):
+		return RegisteredOpenTeam.query(ancestor=self.key)
 	
 class RegisteredIndependentJudge(ndb.Model):
 	"""Models a participant in the tournament"""
