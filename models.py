@@ -83,6 +83,16 @@ class PreRegRecord(ndb.Model):
 			return q.get()
 		else:
 			return None
+	
+	def isInstitution(self, tuser):
+		if tuser:
+			q = RegisteredInstitution.query(ancestor=self.key)
+			q = q.filter(RegisteredInstitution.user == tuser.key)
+			
+			return q.get
+		else:
+			return None
+	
 	def teams(self):
 		return RegisteredOpenTeam.query(ancestor=self.key)
 	

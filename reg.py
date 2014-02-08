@@ -22,6 +22,7 @@ import tusers
 
 from models import Tournament, PreRegRecord
 from regteam import TeamRegForm
+from reginstitution import InstRegForm
 
 from wtforms import Form, BooleanField, TextField, validators
 
@@ -40,8 +41,10 @@ class RegHandler(webapp2.RequestHandler):
 		t = key.get()
 			
 		reg = t.preRegRecord().get()
+		
 		isj = reg.isJudge(user)
 		ist = reg.isOpenTeam(user)
+		isi = reg.isInstitution(user)
 		
 		if (ist):
 			form = TeamRegForm()
@@ -55,6 +58,9 @@ class RegHandler(webapp2.RequestHandler):
 			form.sp1Novice.data = ist.sp1Novice
 			form.sp1ESL.data = ist.sp1ESL
 			form.sp2ESL.data = ist.sp2ESL
+			
+		elif (isi):
+			form = InstRegForm()
 		else:
 			form = None
 				
@@ -67,7 +73,7 @@ class RegHandler(webapp2.RequestHandler):
 			'isj' : isj,
 			'ist' : ist,
 			'form' : form,
-			'regd' : (isj!=None) or (ist!=None)
+			'regd' : (isj!=None) or (ist!=None) or (isi!=None)
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/reg.html')
 		self.response.write(template.render(template_values))
