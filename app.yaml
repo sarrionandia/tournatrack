@@ -11,7 +11,10 @@ handlers:
     
 - url: /style
   static_dir: static
- 
+
+- url: /reg/institution
+  script: reginstitution.app
+
 - url: /reg/team
   script: regteam.app
   

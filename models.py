@@ -110,6 +110,14 @@ class RegisteredOpenTeam(ndb.Model):
 	sp2ESL = ndb.BooleanProperty()
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
+	
+class RegisteredInstitution(ndb.Model):
+	"""Models an institution registered for the tournment"""
+	name = ndb.StringProperty()
+	leadName = ndb.StringProperty()
+	phone = ndb.StringProperty()
+	user = ndb.StringProperty()
+	email = ndb.StringProperty()
 
 class RegisteredPreferences(ndb.Model):
 	"""The preferences of a registered participant"""
