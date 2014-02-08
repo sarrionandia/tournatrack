@@ -83,8 +83,8 @@ class RegHandler(webapp2.RequestHandler):
 			if (form.validate()):
 				
 				#If we are updating an existing registration, update it.
-				teamkey = (self.request.get('teamkey'))
-				if teamkey != None:
+				if 'teamkey' in self.request.arguments():
+					teamkey = (self.request.get('teamkey'))
 					team = ndb.Key(urlsafe=teamkey).get()
 					
 					#Check they own it
