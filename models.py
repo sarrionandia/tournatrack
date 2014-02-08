@@ -119,8 +119,14 @@ class RegisteredInstitution(ndb.Model):
 	user = ndb.StringProperty()
 	email = ndb.StringProperty()
 	
+	def teams(self):
+		return InstitutionTeam.query(ancestor=self.key)
+	
+	def judges(self):
+		return InstitutionJudge.query(ancestor=self.key)
 
 class InstitutionTeam(ndb.Model):
+	"""A team attached to an institution"""
 	teamName = ndb.StringProperty()
 	sp1Name = ndb.StringProperty()
 	sp2Name = ndb.StringProperty()
@@ -130,6 +136,7 @@ class InstitutionTeam(ndb.Model):
 	sp2Novice = ndb.BooleanProperty()
 
 class InstitutionJudge(ndb.Model):
+	"""A judge attached to an institution"""
 	name = ndb.StringProperty()
 	cv = ndb.TextProperty()
 	
