@@ -118,7 +118,21 @@ class RegisteredInstitution(ndb.Model):
 	phone = ndb.StringProperty()
 	user = ndb.StringProperty()
 	email = ndb.StringProperty()
+	
 
+class InstitutionTeam(ndb.Model):
+	teamName = ndb.StringProperty()
+	sp1Name = ndb.StringProperty()
+	sp2Name = ndb.StringProperty()
+	sp1ESL = ndb.BooleanProperty()
+	sp2ESL = ndb.BooleanProperty()
+	sp1Novice = ndb.BooleanProperty()
+	sp2Novice = ndb.BooleanProperty()
+
+class InstitutionJudge(ndb.Model):
+	name = ndb.StringProperty()
+	cv = ndb.TextProperty()
+	
 class RegisteredPreferences(ndb.Model):
 	"""The preferences of a registered participant"""
 	vegetarian = ndb.BooleanProperty()

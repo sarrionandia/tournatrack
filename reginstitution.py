@@ -60,7 +60,8 @@ class RegHandler(webapp2.RequestHandler):
 		template = JINJA_ENVIRONMENT.get_template('view/reginstitution.html')
 		self.response.write(template.render(template_values))
 				
-
+	def post(self):
+		
 	
 app = webapp2.WSGIApplication([
 	('/reg/institution', RegHandler)
