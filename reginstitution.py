@@ -23,7 +23,7 @@ import tusers
 
 from wtforms import Form, BooleanField, TextField, validators
 
-from models import Tournament, PreRegRecord, RegisteredInstitution
+from models import Tournament, PreRegRecord, RegisteredInstitution, InstitutionTeam, InstitutionJudge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -61,6 +61,70 @@ class RegHandler(webapp2.RequestHandler):
 		self.response.write(template.render(template_values))
 				
 	def post(self):
+		user = tusers.get_current_user()
+		#Get the requested tournament
+		tid = self.request.get('t')
+		key = ndb.Key('Tournament', int(tid))
+		t = key.get()
+		reg = t.preRegRecord().get()
+		
+		if user:
+			form = InstRegForm(self.request.POST)
+			if (form.validate()):
+				
+				#If we are updating an existing registration, update it.
+				if 'instkey' in self.request.arguments():
+					instkey = (self.request.get('instkey'))
+					inst = ndb.Key(urlsafe=instkey).get()
+					
+					#Check they own it
+					if inst.user != user.key:
+						self.redirect('/reg?t=' + tid)
+				
+				#Otherwise, make a new institution registration
+				else:
+					inst = RegisteredInstitution(parent=reg.key)
+				
+				inst.leadName = form.leadName.data
+				inst.phone = form.phone.data
+				inst.email = form.email.data
+				inst.name = form.name.data
+				inst.user = user.key
+				
+				inst.put()
+				
+				#Add teams and judges
+				if 'nTeams' in self.request.arguments():
+					nTeams = int(self.request.get('nTeams'))
+					for i in range(nTeams):
+						team = InstitutionTeam(parent=inst.key)
+						team.name = 'Team ' + str(i)
+						team.put()
+						
+				if 'nJudges' in self.request.arguments():
+					nJudges = int(self.request.get('nJudges'))
+					for i in range(nJudges):
+						judge = InstitutionJudge(parent=inst.key)
+						judge.name = 'Judge ' + str(i)
+						judge.put()
+					
+				self.redirect('/reg?t=' + tid)
+			else:
+				logging.info('invalid form')
+				template_values = {
+					'user' : user,
+					't' : t,
+					'logout' : tusers.create_logout_url('/'),
+					'login' : tusers.create_login_url('/reg/team?t=' + tid),
+					'r' : reg,
+					'form' : form		
+				}
+				template = JINJA_ENVIRONMENT.get_template('view/reginstitution.html')
+				self.response.write(template.render(template_values))
+			
+			
+		else:
+			self.redirect('/reg?t=' + tid)
 		
 	
 app = webapp2.WSGIApplication([

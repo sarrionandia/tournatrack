@@ -116,7 +116,7 @@ class RegisteredInstitution(ndb.Model):
 	name = ndb.StringProperty()
 	leadName = ndb.StringProperty()
 	phone = ndb.StringProperty()
-	user = ndb.StringProperty()
+	user = ndb.KeyProperty(kind='TUser')
 	email = ndb.StringProperty()
 	
 	def teams(self):
