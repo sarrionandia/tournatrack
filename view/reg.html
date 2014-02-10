@@ -191,14 +191,39 @@
 	
 	{% if isi %}
 	
+	<div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class=""><i class="fa fa-building-o"></i> {{isi.name}}</h3>
+                </div>
+                <div class="panel-body">
+                	You have registered for this tournament as an Institution.
+					<br /><br />
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#chgregmod">Update Contact Information</button>
+					<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
+					
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class=""><span class="glyphicon glyphicon-pencil"></span>
+					Update Party.</h3>
+                </div>
+                <div class="panel-body">
+                	<p>Tell us who is coming</p>
+					<br />
+					<button type="button" class="btn btn-info">Update Teams <span class="badge">{{iTeamCount}}</span></button>
+					<button type="button" class="btn btn-info">Update Judges <span class="badge">{{iJudgeCount}}</span></button>
+					
+                </div>
+            </div>
+        </div>
+    </div>
+    	
 	{% endif %}
-	<div class="alert alert-success">
-		You have registered for this tournament as an Institution.
-		<br /><br />
-		<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#chgregmod">Update Information</button>
-		<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
-	</div>
-		
 	
 	{% else %}
 		

@@ -89,7 +89,7 @@ class PreRegRecord(ndb.Model):
 			q = RegisteredInstitution.query(ancestor=self.key)
 			q = q.filter(RegisteredInstitution.user == tuser.key)
 			
-			return q.get
+			return q.get()
 		else:
 			return None
 	

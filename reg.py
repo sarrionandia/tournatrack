@@ -46,6 +46,12 @@ class RegHandler(webapp2.RequestHandler):
 		ist = reg.isOpenTeam(user)
 		isi = reg.isInstitution(user)
 		
+		# Initialise variables so that they can be passed to the view
+		iJudges = None
+		iTeams = None
+		iJudgeCount = 0
+		iTeamCount = 0
+				
 		if (ist):
 			form = TeamRegForm()
 			form.leadName.data = ist.leadName
@@ -58,9 +64,14 @@ class RegHandler(webapp2.RequestHandler):
 			form.sp1Novice.data = ist.sp1Novice
 			form.sp1ESL.data = ist.sp1ESL
 			form.sp2ESL.data = ist.sp2ESL
-			
+						
 		elif (isi):
 			form = InstRegForm()
+			iJudges = isi.judges()
+			iJudgeCount = iJudges.count(limit=500)
+			iTeams = isi.teams()
+			iTeamCount = iTeams.count(limit=500)
+			
 		else:
 			form = None
 				
@@ -72,8 +83,13 @@ class RegHandler(webapp2.RequestHandler):
 			'r' : reg,
 			'isj' : isj,
 			'ist' : ist,
+			'isi' : isi,
 			'form' : form,
-			'regd' : (isj!=None) or (ist!=None) or (isi!=None)
+			'regd' : (isj!=None) or (ist!=None) or (isi!=None),
+			'iTeams' : iTeams,
+			'iJudges' : iJudges,
+			'iJudgeCount' : iJudgeCount,
+			'iTeamCount' : iTeamCount
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/reg.html')
 		self.response.write(template.render(template_values))
