@@ -134,6 +134,13 @@ class RegisteredInstitution(ndb.Model):
 	
 	def judges(self):
 		return InstitutionJudge.query(ancestor=self.key)
+	
+	def destroy(self):
+		for judge in self.judges():
+			judge.key.delete()
+		for team in self.teams():
+			team.key.delete()
+		self.key.delete()
 
 class InstitutionTeam(ndb.Model):
 	"""A team attached to an institution"""
