@@ -24,6 +24,9 @@ handlers:
 - url: /dereg/judge
   script: deregjudge.app
 
+- url: /dereg/institution
+  script: dereginstitution.app
+
 - url: /reg/judge
   script: regjudge.app
   

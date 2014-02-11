@@ -152,10 +152,10 @@ class RegisteredInstitution(ndb.Model):
 	#Delete the institution along with its teams and judges
 	def destroy(self):
 		for judge in self.judges():
-			judge.delete()
+			judge.key.delete()
 		for team in self.teams():
-			team.delete()
-		self.delete()
+			team.key.delete()
+		self.key.delete()
 
 class InstitutionTeam(ndb.Model):
 	"""A team attached to an institution"""

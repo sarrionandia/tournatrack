@@ -56,6 +56,7 @@ class RegControlHandler(webapp2.RequestHandler):
 					'ijudges' : iJudges,
 					'jcount' : iJudges.count(limit=500),
 					'teams' : teams,
+					'institutions' : institutions,
 					'tcount' : teams.count(limit=500),
 					'icount' : institutions.count(limit=500)
 				}

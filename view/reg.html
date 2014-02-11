@@ -231,14 +231,15 @@
 	        <h4 class="modal-title" id="deregmodLabel">Are you quite sure that this is wise?</h4>
 	      </div>
 	      <div class="modal-body">
-	        Deregistering will remove all of your teams and judges. If you just want to deregister some of them, use the update teams &amp; judges button on the right of this page. Once you deregister from a tournament, there is no guarantee that you will be able to re-register. Registration may have since
+	        Deregistering will remove all of your teams and judges. If you just want to deregister some of them,
+			use the update teams &amp; judges button on the right of this page. Once you deregister from a tournament, 
+			there is no guarantee that you will be able to re-register. Registration may have since
 	 		closed, or filled up. But, if you're sure...
 	      </div>
 	      <div class="modal-footer">
-			<form method="post" action="/dereg/team">
+			<form method="post" action="/dereg/institution">
+				<input type="hidden" name="institution" value="{{isi.key.urlsafe()}}" />
 				<input type="hidden" name="t" value="{{t.key.id()}}" />
-				<input type="hidden" name="r" value="{{r.key.id()}}" />
-				<input type="hidden" name="institution" value="{{isi.key.id()}}" />
 	        	<button type="submit" class="btn btn-danger">Deregister</button>
 			</form>
 	      </div>
@@ -246,7 +247,6 @@
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-    	
 	{% endif %}
 	
 	{% else %}

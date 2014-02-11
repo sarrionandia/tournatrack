@@ -78,6 +78,16 @@ $( document ).ready(function() {
 				<th>Email</th>
 				<th>Phone</th>
 			</tr>
+			{% for i in institutions %}
+			<tr>
+				<td>{{i.name}}</td>
+				<td></td>
+				<td></td>
+				<td>{{i.leadName}}</td>
+				<td>{{i.email}}</td>
+				<td>{{i.phone}}</td>
+			</tr>
+			{% endfor %}
 		</table>
 	  </div>
 	  <div class="tab-pane fade" id="judge">
