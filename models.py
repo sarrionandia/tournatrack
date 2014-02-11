@@ -28,15 +28,15 @@ class Tournament(ndb.Model):
 	start = ndb.DateProperty()
 	end = ndb.DateProperty()
 			
+	#Return a list of rooms attached to the tournament
 	def rooms(self):
 		return Room.query(ancestor=self.key).order(Room.name)
 		
-	def invitations(self):
-		return OwnerInvitation.query(ancestor=self.key)
-	
+	#Return the pre-registration record for the tournament
 	def preRegRecord(self):
 		return PreRegRecord.query(ancestor=self.key)
-		
+	
+	#Delete the tournament and its attached rooms and registration record	
 	def destroy(self):
 		for r in self.rooms():
 			r.key.delete()
@@ -56,16 +56,21 @@ class PreRegRecord(ndb.Model):
 	open = ndb.BooleanProperty()
 	teamCap = ndb.IntegerProperty()	
 	
+	#Delete the object and its associated judges, teams, and institutions
 	def destroy(self):
 		for j in self.indyJudges():
 			j.key.delete()
 		for t in self.teams():
 			t.key.delete()
+		for i in self.institutions():
+			i.destroy()
 		self.key.delete()
 	
+	#Independent Judges registered
 	def indyJudges(self):
 		return RegisteredIndependentJudge.query(ancestor=self.key)
 		
+	#Check if a user is registered as a judge
 	def isJudge(self, tuser):
 		if tuser:
 			q = RegisteredIndependentJudge.query(ancestor=self.key)
@@ -75,6 +80,7 @@ class PreRegRecord(ndb.Model):
 		else:
 			return None
 	
+	#Check if a user is registered a an Open Team
 	def isOpenTeam(self, tuser):
 		if tuser:
 			q = RegisteredOpenTeam.query(ancestor=self.key)
@@ -84,6 +90,7 @@ class PreRegRecord(ndb.Model):
 		else:
 			return None
 	
+	#Check if a user is registered as an institution
 	def isInstitution(self, tuser):
 		if tuser:
 			q = RegisteredInstitution.query(ancestor=self.key)
@@ -93,9 +100,11 @@ class PreRegRecord(ndb.Model):
 		else:
 			return None
 	
+	#Teams registered
 	def teams(self):
 		return RegisteredOpenTeam.query(ancestor=self.key)
-		
+	
+	#Institutions registered	
 	def institutions(self):
 		return RegisteredInstitution.query(ancestor=self.key)
 	
@@ -132,12 +141,15 @@ class RegisteredInstitution(ndb.Model):
 	user = ndb.KeyProperty(kind='TUser')
 	email = ndb.StringProperty()
 	
+	#Return a query of all of the teams attached to the institution
 	def teams(self):
 		return InstitutionTeam.query(ancestor=self.key)
 	
+	#Return a query of all of the judges attached to the institution
 	def judges(self):
 		return InstitutionJudge.query(ancestor=self.key)
 	
+	#Delete the institution along with its teams and judges
 	def destroy(self):
 		for judge in self.judges():
 			judge.delete()
