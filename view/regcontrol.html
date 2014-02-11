@@ -59,7 +59,8 @@ $( document ).ready(function() {
 	
 	<h3>Who has registered</h3>
 	<ul class="nav nav-tabs">
-	  <li id="insttab" class="active"><a href="#inst" data-toggle="tab">Institutions</a></li>
+	  <li id="insttab" class="active"><a href="#inst" data-toggle="tab">Institutions &nbsp;<span
+			 class="badge">{{icount}}</span></a></li>
 	  <li id="judgetab"><a href="#judge" data-toggle="tab"><i class="fa fa-gavel"></i> Judges&nbsp;<span
 		 class="badge">{{jcount}}</span></a></li>
 	  <li id="teamtab"><a href="#team" data-toggle="tab"><i class="fa fa-bullhorn"></i> Teams&nbsp;<span
@@ -67,7 +68,18 @@ $( document ).ready(function() {
 	</ul>
 	
 	<div class="tab-content">
-	  <div class="tab-pane fade" id="inst">...</div>
+	  <div class="tab-pane fade" id="inst">
+	  	<table class="table table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Teams</th>
+				<th>Judges</th>
+				<th>Contact</th>
+				<th>Email</th>
+				<th>Phone</th>
+			</tr>
+		</table>
+	  </div>
 	  <div class="tab-pane fade" id="judge">
 	
 		<div class="panel panel-default">

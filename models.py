@@ -95,6 +95,9 @@ class PreRegRecord(ndb.Model):
 	
 	def teams(self):
 		return RegisteredOpenTeam.query(ancestor=self.key)
+		
+	def institutions(self):
+		return RegisteredInstitution.query(ancestor=self.key)
 	
 class RegisteredIndependentJudge(ndb.Model):
 	"""Models a participant in the tournament"""
@@ -137,10 +140,10 @@ class RegisteredInstitution(ndb.Model):
 	
 	def destroy(self):
 		for judge in self.judges():
-			judge.key.delete()
+			judge.delete()
 		for team in self.teams():
-			team.key.delete()
-		self.key.delete()
+			team.delete()
+		self.delete()
 
 class InstitutionTeam(ndb.Model):
 	"""A team attached to an institution"""

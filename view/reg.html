@@ -222,6 +222,30 @@
             </div>
         </div>
     </div>
+
+	<div class="modal fade" id="deregmod" tabindex="-1" role="dialog" aria-labelledby="deregmodLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="deregmodLabel">Are you quite sure that this is wise?</h4>
+	      </div>
+	      <div class="modal-body">
+	        Deregistering will remove all of your teams and judges. If you just want to deregister some of them, use the update teams &amp; judges button on the right of this page. Once you deregister from a tournament, there is no guarantee that you will be able to re-register. Registration may have since
+	 		closed, or filled up. But, if you're sure...
+	      </div>
+	      <div class="modal-footer">
+			<form method="post" action="/dereg/team">
+				<input type="hidden" name="t" value="{{t.key.id()}}" />
+				<input type="hidden" name="r" value="{{r.key.id()}}" />
+				<input type="hidden" name="institution" value="{{isi.key.id()}}" />
+	        	<button type="submit" class="btn btn-danger">Deregister</button>
+			</form>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
     	
 	{% endif %}
 	
