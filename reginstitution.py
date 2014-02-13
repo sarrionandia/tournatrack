@@ -34,7 +34,7 @@ class InstRegForm(Form):
 	leadName = TextField('leadName', [validators.Required()])
 	email = TextField('email', [validators.Email()])
 	phone = TextField('phone', [validators.Required()])
-	name = TextField('teamName', [validators.Required()])	
+	name = TextField('name', [validators.Required()])	
 
 class RegHandler(webapp2.RequestHandler):
 	def get(self):
