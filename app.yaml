@@ -12,6 +12,8 @@ handlers:
 - url: /style
   static_dir: static
   
+- url: /dereg_i_judge
+  script: dereg_i_judge.app
 - url: /updatejudges
   script: updatereg.app
 
