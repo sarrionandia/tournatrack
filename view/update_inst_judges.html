@@ -46,7 +46,9 @@
 		<div class="panel-footer">
 			<input type="hidden" name="reg_key" value="{{reg_key}}" />
 			<input type="hidden" name="updating" value="j"/>
-			<button type="button" class="btn btn-warning">Cancel</button>
+			<a href="/reg?t={{t.key.id()}}">
+				<button type="button" class="btn btn-warning">Cancel</button>
+			</a>
 			<button type="submit" class="btn btn-success">Save changes</button>
 		</div>
 		</form>
