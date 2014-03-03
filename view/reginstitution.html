@@ -1,0 +1,89 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Register for the {{t.name}}{% endblock %}
+
+{% block content %}
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Registration</h2>	
+	
+	{% if user %}
+	
+	{% if r.open %}
+	<div class="panel panel-success">
+		<div class="panel panel-heading">
+			<ul class="nav nav-tabs">
+			  <li class="active"><a href="#"><i class="fa fa-building-o"></i> Institution</a></li>
+			  <li><a href="/reg/judge?t={{t.key.id()}}"><i class="fa fa-gavel"></i> Independent Adjudicator</a></li>
+			  <li><a href="/reg/team?t={{t.key.id()}}"><i class="fa fa-users"></i> Open Team</a></li>
+			</ul>
+		</div>
+		<div class="panel panel-body">
+			
+			<h3>"The wave of evil washes all our institutions alike."</h3>
+			
+			{% if form.errors %}
+			    <ul class="errors">
+			        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+			            {% for error in field_errors %}
+			                <li>{{ form[field_name].label }}: {{ error }}</li>
+			            {% endfor %}
+			        {% endfor %}
+			    </ul>
+			{% endif %}
+			
+			<form role="form" action="/reg/institution?t={{t.key.id()}}" method="post">
+				
+				<div class="form-group col-md-12">
+			    	<label for="name">Lead Person's Name</label>
+			    	{{form.leadName(class="form-control", placeholder="Who can we get in touch with?")}}
+			  	</div>
+			  
+				<div class="form-group col-md-6">
+			    	<label for="email">Email</label>
+					{{form.email(class="form-control", placeholder="Email Address")}}
+			  	</div>
+			
+				<div class="form-group col-md-6">
+			    	<label for="phone">Phone Number</label>
+					{{form.phone(class="form-control", placeholder="Call me maybe")}}
+			  	</div>
+			
+				<div class="form-group col-md-12">
+			    	<label for="name">Name of Institution</label>
+					{{form.name(class="form-control", placeholder="e.g. Aberystwyth University")}}
+			  	</div>
+			
+		
+				<div class="well col-md-5">
+					<h2><i class="fa fa-users"></i> Teams</h2>
+					<div class="form-group">
+						<input type="number" name="nTeams" class="form-control" min="0" max="20" placeholder="Number of Teams"/>
+					</div>
+				</div>
+				
+				<div class="col-md-2"> </div>
+				
+				<div class="well col-md-5">
+					<h2><i class="fa fa-gavel"></i> Judges</h2>
+					<div class="form-group">
+						<input type="number" name="nJudges" class="form-control" min="0" max="20" placeholder="Number of Judges"/>
+					</div>
+				</div>
+							
+			   	<button type="submit" class="btn btn-primary">Submit</button>
+			
+			</form>
+			
+		</div>
+	</div>
+	
+	{% else %}
+	<p>Sorry, registration for this tournament is currently closed</p>
+	{% endif %}
+	
+	{% else %}
+	
+		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
+	
+	{% endif %}
+	
+		
+{% endblock %}

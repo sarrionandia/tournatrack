@@ -215,8 +215,10 @@
                 <div class="panel-body">
                 	Tell us who is coming
 					<br /> <br />
-					<button type="button" class="btn btn-info">Update Teams <span class="badge">{{iTeamCount}}</span></button>
-					<button type="button" class="btn btn-info">Update Judges <span class="badge">{{iJudgeCount}}</span></button>
+						<button type="button" class="btn btn-info">Update Teams <span class="badge">{{iTeamCount}}</span></button>
+					<a href="/updatejudges?t={{t.key.id()}}">
+						<button type="button" class="btn btn-info">Update Judges <span class="badge">{{iJudgeCount}}</span></button>
+					</a>
 					
                 </div>
             </div>

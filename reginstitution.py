@@ -109,6 +109,8 @@ class RegHandler(webapp2.RequestHandler):
 						judge.put()
 					
 				self.redirect('/reg?t=' + tid)
+				
+			#If the form is invalid, show it again with errors.
 			else:
 				logging.info('invalid form')
 				template_values = {

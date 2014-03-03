@@ -31,76 +31,75 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class RegHandler(webapp2.RequestHandler):
+class JudgeHandler(webapp2.RequestHandler):
 	def get(self):
 		user = tusers.get_current_user()
+		tid = self.request.get('t')
+
+		if not user:
+			self.redirect('/reg?t=' + tid)
 		
 		#Get the requested tournament
-		tid = self.request.get('t')
 		key = ndb.Key('Tournament', int(tid))
 		t = key.get()
 			
 		reg = t.preRegRecord().get()
 		
-		isj = reg.isJudge(user)
-		ist = reg.isOpenTeam(user)
 		isi = reg.isInstitution(user)
 		
-		# Initialise variables so that they can be passed to the view
-		iJudges = None
-		iTeams = None
-		iJudgeCount = 0
-		iTeamCount = 0
-		
-		# If they are already registered as a team, pre-populate the 
-		# modify teams form		
-		if (ist):
-			form = TeamRegForm()
-			form.leadName.data = ist.leadName
-			form.email.data = ist.email
-			form.phone.data = ist.phone
-			form.teamName.data = ist.teamName
-			form.sp1Name.data = ist.sp1Name
-			form.sp2Name.data = ist.sp2Name
-			form.sp1Novice.data = ist.sp1Novice
-			form.sp1Novice.data = ist.sp1Novice
-			form.sp1ESL.data = ist.sp1ESL
-			form.sp2ESL.data = ist.sp2ESL
-						
-		elif (isi):
-			form = InstRegForm()
-			form.leadName.data = isi.leadName
-			form.phone.data = isi.phone
-			form.email.data = isi.email
-			iJudges = isi.judges()
-			iJudgeCount = iJudges.count(limit=500)
-			iTeams = isi.teams()
-			iTeamCount = iTeams.count(limit=500)
-			
-		else:
-			form = None
-				
-		template_values = {
+		if isi:
+
+			template_values = {
 			'user' : user,
 			't' : t,
 			'logout' : tusers.create_logout_url('/'),
 			'login' : tusers.create_login_url('/reg?t=' + tid),
 			'r' : reg,
-			'isj' : isj,
-			'ist' : ist,
 			'isi' : isi,
-			'form' : form,
-			'regd' : (isj!=None) or (ist!=None) or (isi!=None),
-			'iTeams' : iTeams,
-			'iJudges' : iJudges,
-			'iJudgeCount' : iJudgeCount,
-			'iTeamCount' : iTeamCount
-		}
-		template = JINJA_ENVIRONMENT.get_template('view/reg.html')
-		self.response.write(template.render(template_values))
+			'judges' : isi.judges(),
+			'reg_key' : isi.key.urlsafe()
+			}
+			template = JINJA_ENVIRONMENT.get_template('view/update_inst_judges.html')
+			self.response.write(template.render(template_values))
+		
+		else:
+			self.redirect('/reg?t=' + tid)
+	
+	def post(self):
+		user = tusers.get_current_user()
+		tid = self.request.get('t')
+
+		if not user:
+			self.redirect('/reg?t=' + tid)
+		
+		#Get the requested tournament
+		key = ndb.Key('Tournament', int(tid))
+		t = key.get()
+			
+		reg = t.preRegRecord().get()
+		
+		isi = reg.isInstitution(user)
+		
+		if isi:
+			if self.request.get('updating') == 'j':
+				#Get all of the judge objects
+				judges = isi.judges()
+			
+				for j in judges:
+					name = self.request.get(str(j.key.id()) + '_n')
+					j.name = name
 				
+					cv = self.request.get(str(j.key.id()) + '_c')
+					j.cv = cv
+				
+					j.put()
+				
+				self.redirect('/reg?t=' + tid)
+			
+		else:
+			self.redirect('/reg?t=' + tid)
 
 
 app = webapp2.WSGIApplication([
-	('/reg', RegHandler)
+	('/updatejudges', JudgeHandler)
 ], debug=True)
