@@ -98,14 +98,12 @@ class RegHandler(webapp2.RequestHandler):
 					nTeams = int(self.request.get('nTeams'))
 					for i in range(nTeams):
 						team = InstitutionTeam(parent=inst.key)
-						team.name = 'Team ' + str(i)
 						team.put()
 						
 				if 'nJudges' in self.request.arguments():
 					nJudges = int(self.request.get('nJudges'))
 					for i in range(nJudges):
 						judge = InstitutionJudge(parent=inst.key)
-						judge.name = 'Judge ' + str(i)
 						judge.put()
 					
 				self.redirect('/reg?t=' + tid)

@@ -13,6 +13,55 @@
 
 		<div class="panel-body">
 			
+			{%for team in teams %}
+			<h3>Team {{loop.index}}</h3>
+			<div class="form-group col-md-12">
+		    	<label for="teamName">Team Name</label>
+		    	<input type="text" name="{{team.key.id()}}_n" class="form-control" placeholder="Team Name"
+		 			{% if team.teamName %}value="{{team.teamName}}"{%endif%}>
+		  	</div>
+		
+			<div class="well well-lg col-md-6">
+				<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 1</h2>
+				<div class="form-group">
+					<label for="sp1Name">Name</label>
+					<input type="text" class="form-control" name="{{team.key.id()}}_sp1n" placeholder="First speaker's name" 
+							{% if team.sp1Name %} value="{{team.sp1Name}}"{% endif %}/>
+				</div>
+				<label class="col-md-3">
+				    Novice? <input type="checkbox" name="{{team.key.id()}}_sp1nov" 
+						{%if team.sp1Novice%}checked{%endif%}/>
+				</label>
+				<label class="col-md-3">
+				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp1esl"
+					{%if team.sp1ESL%}checked{%endif%}/>
+				
+				</label>
+				
+			</div>
+			
+			<div class="well well-lg col-md-6">
+				<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 2</h2>
+				<div class="form-group">
+					<label for="sp1Name">Name</label>
+					<input type="text" class="form-control" name="{{team.key.id()}}_sp2n" placeholder="Second speaker's name" 
+							{% if team.sp2Name %} value="{{team.sp2Name}}"{% endif %}/>
+					
+				</div>
+				<label class="col-md-3">
+				    Novice? <input type="checkbox" name="{{team.key.id()}}_sp2nov"
+					{%if team.sp2Novice%}checked{%endif%}/>
+				
+				</label>
+				<label class="col-md-3">
+				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp2nov"
+					{%if team.sp2ESL%}checked{%endif%}/>
+				</label>
+				
+			</div>
+					
+			{% endfor %}
+			
 		</div>
 
 		
