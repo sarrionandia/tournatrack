@@ -99,7 +99,43 @@ class JudgeHandler(webapp2.RequestHandler):
 		else:
 			self.redirect('/reg?t=' + tid)
 
+class TeamHandler(webapp2.RequestHandler):
+	def get(self):
+		user = tusers.get_current_user()
+		tid = self.request.get('t')
+
+		if not user:
+			self.redirect('/reg?t=' + tid)
+		
+		#Get the requested tournament
+		key = ndb.Key('Tournament', int(tid))
+		t = key.get()
+			
+		reg = t.preRegRecord().get()
+		
+		isi = reg.isInstitution(user)
+		
+		if isi:
+
+			template_values = {
+			'user' : user,
+			't' : t,
+			'logout' : tusers.create_logout_url('/'),
+			'login' : tusers.create_login_url('/reg?t=' + tid),
+			'r' : reg,
+			'isi' : isi,
+			'teams' : isi.teams(),
+			'reg_key' : isi.key.urlsafe()
+			}
+			template = JINJA_ENVIRONMENT.get_template('view/update_inst_teams.html')
+			self.response.write(template.render(template_values))
+		
+		else:
+			self.redirect('/reg?t=' + tid)
+		
+		
 
 app = webapp2.WSGIApplication([
-	('/updatejudges', JudgeHandler)
+	('/updatejudges', JudgeHandler),
+	('/updateteams', TeamHandler)
 ], debug=True)

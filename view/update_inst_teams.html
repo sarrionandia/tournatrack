@@ -1,0 +1,40 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Update Registration for the {{t.name}}{% endblock %}
+
+{% block content %}
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Team Registration</h2>	
+	
+	{% if user %}
+	
+	<div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class=""><i class="fa fa-building-o"></i> {{isi.name}}</h3>
+    	</div>
+
+		<div class="panel-body">
+			
+		</div>
+
+		
+		<div class="panel-footer">
+			<input type="hidden" name="reg_key" value="{{reg_key}}" />
+			<input type="hidden" name="updating" value="t"/>
+			<a href="/reg?t={{t.key.id()}}">
+				<button type="button" class="btn btn-warning">Cancel</button>
+			</a>
+			<button type="submit" class="btn btn-success">Save changes</button>
+		</div>
+		</form>
+
+	</div>
+    
+	
+	
+	{% else %}
+	
+		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
+	
+	{% endif %}
+	
+		
+{% endblock %}
