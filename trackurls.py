@@ -15,13 +15,9 @@
 import webapp2
 import jinja2
 import os
-import logging
 
 import tusers
 from google.appengine.ext import ndb
-
-from models import Tournament
-from models import Room
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),

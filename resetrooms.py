@@ -13,14 +13,9 @@
 # limitations under the License.
 
 import webapp2
-import os
-import logging
 
 import tusers
 from google.appengine.ext import ndb
-
-from models import Tournament
-from models import Room
 
 class ResetRoomsHandler(webapp2.RequestHandler):
 	def get(self):

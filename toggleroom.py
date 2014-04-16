@@ -13,13 +13,9 @@
 # limitations under the License.
 
 import webapp2
-import os
 
 import tusers
 from google.appengine.ext import ndb
-
-from models import Tournament
-from models import Institution
 
 class RoomHandler(webapp2.RequestHandler):
 	def get(self):

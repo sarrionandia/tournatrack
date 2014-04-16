@@ -18,9 +18,6 @@ import os
 import tusers
 from google.appengine.ext import ndb
 
-from models import Tournament
-from models import Institution
-
 class InstitutionHandler(webapp2.RequestHandler):
 	def get(self):
 		user = tusers.get_current_user()

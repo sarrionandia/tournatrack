@@ -14,8 +14,6 @@
 
 # A replacement for the users service to decouple the code from the Google API
 
-from google.appengine.ext import ndb
-import logging
 from google.appengine.api import users
 
 from models import TUser

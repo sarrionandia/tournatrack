@@ -15,15 +15,14 @@
 import webapp2
 import jinja2
 import os
-import re
 import logging
 
 from google.appengine.ext import ndb
 import tusers
 
-from wtforms import Form, BooleanField, TextField, validators
+from wtforms import Form, TextField, validators
 
-from models import Tournament, PreRegRecord, RegisteredInstitution, InstitutionTeam, InstitutionJudge
+from models import RegisteredInstitution, InstitutionTeam, InstitutionJudge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),

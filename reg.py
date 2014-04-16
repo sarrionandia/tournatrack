@@ -15,12 +15,10 @@
 import webapp2
 import jinja2
 import os
-import logging
 
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament, PreRegRecord
 from regteam import TeamRegForm
 from reginstitution import InstRegForm
 

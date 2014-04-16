@@ -13,8 +13,6 @@
 # limitations under the License.
 
 from google.appengine.ext import ndb
-import logging
-
 
 class TUser(ndb.Model):
 	"""Models a user account"""

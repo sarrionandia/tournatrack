@@ -23,7 +23,7 @@ import tusers
 
 from wtforms import Form, BooleanField, TextField, validators
 
-from models import Tournament, PreRegRecord, RegisteredOpenTeam
+from models import RegisteredOpenTeam
 
 EMAIL_REGEX = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
 

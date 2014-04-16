@@ -19,7 +19,6 @@ import os
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament
 from models import PreRegRecord
 
 JINJA_ENVIRONMENT = jinja2.Environment(
