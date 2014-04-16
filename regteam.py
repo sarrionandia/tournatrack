@@ -79,6 +79,12 @@ class RegHandler(webapp2.RequestHandler):
 		reg = t.preRegRecord().get()
 					
 		if user:
+
+			#Check they haven't registered already
+			if reg.isRegistered(user):
+				self.redirect('/reg?t=' + tid)
+				return
+
 			form = TeamRegForm(self.request.POST)
 			if (form.validate()):
 				

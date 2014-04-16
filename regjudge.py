@@ -64,8 +64,17 @@ class RegHandler(webapp2.RequestHandler):
 		tid = self.request.get('t')
 		key = ndb.Key('Tournament', int(tid))
 		t = key.get()
+		reg = t.preRegRecord().get()
+
 					
 		if user:
+
+			#Check they haven't registered already
+			if reg.isRegistered(user):
+				logging.info('Already registered')
+				self.redirect('/reg?t=' + tid)
+				return
+
 			name = self.request.get('name')
 			email = self.request.get('email')
 			phone = self.request.get('phone')
@@ -76,8 +85,7 @@ class RegHandler(webapp2.RequestHandler):
 			name_valid = len(name)>0
 			email_valid = EMAIL_REGEX.match(email) != None
 			phone_valid = len(phone)>0
-			reg = t.preRegRecord().get()
-			
+
 			#If valid, create the new judge object
 			if (name_valid & phone_valid & email_valid):
 				
