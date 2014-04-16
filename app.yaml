@@ -14,7 +14,10 @@ handlers:
   
 - url: /dereg_i_judge
   script: dereg_i_judge.app
-  
+
+- url: /dereg_i_team
+  script: dereg_i_team.app
+
 - url: /updateteams
   script: updatereg.app
   

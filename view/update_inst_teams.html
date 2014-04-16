@@ -61,9 +61,9 @@
 				</label>
 				
 			</div>
-			
-			<button type="button" class="btn btn-danger">Deregister Team {{loop.index}}</button>
-					
+			<a href="/dereg_i_team?t={{t.key.id()}}&team={{team.key.id()}}">
+			    <button type="button" class="btn btn-danger">Deregister Team {{loop.index}}</button>
+			</a>
 			{% endfor %}
 			
 		</div>
