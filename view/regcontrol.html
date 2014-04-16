@@ -4,24 +4,11 @@
 {% block head_extra %}
 
 <script>
-$('#insttab a').click(function (e) {
-  e.preventDefault()
-})
-$('#insttab a').tab('show')
 
-$('#teamtab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-
-$('#judgetab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-
-$( document ).ready(function() {
-    $('.tooltip-act').tooltip();
+$(window).load(function(){
+    $('#tab a[href="#insttab"]').tab('show');
 });
+
 </script>
 
 {% endblock %}
@@ -58,8 +45,8 @@ $( document ).ready(function() {
 	{% endif %}
 	
 	<h3>Who has registered</h3>
-	<ul class="nav nav-tabs">
-	  <li id="insttab" class="active"><a href="#inst" data-toggle="tab">Institutions &nbsp;<span
+	<ul class="nav nav-tabs" id="tab">
+	  <li id="insttab"><a href="#inst" data-toggle="tab">Institutions &nbsp;<span
 			 class="badge">{{icount}}</span></a></li>
 	  <li id="judgetab"><a href="#judge" data-toggle="tab"><i class="fa fa-gavel"></i> Judges&nbsp;<span
 		 class="badge">{{jcount}}</span></a></li>
