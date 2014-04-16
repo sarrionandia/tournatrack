@@ -19,8 +19,6 @@ import os
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament
-
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -44,7 +42,7 @@ class PinTracker(webapp2.RequestHandler):
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/trackpin.html')
 				self.response.write(template.render(template_values))
-				
+
 			else:
 				self.redirect('/tournaments')
 		else:
@@ -53,18 +51,18 @@ class PinTracker(webapp2.RequestHandler):
 
 	def post(self):
 		user = tusers.get_current_user()
-		
+
 		if user:
 			#Get the requested tournament
 			tid = self.request.get('t')
 			key = ndb.Key('Tournament', int(tid))
 			t = key.get()
 			
-			if (t and user in t.owner):
+			if (t and user.key in t.owner):
 				pin = self.request.get('pin')
 				t.trackpin = pin
 				t.put()
-				self.redirect('/trackpin?t=' + str(key.id()))
+				self.redirect('/trackpin?t=' + tid)
 			
 		else:
 			self.redirect(tusers.create_login_url(self.request.uri))

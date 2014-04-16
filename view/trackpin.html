@@ -17,10 +17,10 @@ Anybody with access to these links can modify the status of rooms, so if one of 
 	<div class="alert alert-warning">Changing the Tracking Password will require you to redistribute new QR codes / links to your runners.</div>
 	<h3>Change Tracking Password</h3>
 
-  <form method="post" target="/trackpin?t={{t.key.id()}}">
+  <form method="post" action="/trackpin?t={{t.key.id()}}">
   <div class="col-lg-6">
     <div class="input-group">
-      <input type="text" name="pin" class="form-control" placeholder="It should be long and unique. Nonsense phrases are great.">
+      <input type="text" name="pin" class="form-control" placeholder="It should be long and unique.">
       <span class="input-group-btn">
       
         <button class="btn btn-danger" type="submit">Change Tracking Password</button>
