@@ -107,6 +107,20 @@ $( document ).ready(function() {
 				<td>{{j.phone}}</td>
 			</tr>
 			{% endfor %}
+
+            {% for i in institutions %}
+
+            {% for j in i.judges() %}
+            <tr>
+                <td>{{j.name}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.phone}}</td>
+            </tr>
+            {% endfor %}
+
+            {% endfor %}
+
 		  </table>
 	
 	  </div>
@@ -161,6 +175,50 @@ $( document ).ready(function() {
 				</td>
 			</tr>
 			{% endfor %}
+
+
+            {% for i in institutions %}
+
+            {% for t in i.teams() %}
+            <tr>
+              <td>{{i.name}}</td>
+              <td>{{t.teamName}}</td>
+              <td>{{i.leadName}}</td>
+              <td>{{i.email}}</td>
+              <td>{{i.phone}}</td>
+              <td>{{t.sp1Name}}</td>
+              <td>
+					{% if t.sp1ESL %}
+					<a href="#" class="tooltip-act" title="English as a Second Language" data-original-title="Tooltip">
+					<i class="fa fa-globe"></i>
+					</a>
+					{% endif %}
+
+					{% if t.sp1Novice %}
+					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
+					<i class="fa fa-certificate"></i>
+					</a>
+					{% endif %}
+			</td>
+
+              <td>{{t.sp2Name}}</td>
+              <td>
+					{% if t.sp2ESL %}
+					<a href="#" class="tooltip-act" title="English as a Second Language" data-original-title="Tooltip">
+					<i class="fa fa-globe" id="globe"></i>
+					</a>
+					{% endif %}
+					{% if t.sp2Novice %}
+					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
+					<i class="fa fa-certificate"></i>
+					</a>
+					{% endif %}
+			</td>
+
+            </tr>
+            {% endfor %}
+
+            {% endfor %}
 		  </table>
 		
 		

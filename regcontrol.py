@@ -54,10 +54,10 @@ class RegControlHandler(webapp2.RequestHandler):
 					'logout' : tusers.create_logout_url('/'),
 					'r' : reg,
 					'ijudges' : iJudges,
-					'jcount' : iJudges.count(limit=500),
+					'jcount' : reg.totalJudgeCount(),
 					'teams' : teams,
 					'institutions' : institutions,
-					'tcount' : teams.count(limit=500),
+					'tcount' : reg.totalTeamCount(),
 					'icount' : institutions.count(limit=500)
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/regcontrol.html')
