@@ -14,14 +14,10 @@
 
 import webapp2
 import os
-import logging
 
 from google.appengine.ext import ndb
 import tusers
 import jinja2
-
-from models import Tournament
-from models import PreRegRecord
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -38,10 +34,21 @@ class JudgeCVHandler(webapp2.RequestHandler):
 			tid = self.request.get('t')
 			key = ndb.Key('Tournament', int(tid))
 			t = key.get()
-			
 			j = self.request.get('j')
+
+			if (self.request.get('j', default_value=False)):
+				j_string = self.request.get('j')
+				j_key = ndb.Key(urlsafe=j_string)
+				tournament = j_key.parent().parent().parent().get()
+				if user.key in tournament.owner:
+					judge = j_key.get()
+					template_values = {
+						'judge': judge
+					}
+					template = JINJA_ENVIRONMENT.get_template('view/judgecv.html')
+					self.response.write(template.render(template_values))
 			
-			if (t and user.key in t.owner):
+			elif (t and user.key in t.owner):
 				reg = t.preRegRecord().get()
 				judge = ndb.Key('RegisteredIndependentJudge', int(j), parent=reg.key)
 					

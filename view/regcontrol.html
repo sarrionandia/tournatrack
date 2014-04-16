@@ -88,7 +88,14 @@ $(window).load(function(){
 			</tr>
 			{% for j in ijudges %}
 			<tr>
-				<td>{{j.name}}&nbsp;{%if j.cv%}<a id="myLink" href="/judgecv?t={{t.key.id()}}&j={{j.key.id()}}" data-toggle="modal" data-target="#myModal"><span class="badge">CV</span></a>{%endif%}</td>
+				<td>
+                    {{j.name}}&nbsp;
+                    {%if j.cv%}
+                    <a id="myLink" href="/judgecv?t={{t.key.id()}}&j={{j.key.id()}}" data-toggle="modal"
+                       data-target="#myModal">
+                    <span class="badge">CV</span></a>
+                    {%endif%}
+                </td>
 				<td><emph>Independent</emph></td>
 				<td>{{j.email}}</td>
 				<td>{{j.phone}}</td>
@@ -99,7 +106,14 @@ $(window).load(function(){
 
             {% for j in i.judges() %}
             <tr>
-                <td>{{j.name}}</td>
+				<td>
+                    {{j.name}}&nbsp;
+                    {%if j.cv%}
+                    <a id="myLink" href="/judgecv?t={{t.key.id()}}&j={{j.key.urlsafe()}}" data-toggle="modal"
+                       data-target="#myModal">
+                    <span class="badge">CV</span></a>
+                    {%endif%}
+                </td>
                 <td>{{i.name}}</td>
                 <td>{{i.email}}</td>
                 <td>{{i.phone}}</td>
