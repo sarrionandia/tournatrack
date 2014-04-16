@@ -30,6 +30,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+MAX_REG = 20
+
 class InstRegForm(Form):
 	leadName = TextField('leadName', [validators.Required()])
 	email = TextField('email', [validators.Email()])
@@ -96,12 +98,16 @@ class RegHandler(webapp2.RequestHandler):
 				#Add teams and judges
 				if 'nTeams' in self.request.arguments():
 					nTeams = int(self.request.get('nTeams'))
+					if nTeams > MAX_REG:
+						nTeams = MAX_REG
 					for i in range(nTeams):
 						team = InstitutionTeam(parent=inst.key)
 						team.put()
 						
 				if 'nJudges' in self.request.arguments():
 					nJudges = int(self.request.get('nJudges'))
+					if nJudges > MAX_REG:
+						nJudges = MAX_REG
 					for i in range(nJudges):
 						judge = InstitutionJudge(parent=inst.key)
 						judge.put()
