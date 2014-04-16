@@ -11,6 +11,8 @@
             <h3 class=""><i class="fa fa-building-o"></i> {{isi.name}}</h3>
     	</div>
 
+        <form method="post" action="/updateteams?t={{t.key.id()}}">
+
 		<div class="panel-body">
 			
 			{%for team in teams %}
@@ -33,7 +35,7 @@
 						{%if team.sp1Novice%}checked{%endif%}/>
 				</label>
 				<label class="col-md-3">
-				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp1esl"
+				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp1ESL"
 					{%if team.sp1ESL%}checked{%endif%}/>
 				
 				</label>
@@ -54,7 +56,7 @@
 				
 				</label>
 				<label class="col-md-3">
-				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp2nov"
+				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp2ESL"
 					{%if team.sp2ESL%}checked{%endif%}/>
 				</label>
 				
