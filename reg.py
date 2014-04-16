@@ -63,7 +63,7 @@ class RegHandler(webapp2.RequestHandler):
 			form.sp1Name.data = ist.sp1Name
 			form.sp2Name.data = ist.sp2Name
 			form.sp1Novice.data = ist.sp1Novice
-			form.sp1Novice.data = ist.sp1Novice
+			form.sp2Novice.data = ist.sp1Novice
 			form.sp1ESL.data = ist.sp1ESL
 			form.sp2ESL.data = ist.sp2ESL
 						
