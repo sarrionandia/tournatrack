@@ -11,6 +11,9 @@ handlers:
         
 - url: /style
   static_dir: static
+
+- url: /add_to_reg
+  script: reg_add.app
   
 - url: /dereg_i_judge
   script: dereg_i_judge.app

@@ -75,6 +75,9 @@
 			<a href="/reg?t={{t.key.id()}}">
 				<button type="button" class="btn btn-warning">Cancel</button>
 			</a>
+            <a href="/add_to_reg?t={{t.key.id()}}&type=t">
+            	<button type="button" class="btn btn-info" {% if not r.open %}disabled="True">{% endif %}>Add Another Team</button>
+            </a>
 			<button type="submit" class="btn btn-success">Save changes</button>
 		</div>
 		</form>
