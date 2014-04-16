@@ -15,16 +15,9 @@
 import webapp2
 import jinja2
 import os
-import logging
 
 from google.appengine.ext import ndb
 import tusers
-
-from models import Tournament, PreRegRecord
-from regteam import TeamRegForm
-from reginstitution import InstRegForm
-
-from wtforms import Form, BooleanField, TextField, validators
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),

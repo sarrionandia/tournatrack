@@ -13,15 +13,9 @@
 # limitations under the License.
 
 import webapp2
-import os
 
 from google.appengine.ext import ndb
 import tusers
-
-import logging
-
-from models import Tournament
-from models import PreRegRecord
 
 class DeregHandler(webapp2.RequestHandler):
 	def get(self):
