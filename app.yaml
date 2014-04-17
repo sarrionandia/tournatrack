@@ -12,6 +12,9 @@ handlers:
 - url: /style
   static_dir: static
 
+- url: /mod/.*
+  script: modify.app
+
 - url: /add_to_reg
   script: reg_add.app
 

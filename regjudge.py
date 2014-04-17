@@ -22,13 +22,7 @@ import tusers
 from wtforms import Form, TextField, TextAreaField, validators
 
 from models import RegisteredIndependentJudge
-
-#WTForms Form model
-class JudgeRegForm(Form):
-	name = TextField('name', [validators.required()])
-	email = TextField('email', [validators.email()])
-	phone = TextField('phone', [validators.required()])
-	cv = TextAreaField('cv', [validators.optional()])
+from forms import JudgeForm
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -46,7 +40,7 @@ class RegHandler(webapp2.RequestHandler):
 			
 		reg = t.preRegRecord().get()
 
-		form = JudgeRegForm()
+		form = JudgeForm()
 					
 		template_values = {
 			'user' : user,
@@ -76,7 +70,7 @@ class RegHandler(webapp2.RequestHandler):
 				self.redirect('/reg?t=' + tid)
 				return
 
-			form = JudgeRegForm(self.request.POST)
+			form = JudgeForm(self.request.POST)
 
 			#If valid, create the new judge object
 			if (form.validate()):
