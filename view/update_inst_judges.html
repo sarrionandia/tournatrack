@@ -2,6 +2,32 @@
 {% block title %}Update Registration for the {{t.name}}{% endblock %}
 
 {% block content %}
+
+    <script>
+
+    function post_to_url(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+    </script>
 	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Judge Registration</h2>	
 	
 	{% if user %}
@@ -36,9 +62,8 @@
 					</textarea>
 				</td>
 				<td>
-					<a href="/dereg_i_judge?j={{j.key.id()}}&t={{t.key.id()}}">
-						<button type="button" class="btn btn-danger">Deregister</button>
-					</a>
+	        	    <button type="button" onclick="post_to_url('/dereg/judge', {'j_key':'{{j.key.urlsafe()}}'})"
+                            class="btn btn-danger">Deregister</button>
 				</td>
 			<tr>
 			{% endfor %}
