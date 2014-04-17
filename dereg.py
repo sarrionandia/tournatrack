@@ -12,12 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This file handles the deregistration of teams, judges, and institutions.
+
 import webapp2
 
 from google.appengine.ext import ndb
 import tusers
 
-class DeregHandler(webapp2.RequestHandler):
+#Handles the deregistration of open teams
+class DeregTeamHandler(webapp2.RequestHandler):
 	def post(self):
 		user = tusers.get_current_user()
 		
@@ -33,9 +36,41 @@ class DeregHandler(webapp2.RequestHandler):
 		if (ist):
 			ist.key.delete()
 		self.redirect('/reg?t=' + tid)
-								
+
+class DeregJudgeHandler(webapp2.RequestHandler):
+	def post(self):
+		user = tusers.get_current_user()
+
+		#Get the requested tournament
+		tid = self.request.get('t')
+		key = ndb.Key('Tournament', int(tid))
+		t = key.get()
+
+		reg = t.preRegRecord().get()
+
+		isj = reg.isJudge(user)
+
+		if (isj):
+			isj.key.delete()
+		self.redirect('/reg?t=' + tid)
+
+class DeregInstitutionHandler(webapp2.RequestHandler):
+	def post(self):
+		user = tusers.get_current_user()
+		tid = self.request.get('t')
+
+		#Get the requested tournament
+		institutionkey = self.request.get('institution')
+		institution = ndb.Key(urlsafe=institutionkey).get()
+
+		if institution.user == user.key:
+			institution.destroy()
+
+		self.redirect('/reg?t=' + tid)
 
 
 app = webapp2.WSGIApplication([
-	('/dereg/team', DeregHandler)
+	('/dereg/team', DeregTeamHandler),
+	('/dereg/judge', DeregJudgeHandler),
+	('/dereg/institution', DeregInstitutionHandler)
 ], debug=True)

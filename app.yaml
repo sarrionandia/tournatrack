@@ -1,5 +1,5 @@
 application: tournatrack-beta
-version: 2
+version: 3
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -33,14 +33,8 @@ handlers:
 - url: /reg/team
   script: regteam.app
   
-- url: /dereg/team
-  script: deregteam.app
-  
-- url: /dereg/judge
-  script: deregjudge.app
-
-- url: /dereg/institution
-  script: dereginstitution.app
+- url: /dereg/.*
+  script: dereg.app
 
 - url: /reg/judge
   script: regjudge.app
