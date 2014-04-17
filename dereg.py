@@ -37,7 +37,7 @@ class DeregTeamHandler(webapp2.RequestHandler):
 			ist.key.delete()
 		self.redirect('/reg?t=' + tid)
 
-#Handles the deregistration of independent judges
+#Handles the deregistration of independent and institutional judges
 class DeregJudgeHandler(webapp2.RequestHandler):
 	def post(self):
 		user = tusers.get_current_user()
@@ -46,19 +46,10 @@ class DeregJudgeHandler(webapp2.RequestHandler):
 		#Check if the j_key parameter is in use.
 		if self.request.get('j_key', default_value=False):
 			key = ndb.Key(urlsafe=self.request.get('j_key'))
-			t_key = key.parent()
-
-			#Authenticate the user
-			judge = key.get()
-			if judge.user == user.key:
-				authorised = True
-			else:
-				t = t_key.get()
-				if user.key in t.owner:
-					authorised = True
+			j = key.get()
 
 			#Delete from the database
-			if authorised:
+			if j.authorised(user):
 				key.delete()
 
 		self.redirect(self.request.referer)

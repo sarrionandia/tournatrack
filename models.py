@@ -140,6 +140,17 @@ class RegisteredIndependentJudge(ndb.Model):
 	def prefs(self):
 		return RegisteredPreferences.query(ancestor=self.key).get()
 
+	#Check if the user is authorised to modify
+	def authorised(self, tuser):
+		#Check if they own the object
+		if self.user == tuser.key:
+			return True
+		#Check if they own the tournament
+		elif tuser.key in self.key.parent().parent().get().owner:
+			return True
+		else:
+			return False
+
 
 class RegisteredOpenTeam(ndb.Model):
 	"""Models an open team in the tournament"""
@@ -197,6 +208,17 @@ class InstitutionJudge(ndb.Model):
 	name = ndb.StringProperty()
 	cv = ndb.TextProperty()
 
+	#Check if the user is authorised to modify
+	def authorised(self, tuser):
+		#Check if they own the object
+		if self.key.parent().get().user == tuser.key:
+			return True
+		#Check if they are the tournament owner
+		elif tuser.key in self.key.parent().parent().parent().get().owner:
+			return True
+		else:
+			return False
+
 
 class RegisteredPreferences(ndb.Model):
 	"""The preferences of a registered participant"""
@@ -206,5 +228,3 @@ class RegisteredPreferences(ndb.Model):
 	halal = ndb.BooleanProperty()
 	kosher = ndb.BooleanProperty()
 	special = ndb.StringProperty()
-		
-	

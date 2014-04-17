@@ -39,15 +39,10 @@ class DeregHandler(webapp2.RequestHandler):
 			j_key = ndb.Key('InstitutionJudge', int(jid), parent=isi.key)
 			j = j_key.get()
 			j_key.delete()
-			self.redirect('/updatejudges?t=' + tid)
+			self.redirect(self.request.referer)
 			
 		else:
 			self.redirect('/reg?t=' + tid)
-		
-		
-		
-			
-								
 
 
 app = webapp2.WSGIApplication([
