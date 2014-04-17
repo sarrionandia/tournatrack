@@ -71,9 +71,7 @@
 	      </div>
 	      <div class="modal-footer">
 			<form method="post" action="/dereg/judge">
-				<input type="hidden" name="t" value="{{t.key.id()}}" />
-				<input type="hidden" name="r" value="{{r.key.id()}}" />
-				<input type="hidden" name="j" value="{{isj.key.id()}}" />
+				<input type="hidden" name="j_key" value="{{isj.key.urlsafe()}}" />
 	        	<button type="submit" class="btn btn-danger">Deregister</button>
 			</form>
 	      </div>
