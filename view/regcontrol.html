@@ -68,8 +68,10 @@ $( document ).ready(function() {
 			{% for i in institutions %}
 			<tr>
 				<td>{{i.name}}</td>
-				<td>{{i.teams().count(limit=1000)}}</td>
-				<td>{{i.judges().count(limit=1000)}}</td>
+				<td>{{i.teams().count(limit=1000)}}&nbsp;
+                    <a href="/add_to_reg?i={{i.key.urlsafe()}}&type=t"><span class="badge">+1</span></a></td>
+				<td>{{i.judges().count(limit=1000)}}&nbsp;
+                    <a href="/add_to_reg?i={{i.key.urlsafe()}}&type=j"><span class="badge">+1</span></a></td>
 				<td>{{i.leadName}}</td>
 				<td>{{i.email}}</td>
 				<td>{{i.phone}}</td>

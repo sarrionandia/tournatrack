@@ -22,32 +22,28 @@ import logging
 from models import InstitutionTeam, InstitutionJudge
 
 class RegHandler(webapp2.RequestHandler):
-    def get(self):
-        user = tusers.get_current_user()
+	def get(self):
+		user = tusers.get_current_user()
 
-        #Get the requested tournament
-        tid = self.request.get('t')
-        key = ndb.Key('Tournament', int(tid))
-        t = key.get()
+		#Get the institution
+		i = self.request.get('i')
+		i_key = ndb.Key(urlsafe=i)
+		institution = i_key.get()
 
-        reg = t.preRegRecord().get()
-        isi = reg.isInstitution(user)
+		reg = i_key.parent().get()
 
-        logging.info('Adding a new record')
+		if institution.authorised(user) and reg.open:
+			if self.request.get('type') == 't':
+				#Register a new Team
+				team = InstitutionTeam(parent=institution.key)
+				team.put()
 
-        if isi and reg.open:
-            if self.request.get('type') == 't':
-                #Register a new Team
-                team = InstitutionTeam(parent=isi.key)
-                team.put()
-                self.redirect('/updateteams?t=' + tid)
+			if self.request.get('type') == 'j':
+				#Register a new judge
+				judge = InstitutionJudge(parent=institution.key)
+				judge.put()
 
-
-            if self.request.get('type') == 'j':
-                #Register a new judge
-                judge = InstitutionJudge(parent=isi.key)
-                judge.put()
-                self.redirect('/updatejudges?t=' + tid)
+		self.redirect(self.request.referer)
 
 app = webapp2.WSGIApplication([
 	('/add_to_reg', RegHandler)
