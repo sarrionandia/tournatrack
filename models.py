@@ -14,11 +14,19 @@
 
 from google.appengine.ext import ndb
 
+
 class TUser(ndb.Model):
 	"""Models a user account"""
 	g_user = ndb.UserProperty()
 	nickname = ndb.StringProperty()
 
+class Attending(ndb.Model):
+	"""Models a user attending a tournament
+	The parent of the object will be the TUser attending """
+	role = ndb.StringProperty()
+	id = ndb.StringProperty()
+	name = ndb.StringProperty()
+	date = ndb.DateProperty()
 
 class Tournament(ndb.Model):
 	"""Models an individual tournament"""
@@ -43,7 +51,6 @@ class Tournament(ndb.Model):
 		self.preRegRecord().get().destroy()
 		self.key.delete()
 
-
 class Room(ndb.Model):
 	"""Models a room in a tournament"""
 	name = ndb.StringProperty()
@@ -51,7 +58,6 @@ class Room(ndb.Model):
 	status = ndb.StringProperty()
 	changed = ndb.TimeProperty()
 	comment = ndb.StringProperty()
-
 
 class PreRegRecord(ndb.Model):
 	"""Models the pre-registration of a tournament"""
@@ -151,7 +157,6 @@ class RegisteredIndependentJudge(ndb.Model):
 		else:
 			return False
 
-
 class RegisteredOpenTeam(ndb.Model):
 	"""Models an open team in the tournament"""
 	leadName = ndb.StringProperty()
@@ -167,8 +172,12 @@ class RegisteredOpenTeam(ndb.Model):
 	sp2Novice = ndb.BooleanProperty()
 
 	def authorised(self, tuser):
-		return self.user == tuser.key or  tuser.key in self.key.parent().parent().get().owner
-
+		if self.user == tuser.key:
+			return True
+		elif tuser.key in self.key.parent().parent().get().owner:
+			return True
+		else:
+			return False
 
 class RegisteredInstitution(ndb.Model):
 	"""Models an institution registered for the tournment"""
@@ -196,7 +205,6 @@ class RegisteredInstitution(ndb.Model):
 		for team in self.teams():
 			team.key.delete()
 		self.key.delete()
-
 
 class InstitutionTeam(ndb.Model):
 	"""A team attached to an institution"""

@@ -173,9 +173,7 @@
 	      </div>
 	      <div class="modal-footer">
 			<form method="post" action="/dereg/team">
-				<input type="hidden" name="t" value="{{t.key.id()}}" />
-				<input type="hidden" name="r" value="{{r.key.id()}}" />
-				<input type="hidden" name="team" value="{{ist.key.id()}}" />
+				<input type="hidden" name="t_key" value="{{ist.key.urlsafe()}}" />
 	        	<button type="submit" class="btn btn-danger">Deregister</button>
 			</form>
 	      </div>

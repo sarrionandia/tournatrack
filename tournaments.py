@@ -22,7 +22,7 @@ import datetime
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament
+from models import Tournament, Attending
 
 def pin_gen(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for x in range(size))
@@ -39,11 +39,16 @@ class TournamentsHandler(webapp2.RequestHandler):
 		if user:
 			
 			#Get a list of tournaments that the user owns
-			q = Tournament.query(Tournament.owner == user.key)	
-			
+			owner_q = Tournament.query(Tournament.owner == user.key)
+
+			#Get a list of tournaments that the user is attending
+			attend_q = Attending.query(ancestor=user.key).order(Attending.date)
+
+
 			template_values = {
 				'user' : user,
-				'tournaments' : q,
+				'tournaments' : owner_q,
+				'attending' : attend_q,
 				'logout' : tusers.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
@@ -77,18 +82,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 				new_tournament.put()
 			#Send the user back to the tournaments page
 			self.redirect('/tournaments')
-			
-			#Reserve the list of tournaments
-			q = Tournament.query(Tournament.owner == user.key)
-			
-			template_values = {
-				'user' : user,
-				'tournaments' : q,
-				'logout' : tusers.create_logout_url('/'),
-			}
-			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
-			self.response.write(template.render(template_values))
-			
+
 		else:
 			self.redirect(tusers.create_login_url(self.request.uri))
 	

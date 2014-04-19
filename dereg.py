@@ -19,6 +19,8 @@ import webapp2
 from google.appengine.ext import ndb
 import tusers
 
+from models import Attending
+
 #Handles the deregistration of open teams
 class DeregTeamHandler(webapp2.RequestHandler):
 	def post(self):
@@ -30,6 +32,12 @@ class DeregTeamHandler(webapp2.RequestHandler):
 			t = key.get()
 
 			if t.authorised(user):
+
+				#Remove the attendance record
+				q = Attending.query(ancestor=user.key)
+				q.filter(Attending.id == str(key.parent().parent().id()))
+				q.get(keys_only=True).delete()
+
 				key.delete()
 		self.redirect(self.request.referer)
 
@@ -45,6 +53,12 @@ class DeregJudgeHandler(webapp2.RequestHandler):
 
 			#Delete from the database
 			if j.authorised(user):
+
+				#Remove the attendance record
+				q = Attending.query(ancestor=user.key)
+				q.filter(Attending.id == str(key.parent().parent().id()))
+				q.get(keys_only=True).delete()
+
 				key.delete()
 
 		self.redirect(self.request.referer)
@@ -54,10 +68,15 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 		user = tusers.get_current_user()
 
 		#Get the requested tournament
-		institutionkey = self.request.get('institution')
-		institution = ndb.Key(urlsafe=institutionkey).get()
+		key = ndb.Key(urlsafe=self.request.get('institution'))
+		institution = key.get()
 
 		if institution.authorised(user):
+			#Remove the attendance record
+			q = Attending.query(ancestor=user.key)
+			q.filter(Attending.id == str(key.parent().parent().id()))
+			q.get(keys_only=True).delete()
+
 			institution.destroy()
 
 		self.redirect(self.request.referer)

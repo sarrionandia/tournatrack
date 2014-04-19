@@ -21,7 +21,7 @@ import tusers
 
 from wtforms import Form, TextField, TextAreaField, validators
 
-from models import RegisteredIndependentJudge
+from models import RegisteredIndependentJudge, Attending
 from forms import JudgeForm
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -94,6 +94,16 @@ class RegHandler(webapp2.RequestHandler):
 				judge.cv = form.cv.data
 
 				judge.put()
+
+				#Add an attendance record
+				attending = Attending(parent=user.key)
+				tournament = judge.key.parent().parent().get()
+				attending.name = tournament.name
+				attending.role = "Judge"
+				attending.id = str(tournament.key.id())
+				attending.date = tournament.start
+				attending.put()
+
 				
 				self.redirect('/reg?t=' + tid)
 			else:

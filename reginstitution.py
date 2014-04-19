@@ -22,7 +22,7 @@ import tusers
 
 from wtforms import Form, TextField, validators
 
-from models import RegisteredInstitution, InstitutionTeam, InstitutionJudge
+from models import RegisteredInstitution, InstitutionTeam, InstitutionJudge, Attending
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -98,6 +98,15 @@ class RegHandler(webapp2.RequestHandler):
 				inst.user = user.key
 				
 				inst.put()
+
+				#Add an attendance record
+				attending = Attending(parent=user.key)
+				tournament = inst.key.parent().parent().get()
+				attending.name = tournament.name
+				attending.role = "Institution"
+				attending.id = str(tournament.key.id())
+				attending.date = tournament.start
+				attending.put()
 				
 				#Add teams and judges
 				if 'nTeams' in self.request.arguments():

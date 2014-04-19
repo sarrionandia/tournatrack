@@ -2,140 +2,168 @@
 {% block title %}Tournament List{% endblock %}
 
 {% block head_extra %}
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <script type="text/javascript">
     (function($) {
         $(document).ready(function(){
             $(".datepicker").datepicker();
-	        $(".datepicker").datepicker( "option", "dateFormat", "yy-mm-dd");
+            $(".datepicker").datepicker( "option", "dateFormat", "yy-mm-dd");
 
         });
     })(jQuery);
 </script>
 
 <script>
-	function DeleteTournament(t)
-	{
-		// Disable the button
-		$('#' + t + ' .tournament_row button').prop('disabled', true)
-		
-		// Call the deletion URL
-		$.get("delete_tournament?t="  + t, function(data, status) {
-			$('#' + t).remove();
-		});
-	}
-	
-	function newTournament()
-	{
-		$('#tid').attr("value", null);
-		$('#name').val(null);
-		$('#start').val(null);
-		$('#end').val(null);
-		$('#t_button').text("Create Tournament");
-		$('#myModal').modal();
-	}
-	
-	function modifyTournament(tid, name, start, end)
-	{
-		$('#tid').attr("value", tid);
-		$('#name').val(name);
-		$('#start').val(start);
-		$('#end').val(end);
-		$('#t_button').text("Modify Tournament");
-		$('#myModal').modal();
-	}
+    function DeleteTournament(t)
+    {
+        // Disable the button
+        $('#' + t + ' .tournament_row button').prop('disabled', true)
+
+        // Call the deletion URL
+        $.get("delete_tournament?t="  + t, function(data, status) {
+            $('#' + t).remove();
+        });
+    }
+
+    function newTournament()
+    {
+        $('#tid').attr("value", null);
+        $('#name').val(null);
+        $('#start').val(null);
+        $('#end').val(null);
+        $('#t_button').text("Create Tournament");
+        $('#myModal').modal();
+    }
+
+    function modifyTournament(tid, name, start, end)
+    {
+        $('#tid').attr("value", tid);
+        $('#name').val(name);
+        $('#start').val(start);
+        $('#end').val(end);
+        $('#t_button').text("Modify Tournament");
+        $('#myModal').modal();
+    }
 </script>
 {% endblock %}
 
 {% block content %}
 <h2>Welcome to Tournatrack</h2>
-	<div class="panel panel-primary">
-		<div class="panel-heading">Your Tournaments</div>
-		<table class="table table-striped">
-			<tr>
-				<th>Tournament</th>
-				<th>Start</th>
-				<th>End</th>
-				<th>Modify</th>
-		{% for t in tournaments %}
-			<tr id="{{t.key.id()}}">
-				<div class="tournament_row">
-					<td>
-						<a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a>
-					</td>
-					<td>{{t.start}}</td>
-					<td>{{t.end}}</td>
-					<td>
-					<div class="btn-group">
-				  		<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-				    		Modify <span class="caret"></span>
-				  		</button>
-				  		<ul class="dropdown-menu" role="menu">
-							<li><a href="#" onclick="modifyTournament({{t.key.id()}}, '{{t.name}}', '{{t.start}}', '{{t.end}}')">Modify Tournament</a></li>
-				    		<li class="divider"></li>
-							<li>&nbsp;Warning: There's no going back...</li>
-				    		<li><a href="#" onclick="DeleteTournament({{t.key.id()}})">Permanently Delete Tournament</a></li>
-				  		</ul>
-					</div>
-					</td>
-				</div>
-			</tr>
-		{% endfor %}
-		</table>
-	</div>
-	<!-- Button trigger modal -->
-	<button class="btn btn-primary btn-lg" onclick="newTournament()">
+
+<div class="col-md-5">
+    <h3>Tournaments you are attending</h3>
+    <table class="table table-striped table-bordered" >
+        <tr>
+            <th>Tournament</th>
+            <th>Date</th>
+            <th>Registered as</th>
+        </tr>
+        {% for a in attending %}
+        <tr>
+            <td>
+                <a href="/reg?t={{a.id}}">
+                    {{a.name}}
+                </a>
+            </td>
+            <td>
+                {{a.date}}
+            </td>
+            <td>
+                {{a.role}}
+            </td>
+        </tr>
+        {% endfor%}
+    </table>
+</div>
+
+<div class="col-md-5">
+<h3>Tournaments you are running</h3>
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>Tournament</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Modify</th>
+        {% for t in tournaments %}
+    <tr id="{{t.key.id()}}">
+            <td>
+                <a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a>
+            </td>
+            <td>{{t.start}}</td>
+            <td>{{t.end}}</td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                        Modify <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" onclick="modifyTournament({{t.key.id()}}, '{{t.name}}', '{{t.start}}', '{{t.end}}')">Modify Tournament</a></li>
+                        <li class="divider"></li>
+                        <li>&nbsp;Warning: There's no going back...</li>
+                        <li><a href="#" onclick="DeleteTournament({{t.key.id()}})">Permanently Delete Tournament</a></li>
+                    </ul>
+                </div>
+            </td>
+    </tr>
+    {% endfor %}
+</table>
+<p>
+    <button class="btn btn-primary" onclick="newTournament()">
 	  Create New Tournament
 	</button>
+</p>
+</div>
+
+<div class="col-md-1">&nbsp;</div>
+
+<br />
+<!-- New Tournament Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><a href="http://www.youtube.com/watch?v=jfKe0weme68" target="_blank">Tell us about it, Janet</a></h4>
+            </div>
+            <form method="post" action="/tournaments" class="form-horizontal" role="form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" placeholder="Tournament Name" name="name" required>
+                            <input type="hidden" id="tid" name="id" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="start" class="col-sm-2 control-label">Starts on</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <input type="text" class="form-control datepicker" id="start" name="start" placeholder="yyyy-mm-dd" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="end" class="col-sm-2 control-label">Ends on</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <input type="text" class="form-control datepicker" id="end" name="end" placeholder="yyyy-mm-dd" required>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="t_button">Create Tournament</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
-	<!-- New Tournament Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel"><a href="http://www.youtube.com/watch?v=jfKe0weme68" target="_blank">Tell us about it, Janet</a></h4>
-	      </div>
-		<form method="post" action="/tournaments" class="form-horizontal" role="form">
-	      <div class="modal-body">
-	          <div class="form-group">
-			    <label for="name" class="col-sm-2 control-label">Name</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="name" placeholder="Tournament Name" name="name" required>
-				  <input type="hidden" id="tid" name="id" value=""/>
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label for="start" class="col-sm-2 control-label">Starts on</label>
-			    <div class="col-sm-10">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-			     		<input type="text" class="form-control datepicker" id="start" name="start" placeholder="yyyy-mm-dd" required>
-					</div>
-			    </div>
-			  </div>
-	          <div class="form-group">
-			    <label for="end" class="col-sm-2 control-label">Ends on</label>
-			    <div class="col-sm-10">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-			     		<input type="text" class="form-control datepicker" id="end" name="end" placeholder="yyyy-mm-dd" required>
-					</div>
-			    </div>
-			  </div>
-			
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-primary" id="t_button">Create Tournament</button>
-	      </div>
-		</form>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
-	
 {% endblock %}
