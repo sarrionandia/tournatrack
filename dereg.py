@@ -52,7 +52,6 @@ class DeregJudgeHandler(webapp2.RequestHandler):
 class DeregInstitutionHandler(webapp2.RequestHandler):
 	def post(self):
 		user = tusers.get_current_user()
-		tid = self.request.get('t')
 
 		#Get the requested tournament
 		institutionkey = self.request.get('institution')
@@ -61,7 +60,7 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 		if institution.user == user.key:
 			institution.destroy()
 
-		self.redirect('/reg?t=' + tid)
+		self.redirect(self.request.referer)
 
 
 app = webapp2.WSGIApplication([

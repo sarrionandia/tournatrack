@@ -63,6 +63,7 @@ $( document ).ready(function() {
 				<th>Contact</th>
 				<th>Email</th>
 				<th>Phone</th>
+                <th>Delete Teams & Judges</th>
 			</tr>
 			{% for i in institutions %}
 			<tr>
@@ -72,6 +73,13 @@ $( document ).ready(function() {
 				<td>{{i.leadName}}</td>
 				<td>{{i.email}}</td>
 				<td>{{i.phone}}</td>
+                <td>
+                    <form method="post" action="/dereg/institution">
+				        <input type="hidden" name="institution" value="{{i.key.urlsafe()}}" />
+	        	        <button type="submit" class="btn btn-danger">Deregister</button>
+			        </form>
+
+                </td>
 			</tr>
 			{% endfor %}
 		</table>
