@@ -10,11 +10,6 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-- kind: Attending
-  ancestor: yes
-  properties:
-  - name: date
-
 - kind: Institution
   ancestor: yes
   properties:
