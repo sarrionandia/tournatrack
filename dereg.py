@@ -23,25 +23,20 @@ import tusers
 class DeregTeamHandler(webapp2.RequestHandler):
 	def post(self):
 		user = tusers.get_current_user()
-		
-		#Get the requested tournament
-		tid = self.request.get('t')
-		key = ndb.Key('Tournament', int(tid))
-		t = key.get()
-			
-		reg = t.preRegRecord().get()
-		
-		ist = reg.isOpenTeam(user)
-		
-		if (ist):
-			ist.key.delete()
-		self.redirect('/reg?t=' + tid)
+
+		#Check if the t_key parameter is un use
+		if self.request.get('t_key', default_value=False):
+			key = ndb.Key(urlsafe=self.request.get('t_key'))
+			t = key.get()
+
+			if t.authorised(user):
+				key.delete()
+		self.redirect(self.request.referer)
 
 #Handles the deregistration of independent and institutional judges
 class DeregJudgeHandler(webapp2.RequestHandler):
 	def post(self):
 		user = tusers.get_current_user()
-		authorised = False
 
 		#Check if the j_key parameter is in use.
 		if self.request.get('j_key', default_value=False):

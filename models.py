@@ -166,6 +166,9 @@ class RegisteredOpenTeam(ndb.Model):
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
 
+	def authorised(self, tuser):
+		return self.user == tuser.key or  tuser.key in self.key.parent().get().owner
+
 
 class RegisteredInstitution(ndb.Model):
 	"""Models an institution registered for the tournment"""
@@ -201,6 +204,9 @@ class InstitutionTeam(ndb.Model):
 	sp2ESL = ndb.BooleanProperty()
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
+
+	def authorised(self, tuser):
+		return self.key.parent().get().user == tuser.key or  tuser.key in self.key.parent().parent().get().owner
 
 
 class InstitutionJudge(ndb.Model):

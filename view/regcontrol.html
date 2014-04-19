@@ -159,6 +159,7 @@ $( document ).ready(function() {
 				<th>Phone</th>
 				<th colspan="2">Speaker 1</th>
 				<th colspan="2">Speaker 2</th>
+                <th>Delete</th>
 			</tr>
 			{% for t in teams %}
 			<tr>
@@ -198,6 +199,13 @@ $( document ).ready(function() {
 					</a>
 					{% endif %}
 				</td>
+                 <td>
+                    <form method="post" action="/dereg/team">
+				        <input type="hidden" name="t_key" value="{{t.key.urlsafe()}}" />
+	        	        <button type="submit" class="btn btn-danger">Deregister</button>
+			        </form>
+                </td>
+
 			</tr>
 			{% endfor %}
 
@@ -239,6 +247,12 @@ $( document ).ready(function() {
 					</a>
 					{% endif %}
 			</td>
+            <td>
+                <form method="post" action="/dereg/team">
+				    <input type="hidden" name="t_key" value="{{t.key.urlsafe()}}" />
+	        	    <button type="submit" class="btn btn-danger">Deregister</button>
+			    </form>
+            </td>
 
             </tr>
             {% endfor %}
