@@ -40,7 +40,7 @@ class Tournament(ndb.Model):
 	def destroy(self):
 		for r in self.rooms():
 			r.key.delete()
-		self.preRegRecord().destroy()
+		self.preRegRecord().get().destroy()
 		self.key.delete()
 
 
