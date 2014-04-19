@@ -63,7 +63,7 @@
         {% for a in attending %}
         <tr>
             <td>
-                <a href="/reg?t={{a.id}}">
+                <a href="/reg?t={{a.tournament.key.id()}}">
                     {{a.tournament.name}}
                 </a>
             </td>
