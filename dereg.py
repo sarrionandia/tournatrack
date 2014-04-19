@@ -57,7 +57,7 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 		institutionkey = self.request.get('institution')
 		institution = ndb.Key(urlsafe=institutionkey).get()
 
-		if institution.user == user.key:
+		if institution.authorised(user):
 			institution.destroy()
 
 		self.redirect(self.request.referer)

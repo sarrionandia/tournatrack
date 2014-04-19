@@ -186,6 +186,9 @@ class RegisteredInstitution(ndb.Model):
 	def judges(self):
 		return InstitutionJudge.query(ancestor=self.key)
 
+	#Check whether they are authorised to edit
+	def authorised(self, tuser):
+		return self.user == tuser.key or tuser.key in self.key.parent().parent().get().owner
 	#Delete the institution along with its teams and judges
 	def destroy(self):
 		for judge in self.judges():
