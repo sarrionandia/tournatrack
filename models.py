@@ -24,9 +24,7 @@ class Attending(ndb.Model):
 	"""Models a user attending a tournament
 	The parent of the object will be the TUser attending """
 	role = ndb.StringProperty()
-	id = ndb.StringProperty()
-	name = ndb.StringProperty()
-	date = ndb.DateProperty()
+	tournament=ndb.KeyProperty(kind='Tournament')
 
 class Tournament(ndb.Model):
 	"""Models an individual tournament"""

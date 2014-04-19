@@ -32,6 +32,11 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+# Sorry Python, I have forsaken thee!
+class tournament_bean:
+	tournament = None
+	role = ""
+
 class TournamentsHandler(webapp2.RequestHandler):
 	def get(self):
 		user = tusers.get_current_user()
@@ -42,13 +47,22 @@ class TournamentsHandler(webapp2.RequestHandler):
 			owner_q = Tournament.query(Tournament.owner == user.key)
 
 			#Get a list of tournaments that the user is attending
-			attend_q = Attending.query(ancestor=user.key).order(Attending.date)
+			attend_q = Attending.query(ancestor=user.key)
+
+
+			#Build a list of tournaments to pass to the view
+			tournaments = []
+			for a in attend_q:
+				tournament = tournament_bean()
+				tournament.tournament = a.tournament.get()
+				tournament.role = a.role
+				tournaments.append(tournament)
 
 
 			template_values = {
 				'user' : user,
 				'tournaments' : owner_q,
-				'attending' : attend_q,
+				'attending' : tournaments,
 				'logout' : tusers.create_logout_url('/'),
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
