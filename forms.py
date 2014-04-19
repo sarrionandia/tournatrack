@@ -12,7 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from wtforms import Form, TextField, TextAreaField, validators
+from wtforms import Form, TextField, TextAreaField, BooleanField, validators
+
+#Team Form model
+class TeamForm(Form):
+	leadName = TextField('leadName', [validators.Required()])
+	email = TextField('email', [validators.Email()])
+	phone = TextField('phone', [validators.Required()])
+	teamName = TextField('teamName')
+	sp1Name = TextField('sp1Name')
+	sp1Novice = BooleanField('sp1Novice')
+	sp1ESL = BooleanField('sp1ESL')
+	sp2Name = TextField('sp2Name')
+	sp2Novice = BooleanField('sp2Novice')
+	sp2ESL = BooleanField('sp2ESL')
+
 
 # Judge Form model
 class JudgeForm(Form):

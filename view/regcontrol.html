@@ -159,6 +159,7 @@ $( document ).ready(function() {
 				<th>Phone</th>
 				<th colspan="2">Speaker 1</th>
 				<th colspan="2">Speaker 2</th>
+                <th>Modify</th>
                 <th>Delete</th>
 			</tr>
 			{% for t in teams %}
@@ -199,6 +200,12 @@ $( document ).ready(function() {
 					</a>
 					{% endif %}
 				</td>
+
+                <td>
+                    <a href="/mod/team?t={{t.key.urlsafe()}}">
+                        <button type="button" class="btn btn-warning">Modify</button>
+                    </a>
+                </td>
                  <td>
                     <form method="post" action="/dereg/team">
 				        <input type="hidden" name="t_key" value="{{t.key.urlsafe()}}" />
@@ -247,6 +254,11 @@ $( document ).ready(function() {
 					</a>
 					{% endif %}
 			</td>
+            <td>
+                    <a href="/mod/team?t={{t.key.urlsafe()}}">
+                        <button type="button" class="btn btn-warning">Modify</button>
+                    </a>
+            </td>
             <td>
                 <form method="post" action="/dereg/team">
 				    <input type="hidden" name="t_key" value="{{t.key.urlsafe()}}" />

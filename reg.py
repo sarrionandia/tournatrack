@@ -19,7 +19,7 @@ import os
 from google.appengine.ext import ndb
 import tusers
 
-from regteam import TeamRegForm
+from forms import TeamForm
 from reginstitution import InstRegForm
 
 from wtforms import Form, BooleanField, TextField, validators
@@ -53,7 +53,7 @@ class RegHandler(webapp2.RequestHandler):
 		# If they are already registered as a team, pre-populate the 
 		# modify teams form		
 		if (ist):
-			form = TeamRegForm()
+			form = TeamForm()
 			form.leadName.data = ist.leadName
 			form.email.data = ist.email
 			form.phone.data = ist.phone

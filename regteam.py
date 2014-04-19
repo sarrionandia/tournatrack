@@ -21,9 +21,8 @@ import logging
 from google.appengine.ext import ndb
 import tusers
 
-from wtforms import Form, BooleanField, TextField, validators
-
 from models import RegisteredOpenTeam
+from forms import TeamForm
 
 EMAIL_REGEX = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
 
@@ -32,18 +31,6 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class TeamRegForm(Form):
-	leadName = TextField('leadName', [validators.Required()])
-	email = TextField('email', [validators.Email()])
-	phone = TextField('phone', [validators.Required()])
-	teamName = TextField('teamName', [validators.Required()])
-	sp1Name = TextField('sp1Name')
-	sp1Novice = BooleanField('sp1Novice')
-	sp1ESL = BooleanField('sp1ESL')
-	sp2Name = TextField('sp2Name')
-	sp2Novice = BooleanField('sp2Novice')
-	sp2ESL = BooleanField('sp2ESL')
-	
 
 class RegHandler(webapp2.RequestHandler):
 	def get(self):
@@ -56,7 +43,7 @@ class RegHandler(webapp2.RequestHandler):
 			
 		reg = t.preRegRecord().get()
 		
-		form = TeamRegForm()
+		form = TeamForm()
 					
 		template_values = {
 			'user' : user,
@@ -85,7 +72,7 @@ class RegHandler(webapp2.RequestHandler):
 				self.redirect('/reg?t=' + tid)
 				return
 
-			form = TeamRegForm(self.request.POST)
+			form = TeamForm(self.request.POST)
 			if (form.validate()):
 				
 				#If we are updating an existing registration, update it.
