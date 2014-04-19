@@ -21,7 +21,7 @@ import tusers
 
 from forms import JudgeForm, TeamForm
 
-from models import RegisteredOpenTeam, InstitutionTeam
+from models import RegisteredOpenTeam, InstitutionTeam, RegisteredIndependentJudge, InstitutionJudge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -37,14 +37,28 @@ class JudgeHandler(webapp2.RequestHandler):
 		j_key = ndb.Key(urlsafe=j)
 		judge = j_key.get()
 
-		t = j_key.parent().parent().get()
-		reg = t.preRegRecord().get()
+		reg = None
 
-		if user.key in t.owner or judge.user == user.key:
+		institution = None
+
+		if judge.authorised(user):
 			form.name.data = judge.name
-			form.phone.data = judge.phone
-			form.email.data = judge.email
 			form.cv.data = judge.cv
+
+			if isinstance(judge, InstitutionJudge):
+				institution = j_key.parent().get()
+				t = j_key.parent().parent().parent().get()
+				form.email.data = institution.email
+				form.phone.data = institution.phone
+
+				reg = j_key.parent().parent().get()
+
+			elif isinstance(judge, RegisteredIndependentJudge):
+				reg = j_key.parent().get()
+				form.email.data = judge.email
+				form.phone.data = judge.phone
+
+			t = reg.key.parent().get()
 
 			template_values = {
 				'user' : user,
@@ -53,7 +67,8 @@ class JudgeHandler(webapp2.RequestHandler):
 				'login' : tusers.create_login_url('/mod/judge?j=' + j),
 				'r' : reg,
 				'form' : form,
-				'j' : j_key.urlsafe()
+				'j' : j_key.urlsafe(),
+				'institution' : institution
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/modjudge.html')
 			self.response.write(template.render(template_values))
@@ -70,12 +85,24 @@ class JudgeHandler(webapp2.RequestHandler):
 		j_key = ndb.Key(urlsafe=j)
 		judge = j_key.get()
 
-		t = j_key.parent().parent().get()
-		reg = t.preRegRecord().get()
+		reg = None
+		institution = None
 
-		if user.key in t.owner or user.key == judge.user:
+		if judge.authorised(user):
 
-			#If valid, create the new judge object
+
+			if isinstance(judge, InstitutionJudge):
+				institution = j_key.parent().get()
+				reg = institution.key.parent().get()
+
+				form.email.data = institution.email
+				form.phone.data = institution.phone
+
+			elif isinstance(judge, RegisteredIndependentJudge):
+				reg = j_key.parent().get()
+
+			t = reg.key.parent().get()
+
 			if (form.validate()):
 
 				judge.name = form.name.data
@@ -94,6 +121,7 @@ class JudgeHandler(webapp2.RequestHandler):
 					'login' : tusers.create_login_url('/mod/judge?j=' + j),
 					'r' : reg,
 					'form' : form,
+					'institution' : institution,
 				}
 				template = JINJA_ENVIRONMENT.get_template('view/modjudge.html')
 				self.response.write(template.render(template_values))
@@ -129,6 +157,7 @@ class TeamHandler(webapp2.RequestHandler):
 				form.email.data = team.email
 				form.phone.data = team.phone
 				reg = t_key.parent().get()
+
 			elif isinstance(team, InstitutionTeam):
 				institution = team.key.parent().get()
 				form.leadName.data = institution.leadName

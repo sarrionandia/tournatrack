@@ -22,32 +22,50 @@
 			    </ul>
 			{% endif %}
 
+            <form method="post" action="/mod/judge?j={{j}}">
 
-			<form role="form" action="/mod/judge?j={{j}}" method="post">
+                <h3>Contact Details</h3>
+                {% if institution %}
+                <p>
+                    The contact details for this judge come from the institution that registered it:
+                    {{institution.name}}
+                </p>
 
-				<div class="form-group col-md-12">
-			    	<label for="name">Name</label>
-			    	{{form.name(class="form-control", placeholder="Name")}}
+                <div class="form-group col-md-6">
+			    	<label for="name">Email</label>
+			    	{{form.email(class="form-control", disabled="True")}}
 			  	</div>
 
-				<div class="form-group col-md-6">
-			    	<label for="name">Email</label>
+                <div class="form-group col-md-6">
+			    	<label for="name">Phone</label>
+			    	{{form.phone(class="form-control", disabled="True")}}
+			  	</div>
+
+                {% else %}
+                <div class="form-group col-md-6">
+			    	<label for="email">Email</label>
 			    	{{form.email(class="form-control", placeholder="Email Address")}}
 			  	</div>
 
-				<div class="form-group col-md-6">
-			    	<label for="name">Phone Number</label>
-			    	{{form.phone(class="form-control",)}}
+                <div class="form-group col-md-6">
+			    	<label for="phone">Phone</label>
+			    	{{form.phone(class="form-control", placeholder="Phone Number")}}
+			  	</div>
+
+                {% endif %}
+
+                <div class="form-group col-md-12">
+			    	<label for="name">Name of Judge</label>
+			    	{{form.name(class="form-control", placeholder="Name of Judge")}}
 			  	</div>
 
 				<div class="form-group col-md-12">
-			    	<label for="name">Judging CV</label>
-			    	{{form.cv(class="form-control", placeholder="No CV supplied", rows="5")}}
+			    	<label for="name">Your judging CV</label>
+			    	{{form.cv(class="form-control", placeholder="Don't be modest...", rows="5")}}
 			  	</div>
 
-			    <button type="submit" class="btn btn-primary">Save Changes</button>
-
-			</form>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
 
 		</div>
 	</div>
