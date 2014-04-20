@@ -12,6 +12,10 @@ handlers:
 - url: /style
   static_dir: static
 
+- url: /favicon.ico
+  upload: img/favicon.ico
+  static_files: img/favicon.ico
+
 - url: /mod/.*
   script: modify.app
 
