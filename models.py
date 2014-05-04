@@ -66,6 +66,7 @@ class Room(ndb.Model):
 	status = ndb.StringProperty()
 	changed = ndb.TimeProperty()
 	comment = ndb.StringProperty()
+	customStatus = ndb.StringProperty(repeated=True)
 
 class PreRegRecord(ndb.Model):
 	"""Models the pre-registration of a tournament"""
