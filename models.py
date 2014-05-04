@@ -49,7 +49,7 @@ class Tournament(ndb.Model):
 
 		preReg = self.preRegRecord().get()
 		if preReg:
-			preReg.destroy()#
+			preReg.destroy()
 
 		#Get rid of all of the attendance records
 		q = Attending.query()
