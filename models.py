@@ -47,6 +47,14 @@ class Tournament(ndb.Model):
 		for r in self.rooms():
 			r.key.delete()
 		self.preRegRecord().get().destroy()
+
+		#Get rid of all of the attendance records
+		q = Attending.query()
+		q.filter(Attending.tournament == self.key)
+		keys = q.fetch(keys_only=True)
+		ndb.delete_multi(keys)
+
+
 		self.key.delete()
 
 class Room(ndb.Model):
