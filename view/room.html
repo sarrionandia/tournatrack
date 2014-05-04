@@ -3,14 +3,28 @@
 {% block head_extra %}
 <script>
 function newRoom(){
-	if ($('#field_name').val().length > 0)
+    name = $('#field_name').val();
+
+    var roomnames = [];
+    $('.roomname').each(function() {roomnames.push($(this).text())});
+    if (roomnames.indexOf(name) > -1) {
+        isUnique = false;
+        alert("That room already exists");
+        return false;
+    }
+
+    else if (name.length < 1) {
+        return false;
+    }
+
+	else
 	{
 	$.post( '/room?t={{t.key.id()}}', $('form#roomform').serialize(), function(data, status) {
 		arg_string = "t={{t.key.id()}}&r=" + data.id;
-		$("#roomtable > tbody").append("<tr><td>" + data.name + "</td><td><a href='toggle_room?" + arg_string + "'>Deactivate</a></td><td><a href='/del_r?" + arg_string + "'>Delete</a></td></tr>");
+		$("#roomtable > tbody").append("<tr><td class=\"roomname\">" + data.name + "</td><td><a href='toggle_room?" + arg_string + "'>Deactivate</a></td><td><a href='/del_r?" + arg_string + "'>Delete</a></td></tr>");
 		$('#field_name').val('');
 	       },
-	       'json' // I expect a JSON response
+	       'json' //expect a JSON response
 	    );
 	return false;
 }
@@ -31,7 +45,7 @@ function newRoom(){
 		</tr>
 		{% for r in rooms %}
 		<tr id="{{t.key.id()}}">
-			<td>{{r.name}}</td>
+			<td class="roomname">{{r.name}}</td>
 			<td><a href="/toggle_room?t={{t.key.id()}}&r={{r.key.id()}}">{% if r.active %}Deactivate{% else %}Activate{%endif%}</a></td>
 			<td><a href="/del_r?t={{t.key.id()}}&r={{r.key.id()}}">Delete</a></td>
 		</tr>
