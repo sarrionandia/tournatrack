@@ -34,8 +34,12 @@ function roomclick(rid, name, status, comment)
 			Loading...
 		</div>
 	</div>
-	
-<a href="/reset_rooms?t={{t.key.id()}}"button type="button" class="btn btn-primary">Reset All Room Status</button></a>
+
+    <a href="/custom_room_status?t={{t.key.id()}}"button type="button"
+       class="btn btn-success">Set Up Custom Statuses</button></a>
+
+    <a href="/reset_rooms?t={{t.key.id()}}"button type="button"
+       class="btn btn-primary">Reset All Room Status</button></a>
 	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -53,12 +57,15 @@ function roomclick(rid, name, status, comment)
 				<option value="Judging">Judging Started</option>
 				<option value="Feedback">Feedback Started</option>
 				<option value="Problem">Problem: Send help</option>
+            {% for s in t.customRoomStatus %}
+                <option value="{{s}}">{{s}}</option>
+            {% endfor %}
 			</select>
 			
 			<label class="control-label">Comment</label>
 			<input type="hidden" id="roomid" name="r" value=""/>
 			<input type="text" id="roomcomment" name="comment" class="form-control" placeholder="Optional"/>
-			
+
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

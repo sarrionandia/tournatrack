@@ -34,3 +34,7 @@ class JudgeForm(Form):
 	email = TextField('email', [validators.email()])
 	phone = TextField('phone', [validators.required()])
 	cv = TextAreaField('cv', [validators.optional()])
+
+#Custom Room Status Form model
+class CustomStatusForm(Form):
+	name = TextField('name', [validators.required()])

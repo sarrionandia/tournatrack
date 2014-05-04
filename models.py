@@ -33,6 +33,7 @@ class Tournament(ndb.Model):
 	trackpin = ndb.StringProperty()
 	start = ndb.DateProperty()
 	end = ndb.DateProperty()
+	customRoomStatus = ndb.StringProperty(repeated=True)
 
 	#Return a list of rooms attached to the tournament
 	def rooms(self):
@@ -66,7 +67,6 @@ class Room(ndb.Model):
 	status = ndb.StringProperty()
 	changed = ndb.TimeProperty()
 	comment = ndb.StringProperty()
-	customStatus = ndb.StringProperty(repeated=True)
 
 class PreRegRecord(ndb.Model):
 	"""Models the pre-registration of a tournament"""

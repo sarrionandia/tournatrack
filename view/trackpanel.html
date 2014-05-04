@@ -36,6 +36,9 @@
 				<option value="Judging">Judging Started</option>
 				<option value="Feedback">Feedback Started</option>
 				<option value="Problem">Problem: Send help</option>
+                {% for s in t.customRoomStatus %}
+                <option value="{{s}}">{{s}}</option>
+                {% endfor %}
 			</select>
 		</div>
 		<div class="form-group">

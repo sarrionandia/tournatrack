@@ -1,0 +1,39 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Custom Room Statuses{% endblock %}
+
+{% block content %}
+
+        <div class="col-md-6">
+            <h2>Your Current Custom Statuses</h2>
+
+            <ul>
+            {% for s in t.customRoomStatus %}
+                <li>{{s}} [<a href="/delete_status?t={{t.key.id()}}&s={{s}}">Delete</a>] </li>
+
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <h2>Add a new Status</h2>
+
+            	{% if form.errors %}
+			    <ul class="errors">
+			        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+			            {% for error in field_errors %}
+			                <li>{{ form[field_name].label }}: {{ error }}</li>
+			            {% endfor %}
+			        {% endfor %}
+			    </ul>
+			{% endif %}
+
+            <form role="form" method="post" action="/custom_room_status?t={{t.key.id()}}">
+                <div class="col-md-4 form-group">
+			    	{{form.name(class="form-control", placeholder="e.g. 'On Fire'")}}
+                </div>
+                <button class="col-md-2 btn btn-success" type="submit">Add</button>
+            </form>
+
+        </div>
+
+{% endblock %}

@@ -19,6 +19,12 @@ handlers:
 - url: /mod/.*
   script: modify.app
 
+- url: /custom_room_status
+  script: custom_room_status.app
+
+- url: /delete_status
+  script: deletestatus.app
+
 - url: /add_to_reg
   script: reg_add.app
 
