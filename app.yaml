@@ -19,6 +19,9 @@ handlers:
 - url: /mod/.*
   script: modify.app
 
+- url: /tab
+  script: tab.app
+
 - url: /custom_room_status
   script: custom_room_status.app
 

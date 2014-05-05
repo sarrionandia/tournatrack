@@ -1,0 +1,38 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Tab Control{% endblock %}
+
+
+{% block content %}
+	<h2><i class="fa fa-list-ol"></i> Tabbing</h2>
+
+
+    <div class="alert alert-info col-md-6">
+
+        <h2>This thing can tab?!</h2>
+        <p>
+            Not yet. Sorry. But it can export your pre-registration data to the two most commonly used tab programs,
+            Tabbie and Tournaman. This will save your tabmaster lots of time.
+        </p>
+
+    </div>
+
+    <div class="col-md-6">
+        <h2>Export Registration Data</h2>
+        <p>
+            Exporting to Tabbie will give you an SQL file. Exporting to Tournaman will give you a CSV / spreadsheet file.
+            Don't know what that means? Don't worry, your tabmaster will.
+        </p>
+
+        <btn class="btn btn-info">
+            <i class="fa fa-download"></i> Tabbie
+        </btn>
+        <btn class="btn btn-info">
+            <i class="fa fa-download"></i> Tournaman
+        </btn>
+
+
+    </div>
+	
+
+
+{% endblock %}
