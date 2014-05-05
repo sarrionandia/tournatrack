@@ -105,7 +105,7 @@ class RegHandler(webapp2.RequestHandler):
 
 				#Add an attendance record
 				attending = Attending(parent=user.key)
-				attending.role = "Institution"
+				attending.role = "Open Team"
 				attending.tournament = t.key
 				attending.put()
 
