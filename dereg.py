@@ -18,6 +18,7 @@ import webapp2
 
 from google.appengine.ext import ndb
 import tusers
+import logging
 
 from models import Attending
 
@@ -75,7 +76,10 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 			#Remove the attendance record
 			q = Attending.query(ancestor=user.key)
 			q.filter(Attending.tournament == key.parent().parent())
-			q.get(keys_only=True).delete()
+			try:
+				q.get(keys_only=True).delete()
+			except:
+				logging.info("No key for attendance record")
 
 			institution.destroy()
 
