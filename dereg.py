@@ -32,11 +32,11 @@ class DeregTeamHandler(webapp2.RequestHandler):
 			t = key.get()
 
 			if t.authorised(user):
-
-				#Remove the attendance record
-				q = Attending.query(ancestor=user.key)
-				q.filter(Attending.tournament == key.parent().parent())
-				q.get(keys_only=True).delete()
+				if key.kind() == 'RegisteredOpenTeam':
+					#Remove the attendance record
+					q = Attending.query(ancestor=user.key)
+					q.filter(Attending.tournament == key.parent().parent())
+					q.get(keys_only=True).delete()
 
 				key.delete()
 		self.redirect(self.request.referer)
@@ -53,11 +53,11 @@ class DeregJudgeHandler(webapp2.RequestHandler):
 
 			#Delete from the database
 			if j.authorised(user):
-
-				#Remove the attendance record
-				q = Attending.query(ancestor=user.key)
-				q.filter(Attending.tournament == key.parent().parent())
-				q.get(keys_only=True).delete()
+				if key.kind() == 'RegisteredIndependentJudge':
+					#Remove the attendance record
+					q = Attending.query(ancestor=user.key)
+					q.filter(Attending.tournament == key.parent().parent())
+					q.get(keys_only=True).delete()
 
 				key.delete()
 
