@@ -1,0 +1,2 @@
+{% for j in i_judges %}{{j.name}},Independent,,1,n{% endfor %}
+{% for i in institutions %}{%for j in i.judges() %}{{j.name}},{{i.name}},,1,{% endfor %}{% endfor %}

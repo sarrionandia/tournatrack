@@ -8,7 +8,7 @@ builtins:
 - remote_api: on
 
 handlers:
-        
+
 - url: /style
   static_dir: static
 
@@ -22,6 +22,9 @@ handlers:
 - url: /tab
   script: tab.app
 
+- url: /tab/tournaman.*
+  script: tournaman.app
+
 - url: /custom_room_status
   script: custom_room_status.app
 
@@ -33,7 +36,7 @@ handlers:
 
 - url: /updateteams
   script: updatereg.app
-  
+
 - url: /updatejudges
   script: updatereg.app
 
@@ -42,27 +45,27 @@ handlers:
 
 - url: /reg/team
   script: regteam.app
-  
+
 - url: /dereg/.*
   script: dereg.app
 
 - url: /reg/judge
   script: regjudge.app
-  
+
 - url: /judgecv
   script: judgecv.app
-  
+
 - url: /reg
   script: reg.app
-  
+
 - url: /toggle_pre_reg
   script: regcontrol.app
 
 - url: /reg_control
   script: regcontrol.app
-  
+
 - url: /delete_tournament
-  script: deletetournament.app  
+  script: deletetournament.app
 
 - url: /reset_rooms
   script: resetrooms.app
@@ -75,25 +78,25 @@ handlers:
 
 - url: /trackgrid
   script: trackgrid.app
-  
+
 - url: /trackpin
   script: trackpin.app
-  
+
 - url: /toggle_room
-  script: toggleroom.app  
+  script: toggleroom.app
 
 - url: /del_r
   script: deleteroom.app
 
 - url: /room
-  script: room.app  
+  script: room.app
 
 - url: /del_i
   script: deleteinst.app
-  
+
 - url: /tournaments
   script: tournaments.app
-   
+
 - url: /tournament_instance
   script: tournamentinstance.app
 

@@ -188,6 +188,9 @@ class RegisteredOpenTeam(ndb.Model):
 		else:
 			return False
 
+	def institutionName(self):
+		return "Composite"
+
 class RegisteredInstitution(ndb.Model):
 	"""Models an institution registered for the tournment"""
 	name = ndb.StringProperty()
@@ -228,6 +231,8 @@ class InstitutionTeam(ndb.Model):
 	def authorised(self, tuser):
 		return self.key.parent().get().user == tuser.key or  tuser.key in self.key.parent().parent().parent().get().owner
 
+	def institutionName(self):
+		return self.key.parent().get().name
 
 class InstitutionJudge(ndb.Model):
 	"""A judge attached to an institution"""
