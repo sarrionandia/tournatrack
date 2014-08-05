@@ -1,1 +1,3 @@
-{% for t in teams %}{{t.teamName}},{{t.sp1Name}},{{t.sp2Name}},{{t.institutionName()}},n,{%if t.sp1ESL %}s{% endif%},{%if t.sp2ESL %}s{% endif %},y{% endfor %}
+{% for t in teams %}{{t.teamName}},{{t.sp1Name}},{{t.sp2Name}},{{t.institutionName()}},n,{%if t.sp1ESL %}s{% endif%},{%if t.sp2ESL %}s{% endif %},y
+{% endfor %}{%for i in institutions %}{% for t in i.teams() %}{{t.teamName}},{{t.sp1Name}},{{t.sp2Name}},{{t.institutionName()}},n,{%if t.sp1ESL %}s{% endif%},{%if t.sp2ESL %}s{% endif %},y
+{% endfor %}{% endfor %}

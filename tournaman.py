@@ -80,7 +80,8 @@ class TournamanTeamsHandler(webapp2.RequestHandler):
           't' : t,
           'logout' : tusers.create_logout_url('/'),
           'r' : reg,
-          'teams' : reg.teams()
+          'teams' : reg.teams(),
+          'institutions' : reg.institutions()
         }
         template = JINJA_ENVIRONMENT.get_template('view/tabexport/tournaman.csv')
         self.response.headers['Content-Type'] = 'text/csv'
