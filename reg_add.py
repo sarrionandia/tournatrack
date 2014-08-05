@@ -32,7 +32,7 @@ class RegHandler(webapp2.RequestHandler):
 
 		reg = i_key.parent().get()
 
-		if institution.authorised(user) and reg.open:
+		if institution.authorised(user) and reg.open and institution.teams().count(limit=20)<20:
 			if self.request.get('type') == 't':
 				#Register a new Team
 				team = InstitutionTeam(parent=institution.key)
