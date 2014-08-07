@@ -88,6 +88,15 @@
   {% for break in breaks %}
   <div class="alert alert-success" role="alert">
     <i class="fa fa-star"></i>&nbsp; {{break.startDate}}: {{break.tournament}}
+    ({% if break.NoviceBreak %}Novice Break,{% endif %}
+    {% if break.EFLBreak %}EFL Break,{% endif %}
+    {% if break.ESLBreak %}ESL Break,{% endif %}
+    {% if break.doubleoctofinalist %}Double-Octo Break,{% endif %}
+    {% if break.octofinalist %}Octofinalist,{% endif %}
+    {% if break.quarterfinalist %}Quarterfinalist,{% endif %}
+    {% if break.semifinalist %}Semifinalist,{% endif %}
+    {% if break.finalist %}Finalist,{% endif %})
+
   </div>
   {% endfor %}
 
@@ -113,6 +122,10 @@
   {% for win in wins %}
   <div class="alert alert-warning" role="alert">
     <i class="fa fa-trophy"></i>&nbsp; {{win.startDate}}: {{win.tournament}}
+    ({% if win.champion %}Open Break,{% endif %}
+    {% if win.ESLChampion %}ESL Break,{% endif %}
+    {% if win.EFLChampion %}EFL Break,{% endif %}
+    {% if win.NoviceChampion %}Novice Break{% endif %})
   </div>
   {% endfor %}
 
