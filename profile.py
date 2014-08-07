@@ -59,6 +59,7 @@ class ProfileHandler(webapp2.RequestHandler):
 
       if (not name):
         self.redirect('/update_profile')
+        return
     else:
       self.redirect('/')
       return
