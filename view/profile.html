@@ -1,7 +1,100 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Your Profile{% endblock %}
 
+{% block head_extra %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Tournament', 'Speaks'],
+          ['Durham IV',  78],
+          ['Lancaster IV',  76],
+          ['SOAS Open',  81.2],
+          ['Welsh Mace',  80]
+        ]);
+
+        var options = {
+          title: 'Speaker Points Over Last 10 Tournaments',
+          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 50}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
+{% endblock %}
+
 {% block content %}
-<h2>Your Tournatrack Profile</h2>
+<div class="alert alert-info" role="alert">
+  Your DebaterID is: {{user.key.id()}}
+</div>
+
+<h1>Speaking Achievements</h2>
+
+<h2>Average Speaker Score: 80.4</h2>
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar"
+   aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+    <span class="sr-only">80.4 Average</span>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <h2>Broken at 11 Tournaments</h2>
+
+  <div class="alert alert-success" role="alert">
+    <i class="fa fa-star"></i>&nbsp; 19/06/2014: NCH Literature Open
+  </div>
+
+  <div class="alert alert-success" role="alert">
+    <i class="fa fa-star"></i>&nbsp; 21/05/2014: Durham Open
+  </div>
+
+<div class="alert alert-success" role="alert">
+  <i class="fa fa-star"></i>&nbsp; 14/05/2014: Newcastle Mixed Doubles
+</div>
+
+</div>
+
+<div class="col-md-6">
+  <h2>Won 4 Tournaments</h2>
+  <div class="alert alert-warning" role="alert">
+    <i class="fa fa-trophy"></i>&nbsp; 19/06/2014: NCH Literature Open
+  </div>
+
+  <div class="alert alert-warning" role="alert">
+    <i class="fa fa-trophy"></i>&nbsp; 18/01/2014: Lancaster IV
+  </div>
+
+  <div class="alert alert-warning" role="alert">
+    <i class="fa fa-trophy"></i>&nbsp; 01/12/2012: Welsh Mace
+  </div>
+
+
+</div>
+
+<div class="col-md-12" id="chart_div" style="width: 900px; height: 500px;"></div>
+
+<div class="col-md-12" id="all_tournaments">
+  <h2>The Gory Details</h2>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Tournament</th>
+      <th>Team Rank</th>
+      <th>Speaker Rank</th>
+      <th>Average Speaks</th>
+      <th>Achievements</th>
+    </tr>
+  </table>
+
+  <a href="myProfile/AddSpeakerRecord">
+    <button type="button" class="btn btn-success">Add Speaker Record</button>
+    </a>
+</div>
 
 {% endblock %}
