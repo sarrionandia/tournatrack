@@ -19,6 +19,7 @@ class TUser(ndb.Model):
 	"""Models a user account"""
 	g_user = ndb.UserProperty()
 	nickname = ndb.StringProperty()
+	full_name = ndb.StringProperty()
 
 class Attending(ndb.Model):
 	"""Models a user attending a tournament
@@ -259,3 +260,28 @@ class RegisteredPreferences(ndb.Model):
 	halal = ndb.BooleanProperty()
 	kosher = ndb.BooleanProperty()
 	special = ndb.StringProperty()
+
+class PerformanceTournamentSpeakerRecord(ndb.Model):
+	"""The performance record of a speaker at a tournament"""
+	tournament = ndb.StringProperty()
+	startDate = ndb.DateProperty()
+	teamName = ndb.StringProperty()
+
+	teamRank = ndb.IntegerProperty()
+	averageSpeaks = ndb.FloatProperty()
+	speakerRank = ndb.IntegerProperty()
+
+	champion = ndb.BooleanProperty()
+	finalist = ndb.BooleanProperty()
+	semifinalist = ndb.BooleanProperty()
+	quarterfinalist = ndb.BooleanProperty()
+	octofinalist = ndb.BooleanProperty()
+	doubleoctofinalist = ndb.BooleanProperty()
+
+	ESLBreak = ndb.BooleanProperty()
+	ESLChampion = ndb.BooleanProperty()
+	EFLBreak = ndb.BooleanProperty()
+	EFLChampion = ndb.BooleanProperty()
+
+	NoviceBreak = ndb.BooleanProperty()
+	NoviceChampion = ndb.BooleanProperty()
