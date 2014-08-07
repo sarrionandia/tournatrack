@@ -1,0 +1,53 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Update your Details{% endblock %}
+
+{% block content %}
+<h2>Your Tournatrack Profile</h2>
+
+<div class="col-md-6">
+    <h3>Some Details</h3>
+    {% if form.errors %}
+    <ul class="errors">
+    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+          {% for error in field_errors %}
+              <li>{{ form[field_name].label }}: {{ error }}</li>
+          {% endfor %}
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form role="form" action="/update_profile" method="post">
+
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        {{form.name(class="form-control", placeholder="Your Name", required="required")}}
+      </div>
+
+      <div class="form-group">
+        <label for="institution">Your Current Institution (optional)</label>
+        {{form.institution(class="form-control", placeholder="e.g. University of Warwick")}}
+      </div>
+
+      <div class="checkbox">
+        <label for="public">Tick to make your profile public </label>
+        {{form.public()}}
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Details</button>
+
+    </form>
+</div>
+
+<div class="col-md-6">
+<div class="panel panel-primary">
+  <div class="panel-heading">Your Profile</div>
+	<div class="panel-body">
+     Before you can make your public profile, you must fill in some
+     basic details about yourself.
+
+     Complete the form on the left, then try to re-access the public
+     profile feature.
+   </div>
+</div>
+</div>
+  {% endblock %}

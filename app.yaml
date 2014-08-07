@@ -20,7 +20,10 @@ handlers:
   script: modify.app
 
 - url: /myProfile
-  script: myProfile/profile.app
+  script: profile.app
+
+- url: /update_profile
+  script: update_profile.app
 
 - url: /tab
   script: tab.app

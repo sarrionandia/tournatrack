@@ -20,6 +20,8 @@ class TUser(ndb.Model):
 	g_user = ndb.UserProperty()
 	nickname = ndb.StringProperty()
 	full_name = ndb.StringProperty()
+	current_institution = ndb.StringProperty()
+	public_profile = ndb.BooleanProperty()
 
 class Attending(ndb.Model):
 	"""Models a user attending a tournament

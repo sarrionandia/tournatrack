@@ -38,3 +38,8 @@ class JudgeForm(Form):
 #Custom Room Status Form model
 class CustomStatusForm(Form):
 	name = TextField('name', [validators.required()])
+
+class ProfileForm(Form):
+	name = TextField('name', [validators.required()])
+	institution = TextField('institution')
+	public = BooleanField('public')
