@@ -10,7 +10,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Tournament', 'Speaks'],
           {% for r in last_five | reverse %}
-          {% if loop.index < 6 %}['{{r.tournament}}', {{r.averageSpeaks}}]{% if not loop.last%},{% endif %}{% endif %}
+          {% if loop.index <= nGraph %}['{{r.tournament}}', {{r.averageSpeaks}}]{% if not loop.last%},{% endif %}{% endif %}
           {% endfor %}
         ]);
 
@@ -23,6 +23,32 @@
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
+    </script>
+
+    <script type="text/javascript">
+    function loadGraph() {
+
+    var paramName = 'nGraph';
+    var paramValue = $('#graphLimit').val();
+
+    var url = window.location.href;
+    if (url.indexOf(paramName + "=") >= 0)
+    {
+        var prefix = url.substring(0, url.indexOf(paramName));
+        var suffix = url.substring(url.indexOf(paramName));
+        suffix = suffix.substring(suffix.indexOf("=") + 1);
+        suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+        url = prefix + paramName + "=" + paramValue + suffix;
+    }
+    else
+    {
+    if (url.indexOf("?") < 0)
+        url += "?" + paramName + "=" + paramValue;
+    else
+        url += "&" + paramName + "=" + paramValue;
+    }
+    window.location.href = url;
+  }
     </script>
 
 {% endblock %}
@@ -134,6 +160,11 @@
 </div>
 
 <div class="col-md-12" id="chart_div" style="width: 100%; height: 400px;"></div>
+
+<div class="col-md-12">
+Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tournaments <br />
+<button type="button" onclick="loadGraph()" >Update Graph</button>
+</div>
 
 <div class="col-md-12" id="all_tournaments">
   <h2>The Gory Details</h2>

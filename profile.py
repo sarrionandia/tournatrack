@@ -63,7 +63,6 @@ class ProfileHandler(webapp2.RequestHandler):
       self.redirect('/')
       return
 
-
     #Find all speaker records
     speaker_q = PerfSpeakerRecord.query(ancestor=requested_user.key).order(-PerfSpeakerRecord.startDate)
 
@@ -76,6 +75,11 @@ class ProfileHandler(webapp2.RequestHandler):
         sumSpeaks += result.averageSpeaks
         nSpeakerRecords += 1
         averageSpeaks = sumSpeaks / nSpeakerRecords
+
+      #Adjust limits for graph
+      nGraph = 5
+      if self.request.get('nGraph'):
+        nGraph = int(self.request.get('nGraph'))
 
       #Find all tournaments won
       won_q = speaker_q.filter(PerfSpeakerRecord.isWin == True).order(-PerfSpeakerRecord.startDate)
@@ -92,9 +96,10 @@ class ProfileHandler(webapp2.RequestHandler):
         'wins' : won_q,
         'breaks' : break_q,
         'speaker_records' : speaker_q,
-        'last_five' : speaker_q.fetch(5),
+        'last_five' : speaker_q.fetch(nGraph),
         'own_profile' : is_self,
-        'profile' : display_user
+        'profile' : display_user,
+        'nGraph' : nGraph
       }
     else:
       template_values = {
