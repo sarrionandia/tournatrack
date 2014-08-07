@@ -12,9 +12,9 @@ $( document ).ready(function() {
 
 {% endblock %}
 {% block content %}
-	<h2><i class="fa fa-keyboard-o"></i> Pre-Registration</h2>	
-	
-	{% if r.open %}		
+	<h2><i class="fa fa-keyboard-o"></i> Pre-Registration</h2>
+
+	{% if r.open %}
 		<div class="alert alert-success">
 			<strong>Reg Link:</strong>
 			<a href="/reg?t={{t.key.id()}}">
@@ -29,7 +29,7 @@ $( document ).ready(function() {
 			    <li><a href="/toggle_pre_reg?t={{t.key.id()}}&o=0">Close Registration</a></li>
 			  </ul>
 			</div>
-			
+
 		</div>
 	{% else %}
 		<div class="btn-group">
@@ -40,9 +40,9 @@ $( document ).ready(function() {
 		    <li><a href="/toggle_pre_reg?t={{t.key.id()}}&o=1">Open Registration</a></li>
 		  </ul>
 		</div>
-		
+
 	{% endif %}
-	
+
 	<h3>Who has registered</h3>
 	<ul class="nav nav-tabs" id="tab">
 	  <li id="insttab"><a href="#inst" data-toggle="tab">Institutions &nbsp;<span
@@ -52,7 +52,7 @@ $( document ).ready(function() {
 	  <li id="teamtab"><a href="#team" data-toggle="tab"><i class="fa fa-bullhorn"></i> Teams&nbsp;<span
 		class="badge">{{tcount}}</span></a></li>
 	</ul>
-	
+
 	<div class="tab-content">
 	  <div class="tab-pane fade" id="inst">
 	  	<table class="table table-striped">
@@ -87,7 +87,7 @@ $( document ).ready(function() {
 		</table>
 	  </div>
 	  <div class="tab-pane fade" id="judge">
-	
+
 		  <table class="table table-striped">
 		    <tr>
 				<th>Name</th>
@@ -131,7 +131,7 @@ $( document ).ready(function() {
 				<td>
                     {{j.name}}&nbsp;
                     {%if j.cv%}
-                    <a id="myLink" href="/judgecv?t={{t.key.id()}}&j={{j.key.urlsafe()}}" data-toggle="modal"
+                    <a id="myLink"  data-toggle="modal"
                        data-target="#myModal">
                     <span class="badge">CV</span></a>
                     {%endif%}
@@ -157,7 +157,7 @@ $( document ).ready(function() {
             {% endfor %}
 
 		  </table>
-	
+
 	  </div>
 	  <div class="tab-pane fade" id="team">
 	  	  <table class="table table-striped">
@@ -188,7 +188,7 @@ $( document ).ready(function() {
 					<i class="fa fa-globe"></i>
 					</a>
 					{% endif %}
-					
+
 					{% if t.sp1Novice %}
 					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
 					<i class="fa fa-certificate"></i>
@@ -281,19 +281,23 @@ $( document ).ready(function() {
 
             {% endfor %}
 		  </table>
-		
-		
+
+
 	  </div>
 	</div>
-	
+
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-	</div><!-- /.modal -->
-	
+	  <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div><!-- /.modal -->
+
 	<script>
 	$('#myModal').on('hidden.bs.modal', function (e) {
 	  $(this).removeData('bs.modal');
 	})
-	
+
 	</script>
-	
+
 {% endblock %}
