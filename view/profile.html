@@ -1,5 +1,5 @@
 {% extends "view/rootpage.html" %}
-{% block title %}Your Profile{% endblock %}
+{% block title %}{%if own_profile %}Your Profile{%else%}{{profile.full_name}} on Tournatrack{%endif%}{% endblock %}
 
 {% block head_extra %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -9,8 +9,8 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Tournament', 'Speaks'],
-          {% for r in speaker_records | reverse %}
-          {% if loop.index < 5 %}['{{r.tournament}}', {{r.averageSpeaks}}]{% if not loop.last%},{% endif %}{% endif %}
+          {% for r in last_five | reverse %}
+          {% if loop.index < 6 %}['{{r.tournament}}', {{r.averageSpeaks}}]{% if not loop.last%},{% endif %}{% endif %}
           {% endfor %}
         ]);
 
@@ -28,9 +28,35 @@
 {% endblock %}
 
 {% block content %}
+
+{% if own_profile %}
 <div class="alert alert-info" role="alert">
-  Your DebaterID is: {{user.key.id()}}
+  <p>
+    Your DebaterID is: {{user.key.id()}}
+  <p>
+  <p>
+    {% if user.public_profile %}
+    Your profile is currently public and can be viewed by anyone who has
+    <a href="/myProfile?d={{user.key.id()}}">this link</a>.
+    {% else %}
+    Your profile is currently private, only you can see it.
+    {% endif %}
+    You can change your private settings in your Profile Settings page.
+  </p>
+  <a href="/update_profile">
+    <button type="button" class="btn btn-info">
+      <i class="fa fa-gears"></i>&nbsp; Profile Settings
+    </button>
+  </a>
+
 </div>
+{% else %}
+<h1>{{profile.full_name}}'s Debating CV</h1>
+
+<a href='/myProfile'>
+  <button class='btn btn-success' type="button"><i class="fa fa-paperclip"></i>&nbsp;Get your own Tournatrack Profile!</button>
+</a>
+{% endif %}
 
 {% if empty %}
 
@@ -39,7 +65,8 @@
 <h2>Hey there, newbie.</h2>
 <p>We can't give you any stats on your performance until you give us some data.
     Add some speaker records below and our team of lizards will start crunching the
-    numbers.</p>
+    numbers.
+</p>
 <a href="myProfile/addSpeakerRecord">
   <button type="button" class="btn btn-success">Add Speaker Record</button>
   </a>
@@ -90,7 +117,9 @@
       <th>Team Rank</th>
       <th>Speaker Rank</th>
       <th>Average Speaks</th>
+      {% if own_profile %}
       <th>Delete</th>
+      {% endif %}
     </tr>
 
     {% for r in speaker_records %}
@@ -100,19 +129,23 @@
       <td>{{r.teamRank}}</td>
       <td>{{r.speakerRank}}</td>
       <td>{{r.averageSpeaks}}</td>
+      {% if own_profile %}
       <td>
         <form action="/myProfile/deleteSpeakerRecord" method="post">
           <input type="hidden" name="record" value="{{r.key.urlsafe()}}"></input>
           <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>
 
+{% if own_profile %}
   <a href="myProfile/addSpeakerRecord">
     <button type="button" class="btn btn-success">Add Speaker Record</button>
-    </a>
+  </a>
+{% endif %}
 </div>
 {% endif %}
 {% endblock %}

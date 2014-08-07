@@ -81,8 +81,8 @@ class SpeakerRecordHandler(webapp2.RequestHandler):
         record.EFLBreak = form.eflBreak.data
         record.EFLChampion = form.eflChampion.data
 
-        record.NoviceBreak = form.noviceChampion.data
-        record.NoviceChampion = form.noviceBreak.data
+        record.NoviceBreak = form.noviceBreak.data
+        record.NoviceChampion = form.noviceChampion.data
 
         #Check if this is a breaking record
         if record.finalist or record.semifinalist or record.quarterfinalist or record.octofinalist or record.doubleoctofinalist or record.NoviceBreak or record.ESLBreak or record.EFLBreak:

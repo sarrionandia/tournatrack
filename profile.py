@@ -18,6 +18,7 @@ import os
 import string
 import random
 import datetime
+import logging
 
 from google.appengine.ext import ndb
 import tusers
@@ -34,60 +35,73 @@ class ProfileHandler(webapp2.RequestHandler):
   def get(self):
     user = tusers.get_current_user()
 
-    if user:
+    profile_id = self.request.get('d')
+    display_user = None
+    is_self = False
+
+    if profile_id:
+      #Get the associated account
+      requested_user = ndb.Key('TUser', int(profile_id)).get()
+
+      #Check if the profile is public
+      if requested_user and requested_user.public_profile:
+        display_user = requested_user
+
+    elif user:
+      requested_user = user
+      is_self = True
 
       name = user.full_name
       current_institution = user.current_institution
 
       if (not name):
         self.redirect('/update_profile')
-
-      else:
-
-        #Find all speaker records
-        speaker_q = PerfSpeakerRecord.query(ancestor=user.key).order(-PerfSpeakerRecord.startDate)
-
-        if speaker_q.count(limit=1) > 0:
-
-          #Calculate average speaker points
-          sumSpeaks = 0
-          nSpeakerRecords = 0
-          for result in speaker_q:
-            sumSpeaks += result.averageSpeaks
-            nSpeakerRecords += 1
-          averageSpeaks = sumSpeaks / nSpeakerRecords
-
-
-          #Find all tournaments won
-          won_q = PerfSpeakerRecord.query(ancestor=user.key)
-          won_q = won_q.filter(PerfSpeakerRecord.isWin == True).order(-PerfSpeakerRecord.startDate)
-
-          #Find all tournaments broken
-          break_q = PerfSpeakerRecord.query(ancestor=user.key)
-          break_q = break_q.filter(PerfSpeakerRecord.isBreak == True).order(-PerfSpeakerRecord.startDate)
-
-
-          template_values = {
-            'user' : user,
-            'logout' : tusers.create_logout_url('/'),
-            'average_speaks' : averageSpeaks,
-            'win_count' : won_q.count(limit=1000),
-            'break_count' : break_q.count(limit=1000),
-            'wins' : won_q,
-            'breaks' : break_q,
-            'speaker_records' : speaker_q
-          }
-        else:
-          template_values = {
-          'user' : user,
-          'logout' : tusers.create_logout_url('/'),
-            'empty' : True
-          }
-        template = JINJA_ENVIRONMENT.get_template('view/profile.html')
-        self.response.write(template.render(template_values))
-
     else:
-      self.redirect(tusers.create_login_url(self.request.uri))
+      logging.info("NOT LOGGED IN")
+      self.redirect('/')
+      return
+
+
+    #Find all speaker records
+    speaker_q = PerfSpeakerRecord.query(ancestor=requested_user.key).order(-PerfSpeakerRecord.startDate)
+
+    if speaker_q.count(limit=1) > 0:
+
+      #Calculate average speaker points
+      sumSpeaks = 0
+      nSpeakerRecords = 0
+      for result in speaker_q:
+        sumSpeaks += result.averageSpeaks
+        nSpeakerRecords += 1
+        averageSpeaks = sumSpeaks / nSpeakerRecords
+
+      #Find all tournaments won
+      won_q = speaker_q.filter(PerfSpeakerRecord.isWin == True).order(-PerfSpeakerRecord.startDate)
+
+      #Find all tournaments broken
+      break_q = speaker_q.filter(PerfSpeakerRecord.isBreak == True).order(-PerfSpeakerRecord.startDate)
+
+      template_values = {
+        'user' : user,
+        'logout' : tusers.create_logout_url('/'),
+        'average_speaks' : averageSpeaks,
+        'win_count' : won_q.count(limit=1000),
+        'break_count' : break_q.count(limit=1000),
+        'wins' : won_q,
+        'breaks' : break_q,
+        'speaker_records' : speaker_q,
+        'last_five' : speaker_q.fetch(5),
+        'own_profile' : is_self,
+        'profile' : display_user
+      }
+    else:
+      template_values = {
+      'user' : user,
+      'logout' : tusers.create_logout_url('/'),
+      'empty' : True
+      }
+    template = JINJA_ENVIRONMENT.get_template('view/profile.html')
+    self.response.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([
   ('/myProfile', ProfileHandler)
