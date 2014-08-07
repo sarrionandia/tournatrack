@@ -141,7 +141,6 @@
   <table class="table table-striped">
     <tr>
       <th>Tournament</th>
-      <th>Team Name</th>
       <th>Team Rank</th>
       <th>Speaker Rank</th>
       <th>Average Speaks</th>
@@ -153,7 +152,6 @@
     {% for r in speaker_records %}
     <tr>
       <td>{{r.tournament}}<br />{{r.startDate}}</td>
-      <td>{{r.teamName}}</td>
       <td>{{r.teamRank}}</td>
       <td>{{r.speakerRank}}</td>
       <td>{{r.averageSpeaks}}</td>

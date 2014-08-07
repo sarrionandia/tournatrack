@@ -267,7 +267,6 @@ class PerfSpeakerRecord(ndb.Model):
 	"""The performance record of a speaker at a tournament"""
 	tournament = ndb.StringProperty()
 	startDate = ndb.DateProperty()
-	teamName = ndb.StringProperty()
 
 	teamRank = ndb.IntegerProperty()
 	averageSpeaks = ndb.FloatProperty()

@@ -45,7 +45,6 @@ class ProfileForm(Form):
 	public = BooleanField('public')
 
 class SpeakerRecordForm(Form):
-	teamName = TextField('teamName', [validators.required()])
 	tournamentName = TextField('tournamentName', [validators.required()])
 	startDate = DateField('startDate', [validators.required()])
 

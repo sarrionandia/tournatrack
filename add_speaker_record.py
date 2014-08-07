@@ -63,7 +63,6 @@ class SpeakerRecordHandler(webapp2.RequestHandler):
 
         record.tournament = form.tournamentName.data
         record.startDate = form.startDate.data
-        record.teamName = form.teamName.data
 
         record.teamRank = form.teamRank.data
         record.averageSpeaks = float(form.averageSpeaks.data)
