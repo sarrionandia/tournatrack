@@ -46,6 +46,9 @@ class ProfileHandler(webapp2.RequestHandler):
       #Check if the profile is public
       if requested_user and requested_user.public_profile:
         display_user = requested_user
+      else:
+        self.redirect('/')
+        return
 
     elif user:
       requested_user = user
@@ -57,7 +60,6 @@ class ProfileHandler(webapp2.RequestHandler):
       if (not name):
         self.redirect('/update_profile')
     else:
-      logging.info("NOT LOGGED IN")
       self.redirect('/')
       return
 
