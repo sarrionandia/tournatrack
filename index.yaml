@@ -15,6 +15,43 @@ indexes:
   properties:
   - name: name
 
+- kind: PerfSpeakerRecord
+  ancestor: yes
+  properties:
+  - name: isBreak
+  - name: startDate
+
+- kind: PerfSpeakerRecord
+  ancestor: yes
+  properties:
+  - name: isBreak
+  - name: startDate
+    direction: desc
+
+- kind: PerfSpeakerRecord
+  ancestor: yes
+  properties:
+  - name: isWin
+  - name: startDate
+
+- kind: PerfSpeakerRecord
+  ancestor: yes
+  properties:
+  - name: isWin
+  - name: startDate
+    direction: desc
+
+- kind: PerfSpeakerRecord
+  ancestor: yes
+  properties:
+  - name: startDate
+
+- kind: PerfSpeakerRecord
+  ancestor: yes
+  properties:
+  - name: startDate
+    direction: desc
+
 - kind: Room
   ancestor: yes
   properties:

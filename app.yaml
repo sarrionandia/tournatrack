@@ -22,6 +22,12 @@ handlers:
 - url: /myProfile
   script: profile.app
 
+- url: /myProfile/addSpeakerRecord
+  script: add_speaker_record.app
+
+- url: /myProfile/deleteSpeakerRecord
+  script: delete_speaker_record.app
+
 - url: /update_profile
   script: update_profile.app
 

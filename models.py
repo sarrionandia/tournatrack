@@ -263,7 +263,7 @@ class RegisteredPreferences(ndb.Model):
 	kosher = ndb.BooleanProperty()
 	special = ndb.StringProperty()
 
-class PerformanceTournamentSpeakerRecord(ndb.Model):
+class PerfSpeakerRecord(ndb.Model):
 	"""The performance record of a speaker at a tournament"""
 	tournament = ndb.StringProperty()
 	startDate = ndb.DateProperty()
@@ -287,3 +287,6 @@ class PerformanceTournamentSpeakerRecord(ndb.Model):
 
 	NoviceBreak = ndb.BooleanProperty()
 	NoviceChampion = ndb.BooleanProperty()
+
+	isWin = ndb.BooleanProperty()
+	isBreak = ndb.BooleanProperty()

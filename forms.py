@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from wtforms import Form, TextField, TextAreaField, BooleanField, validators
+from wtforms import Form, TextField, TextAreaField, BooleanField, IntegerField, DateField, DecimalField, validators
 
 #Team Form model
 class TeamForm(Form):
@@ -43,3 +43,28 @@ class ProfileForm(Form):
 	name = TextField('name', [validators.required()])
 	institution = TextField('institution')
 	public = BooleanField('public')
+
+class SpeakerRecordForm(Form):
+	teamName = TextField('teamName', [validators.required()])
+	tournamentName = TextField('tournamentName', [validators.required()])
+	startDate = DateField('startDate', [validators.required()])
+
+	teamRank = IntegerField('teamRank', [validators.required()])
+	speakerRank = IntegerField('speakerRank', [validators.required()])
+	averageSpeaks = DecimalField('averageSpeaks', [validators.required()])
+
+	champion = BooleanField('champion')
+	finalist = BooleanField('finalist')
+	semifinalist = BooleanField('semifinalist')
+	quarterfinalist = BooleanField('quarterfinalist')
+	octofinalist = BooleanField('octofinalist')
+	doubleoctofinalist = BooleanField('doubleoctofinalist')
+
+	eslChampion = BooleanField('ESLChampion')
+	eslBreak = BooleanField('ESLBreak')
+
+	eflChampion = BooleanField('EFLChampion')
+	eflBreak = BooleanField('EFLBreak')
+
+	noviceChampion = BooleanField('noviceChampion')
+	noviceBreak = BooleanField('noviceBreak')

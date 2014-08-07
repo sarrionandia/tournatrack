@@ -1,0 +1,170 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Add a Speaker Record{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    (function($) {
+        $(document).ready(function(){
+            $(".datepicker").datepicker();
+            $(".datepicker").datepicker( "option", "dateFormat", "yy-mm-dd");
+
+        });
+    })(jQuery);
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>How did you do?</h2>
+
+<div class="col-md-12">
+    {% if form.errors %}
+    <ul class="errors">
+    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+          {% for error in field_errors %}
+              <li>{{ form[field_name].label }}: {{ error }}</li>
+          {% endfor %}
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form role="form" action="/myProfile/addSpeakerRecord" method="post">
+
+      <div class="form-group col-md-12">
+        <label for="teamName">Team Name</label>
+        {{form.teamName(class="form-control", placeholder="e.g. Bristol A", required="required")}}
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="tournamentName">Tournament Name</label>
+        {{form.tournamentName(class="form-control", placeholder="e.g. Aberystwyth Open", required="required")}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="tournamentDate">Starting Date of Tournament</label>
+        <div class="input group">
+          {{form.startDate(class="form-control datepicker", required="required", placeholder="yyy-mm-dd")}}
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="teamRank">Rank on Team Tab</label>
+        {{form.teamRank(class="form-control", placeholder="e.g. 5", required="required")}}
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="speakerRank">Rank on Speaker Tab</label>
+        {{form.speakerRank(class="form-control", placeholder="e.g. 9", required="required")}}
+      </div>
+
+    <div class="form-group col-md-4">
+      <label for="averageSpeaks">Speaker Point Average</label>
+      {{form.averageSpeaks(class="form-control", placeholder="e.g. 76.8", required="required")}}
+    </div>
+ <div class="col-md-12">
+    <div class="col-md-6">
+      <div class="panel panel-success">
+        <div class="panel-heading"><i class="fa fa-trophy"></i>&nbsp;Open Break Achievements</div>
+
+        <div class="panel-body">
+          <p>Tick all that apply</p>
+          <div class="checkbox">
+            <label for="champion">{{form.champion(class="checkbox")}}&nbsp;Open Break Winner</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="finalist">{{form.finalist(class="checkbox")}}&nbsp;Open Break Finalist</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="semifinalist">{{form.semifinalist(class="checkbox")}}&nbsp;Open Break Semi-Finalist</label>
+          </div>
+
+          <div class="checkbox">
+              <label for="quarterfinalist">{{form.quarterfinalist(class="checkbox")}}&nbsp;Open Break Quarter-Finalist</label>
+          </div>
+
+          <div class="checkbox">
+              <label for="octofinalist">{{form.octofinalist(class="checkbox")}}&nbsp;Open Break Octo-Finalist</label>
+          </div>
+
+          <div class="checkbox">
+              <label for="doubleoctofinalist">{{form.doubleoctofinalist(class="checkbox")}}&nbsp;Open Break Semi Double-Octo-Finalist</label>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading"><i class="fa fa-certificate"></i>&nbsp;Novice Break Achievements</div>
+
+        <div class="panel-body">
+          <p>Tick all that apply</p>
+
+          <div class="checkbox">
+              <label for="noviceChampion">{{form.noviceChampion(class="checkbox")}}&nbsp;Novice Break Winner</label>
+          </div>
+
+        <div class="checkbox">
+            <label for="noviceBreak">{{form.noviceBreak(class="checkbox")}}&nbsp;Breaking Novice Team</label>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    <div class="col-md-12">
+
+    <div class="col-md-6">
+      <div class="panel panel-warning">
+        <div class="panel-heading"><i class="fa fa-globe"></i>&nbsp;ESL Break Achievements</div>
+
+        <div class="panel-body">
+          <p>Tick all that apply</p>
+
+          <div class="checkbox">
+              <label for="ESLChampion">{{form.eslChampion(class="checkbox")}}&nbsp;ESL Break Winner</label>
+          </div>
+
+        <div class="checkbox">
+            <label for="ESLBreak">{{form.eslBreak(class="checkbox")}}&nbsp;Breaking ESL Team</label>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-warning">
+        <div class="panel-heading"><i class="fa fa-globe"></i>&nbsp;EFL Break Achievements</div>
+
+        <div class="panel-body">
+          <p>Tick all that apply</p>
+
+          <div class="checkbox">
+              <label for="EFLChampion">{{form.eflChampion(class="checkbox")}}&nbsp;EFL Break Winner</label>
+          </div>
+
+        <div class="checkbox">
+            <label for="EFLBreak">{{form.eflBreak(class="checkbox")}}&nbsp;Breaking EFL Team</label>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-primary btn-lg">Add Record</button>
+    </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -22,7 +22,7 @@ import datetime
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament, Attending
+from models import PerfSpeakerRecord
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -44,10 +44,45 @@ class ProfileHandler(webapp2.RequestHandler):
 
       else:
 
-        template_values = {
+        #Find all speaker records
+        speaker_q = PerfSpeakerRecord.query(ancestor=user.key).order(-PerfSpeakerRecord.startDate)
+
+        if speaker_q.count(limit=1) > 0:
+
+          #Calculate average speaker points
+          sumSpeaks = 0
+          nSpeakerRecords = 0
+          for result in speaker_q:
+            sumSpeaks += result.averageSpeaks
+            nSpeakerRecords += 1
+          averageSpeaks = sumSpeaks / nSpeakerRecords
+
+
+          #Find all tournaments won
+          won_q = PerfSpeakerRecord.query(ancestor=user.key)
+          won_q = won_q.filter(PerfSpeakerRecord.isWin == True).order(-PerfSpeakerRecord.startDate)
+
+          #Find all tournaments broken
+          break_q = PerfSpeakerRecord.query(ancestor=user.key)
+          break_q = break_q.filter(PerfSpeakerRecord.isBreak == True).order(-PerfSpeakerRecord.startDate)
+
+
+          template_values = {
+            'user' : user,
+            'logout' : tusers.create_logout_url('/'),
+            'average_speaks' : averageSpeaks,
+            'win_count' : won_q.count(limit=1000),
+            'break_count' : break_q.count(limit=1000),
+            'wins' : won_q,
+            'breaks' : break_q,
+            'speaker_records' : speaker_q
+          }
+        else:
+          template_values = {
           'user' : user,
-        ' logout' : tusers.create_logout_url('/'),
-        }
+          'logout' : tusers.create_logout_url('/'),
+            'empty' : True
+          }
         template = JINJA_ENVIRONMENT.get_template('view/profile.html')
         self.response.write(template.render(template_values))
 
