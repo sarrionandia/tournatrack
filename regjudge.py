@@ -30,93 +30,94 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 class RegHandler(webapp2.RequestHandler):
-	def get(self):
-		user = tusers.get_current_user()
+  def get(self):
+    user = tusers.get_current_user()
 
-		#Get the requested tournament
-		tid = self.request.get('t')
-		key = ndb.Key('Tournament', int(tid))
-		t = key.get()
+    #Get the requested tournament
+    tid = self.request.get('t')
+    key = ndb.Key('Tournament', int(tid))
+    t = key.get()
 
-		reg = t.preRegRecord().get()
+    reg = t.preRegRecord().get()
 
-		form = JudgeForm()
+    form = JudgeForm()
 
-		template_values = {
-			'user' : user,
-			't' : t,
-			'logout' : tusers.create_logout_url('/'),
-			'login' : tusers.create_login_url('/reg/judge?t=' + tid),
-			'r' : reg,
-			'form' : form,
-		}
-		template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
-		self.response.write(template.render(template_values))
-
-
-	def post(self):
-		user = tusers.get_current_user()
-		#Get the requested tournament
-		tid = self.request.get('t')
-		key = ndb.Key('Tournament', int(tid))
-		t = key.get()
-		reg = t.preRegRecord().get()
+    template_values = {
+      'user' : user,
+      't' : t,
+      'logout' : tusers.create_logout_url('/'),
+      'login' : tusers.create_login_url('/reg/judge?t=' + tid),
+      'r' : reg,
+      'form' : form,
+    }
+    template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
+    self.response.write(template.render(template_values))
 
 
-		if user:
-
-			#Check they haven't registered already
-			if reg.isRegistered(user):
-				self.redirect('/reg?t=' + tid)
-				return
-
-			form = JudgeForm(self.request.POST)
-
-			#If valid, create the new judge object
-			if (form.validate()):
-
-				#Check if we are updating an existing judge
-				if not self.request.get('j'):
-					judge = RegisteredIndependentJudge(parent=reg.key)
-					judge.user = user.key
-
-				else:
-					judge = ndb.Key('Tournament', int(tid), 'PreRegRecord', reg.key.id(), 'RegisteredIndependentJudge', int(self.request.get('j'))).get()
-
-				#Check we are authorised
-				if not ((judge.user == user.key) or (user.key in t.owner)):
-					judge = None
-					self.redirect('/')
-
-				judge.name = form.name.data
-				judge.phone = form.phone.data
-				judge.cv = form.cv.data
-
-				judge.put()
-
-				#Add an attendance record
-				attending = Attending(parent=user.key)
-				attending.role = "Judge"
-				attending.tournament = t.key
-				attending.put()
+  def post(self):
+    user = tusers.get_current_user()
+    #Get the requested tournament
+    tid = self.request.get('t')
+    key = ndb.Key('Tournament', int(tid))
+    t = key.get()
+    reg = t.preRegRecord().get()
 
 
-				self.redirect('/reg?t=' + tid)
-			else:
-				template_values = {
-					'user' : user,
-					't' : t,
-					'logout' : tusers.create_logout_url('/'),
-					'login' : tusers.create_login_url('/reg/judge?t=' + tid),
-					'r' : reg,
-					'form' : form,
-				}
-				template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
-				self.response.write(template.render(template_values))
-		else:
-			self.redirect('/reg?t=' + tid)
+    if user:
+
+      form = JudgeForm(self.request.POST)
+
+      #If valid, create the new judge object
+      if (form.validate()):
+
+        #Check if we are updating an existing judge
+        if not self.request.get('j'):
+          #Check they haven't registered already
+          if reg.isRegistered(user):
+            self.redirect('/reg?t=' + tid)
+            return
+
+          judge = RegisteredIndependentJudge(parent=reg.key)
+          judge.user = user.key
+
+        else:
+
+          judge = ndb.Key('Tournament', int(tid), 'PreRegRecord', reg.key.id(), 'RegisteredIndependentJudge', int(self.request.get('j'))).get()
+
+        #Check we are authorised
+        if not ((judge.user == user.key) or (user.key in t.owner)):
+          judge = None
+          self.redirect('/')
+
+        judge.name = form.name.data
+        judge.phone = form.phone.data
+        judge.cv = form.cv.data
+
+        judge.put()
+
+        #Add an attendance record
+        attending = Attending(parent=user.key)
+        attending.role = "Judge"
+        attending.tournament = t.key
+        attending.put()
+
+
+        self.redirect('/reg?t=' + tid)
+      else:
+        template_values = {
+          'user' : user,
+          't' : t,
+          'logout' : tusers.create_logout_url('/'),
+          'login' : tusers.create_login_url('/reg/judge?t=' + tid),
+          'r' : reg,
+          'form' : form,
+        }
+        template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
+        self.response.write(template.render(template_values))
+    else:
+      self.redirect('/reg?t=' + tid)
 
 
 app = webapp2.WSGIApplication([
-	('/reg/judge', RegHandler)
+  ('/reg/judge', RegHandler)
 ], debug=True)

@@ -1,11 +1,11 @@
 {% extends "view/rootpage.html" %}
 {% block title %}Register for the {{t.name}}{% endblock %}
 {% block content %}
-	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Registration</h2>	
-	
-	
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Registration</h2>
+
+
 	{% if user %}
-	
+
 	{% if regd %}
 	{% if isj %}
 	<div class="alert alert-success">
@@ -14,7 +14,7 @@
 		<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#chgregmod">Update Information</button>
 		<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
 	</div>
-	
+
 	<div class="modal fade" id="chgregmod" tabindex="-1" role="dialog" aria-labelledby="chgregmodaLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -23,28 +23,24 @@
 	        <h4 class="modal-title" id="chgregmodLabel"><a target="_blank" href="http://www.youtube.com/watch?v=pl3vxEudif8">Ch-Ch-Ch-Changes</a></h4>
 	      </div>
 			<form method="post" action="/reg/judge">
-	
+
 	      <div class="modal-body">
-	        	<div class="form-group col-md-12">
+	        	<div class="form-group col-md-6">
 			    	<label for="name">Your Name</label>
 			    	<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required value="{{isj.name}}">
 			  	</div>
-			  
-				<div class="form-group col-md-6">
-			    	<label for="name">Your Email</label>
-			    	<input type="email" name="email" class="form-control" id="email" placeholder="Email Address" required value="{{isj.email}}">
-			  	</div>
-			
+
+
 				<div class="form-group col-md-6">
 			    	<label for="name">Your Phone Number</label>
 			    	<input type="tel" name="phone" class="form-control" id="phone" placeholder="Call me maybe" required value="{{isj.phone}}">
 			  	</div>
-			
+
 				<div class="form-group col-md-12">
 			    	<label for="name">Your judging CV</label>
 			    	<textarea  name="cv" class="form-control" id="cv" placeholder="Don't be modest..." rows="5">{% if isj.cv %}{{isj.cv}}{%endif%}</textarea>
 			  	</div>
-			
+
 	      </div>
 	      <div class="modal-footer">
 				<input type="hidden" name="t" value="{{t.key.id()}}" />
@@ -56,8 +52,8 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
-	
+
+
 	<div class="modal fade" id="deregmod" tabindex="-1" role="dialog" aria-labelledby="deregmodLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -78,18 +74,18 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
+
 	{% endif %}
-	
+
 	{% if ist %}
-	
+
 	<div class="alert alert-success">
 		You have registered for this tournament as an Open Team.
 		<br /><br />
 		<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#chgregmod">Update Information</button>
 		<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
 	</div>
-	
+
 	<div class="modal fade" id="chgregmod" tabindex="-1" role="dialog" aria-labelledby="chgregmodaLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -98,7 +94,7 @@
 	        <h4 class="modal-title" id="chgregmodLabel"><a target="_blank" href="http://www.youtube.com/watch?v=pl3vxEudif8">Ch-Ch-Ch-Changes</a></h4>
 	      </div>
 			<form method="post" action="/reg/team?t={{t.key.id()}}">
-	
+
 	      <div class="modal-body">
 				<div class="form-group col-md-12">
 			    	<label for="name">Lead Person's Name</label>
@@ -108,17 +104,17 @@
 			    	<label for="email">Email</label>
 					{{form.email(class="form-control", placeholder="Email Address")}}
 			  	</div>
-			
+
 				<div class="form-group col-md-6">
 			    	<label for="phone">Phone Number</label>
 					{{form.phone(class="form-control", placeholder="Call me maybe")}}
 			  	</div>
-			
+
 				<div class="form-group col-md-12">
 			    	<label for="teamName">Your Team Name</label>
 					{{form.teamName(class="form-control", placeholder="The best ones contain in-jokes")}}
 			  	</div>
-			
+
 				<div class="well well-lg col-md-6">
 					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 1</h2>
 					<div class="form-group">
@@ -144,9 +140,9 @@
 					<label class="col-md-3">
 					    ESL? {{form.sp2ESL(class="form-control")}}
 					</label>
-					
+
 				</div>
-			
+
 	      </div>
 	      <div class="modal-footer">
 				<input type="hidden" name="t" value="{{t.key.id()}}" />
@@ -158,8 +154,8 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
-	
+
+
 	<div class="modal fade" id="deregmod" tabindex="-1" role="dialog" aria-labelledby="deregmodLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -180,13 +176,13 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
-	
-	
+
+
+
 	{% endif %}
-	
+
 	{% if isi %}
-	
+
 	<div class="row">
         <div class="col-md-6">
             <div class="panel panel-primary">
@@ -198,7 +194,7 @@
 					<br /><br />
 					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#chgregmod">Update Contact Information</button>
 					<button type="button" class="btn btn-danger"data-toggle="modal" data-target="#deregmod">Deregister</button>
-					
+
                 </div>
             </div>
         </div>
@@ -217,7 +213,7 @@
 					<a href="/updatejudges?t={{t.key.id()}}">
 						<button type="button" class="btn btn-info">Update Judges <span class="badge">{{iJudgeCount}}</span></button>
 					</a>
-					
+
                 </div>
             </div>
         </div>
@@ -232,7 +228,7 @@
 	      </div>
 	      <div class="modal-body">
 	        Deregistering will remove all of your teams and judges. If you just want to deregister some of them,
-			use the update teams &amp; judges button on the right of this page. Once you deregister from a tournament, 
+			use the update teams &amp; judges button on the right of this page. Once you deregister from a tournament,
 			there is no guarantee that you will be able to re-register. Registration may have since
 	 		closed, or filled up. But, if you're sure...
 	      </div>
@@ -246,7 +242,7 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
+
 	<div class="modal fade" id="chgregmod" tabindex="-1" role="dialog" aria-labelledby="chgregmodaLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -257,7 +253,7 @@
 			</h4>
 	      </div>
 			<form method="post" action="/reg/institution">
-	
+
 	      <div class="modal-body">
 				<div class="alert alert-warning">
 					<p>If you want to change who is coming, close this box and use the Update Party section to the right</p>
@@ -270,11 +266,11 @@
 			    	<label for="email">Email</label>
 					{{form.email(class="form-control", placeholder="Email Address")}}
 			  	</div>
-			
+
 				<div class="form-group col-md-6">
 			    	<label for="phone">Phone Number</label>
 					{{form.phone(class="form-control", placeholder="Call me maybe")}}
-			  	</div>			
+			  	</div>
 	      </div>
 	      <div class="modal-footer">
 				<input type="hidden" name="t" value="{{t.key.id()}}" />
@@ -286,12 +282,12 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
+
 
 	{% endif %}
-	
+
 	{% else %}
-		
+
 	{% if r.open %}
 	<div class="panel panel-success">
 		<div class="panel panel-heading">
@@ -307,19 +303,19 @@
 			</p>
 		</div>
 	</div>
-		
+
 	{% else %}
 	<p>Sorry, registration for this tournament is currently closed.</p>
 	{% endif %}
-	
+
 	{% endif %}
-	
-	
+
+
 	{% else %}
-	
+
 		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
-	
+
 	{% endif %}
-	
-		
+
+
 {% endblock %}

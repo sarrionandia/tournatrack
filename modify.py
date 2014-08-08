@@ -55,7 +55,6 @@ class JudgeHandler(webapp2.RequestHandler):
 
 			elif isinstance(judge, RegisteredIndependentJudge):
 				reg = j_key.parent().get()
-				form.email.data = judge.email
 				form.phone.data = judge.phone
 
 			t = reg.key.parent().get()
@@ -95,7 +94,6 @@ class JudgeHandler(webapp2.RequestHandler):
 				institution = j_key.parent().get()
 				reg = institution.key.parent().get()
 
-				form.email.data = institution.email
 				form.phone.data = institution.phone
 
 			elif isinstance(judge, RegisteredIndependentJudge):
@@ -107,7 +105,6 @@ class JudgeHandler(webapp2.RequestHandler):
 
 				judge.name = form.name.data
 				judge.phone = form.phone.data
-				judge.email = form.email.data
 				judge.cv = form.cv.data
 
 				judge.put()
