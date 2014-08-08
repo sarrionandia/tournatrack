@@ -87,6 +87,14 @@ class RegHandler(webapp2.RequestHandler):
             return
 
           team = RegisteredOpenTeam(parent=reg.key)
+          team.user = user.key
+          
+          #Add an attendance record
+          attending = Attending(parent=user.key)
+          attending.role = "Open Team"
+          attending.tournament = t.key
+          attending.put()
+
 
         team.leadName = form.leadName.data
         team.phone = form.phone.data
@@ -101,13 +109,6 @@ class RegHandler(webapp2.RequestHandler):
         team.user = user.key
 
         team.put()
-
-        #Add an attendance record
-        attending = Attending(parent=user.key)
-        attending.role = "Open Team"
-        attending.tournament = t.key
-        attending.put()
-
 
         self.redirect('/reg?t=' + tid)
       else:

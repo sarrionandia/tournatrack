@@ -80,6 +80,13 @@ class RegHandler(webapp2.RequestHandler):
           judge = RegisteredIndependentJudge(parent=reg.key)
           judge.user = user.key
 
+          #Add an attendance record
+          attending = Attending(parent=user.key)
+          attending.role = "Judge"
+          attending.tournament = t.key
+          attending.put()
+
+
         else:
 
           judge = ndb.Key('Tournament', int(tid), 'PreRegRecord', reg.key.id(), 'RegisteredIndependentJudge', int(self.request.get('j'))).get()
@@ -94,13 +101,6 @@ class RegHandler(webapp2.RequestHandler):
         judge.cv = form.cv.data
 
         judge.put()
-
-        #Add an attendance record
-        attending = Attending(parent=user.key)
-        attending.role = "Judge"
-        attending.tournament = t.key
-        attending.put()
-
 
         self.redirect('/reg?t=' + tid)
       else:

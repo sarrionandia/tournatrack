@@ -90,6 +90,13 @@ class RegHandler(webapp2.RequestHandler):
             return
 
           inst = RegisteredInstitution(parent=reg.key)
+          inst.user = user.key
+
+          #Add an attendance record
+          attending = Attending(parent=user.key)
+          attending.role = "Institution"
+          attending.tournament = t.key
+          attending.put()
 
         inst.leadName = form.leadName.data
         inst.phone = form.phone.data
@@ -97,12 +104,6 @@ class RegHandler(webapp2.RequestHandler):
         inst.user = user.key
 
         inst.put()
-
-        #Add an attendance record
-        attending = Attending(parent=user.key)
-        attending.role = "Institution"
-        attending.tournament = t.key
-        attending.put()
 
         #Add teams and judges
         if 'nTeams' in self.request.arguments():
