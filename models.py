@@ -248,8 +248,9 @@ class RegisteredInstitution(ndb.Model):
 	leadName = ndb.StringProperty()
 	phone = ndb.StringProperty()
 	user = ndb.KeyProperty(kind='TUser')
-	email = ndb.StringProperty()
 
+	def email(self):
+		return self.user.get().preferredEmail()
 	#Return a query of all of the teams attached to the institution
 	def teams(self):
 		return InstitutionTeam.query(ancestor=self.key)

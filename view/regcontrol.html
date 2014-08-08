@@ -73,7 +73,7 @@ $( document ).ready(function() {
 				<td>{{i.judges().count(limit=1000)}}&nbsp;
                     <a href="/add_to_reg?i={{i.key.urlsafe()}}&type=j"><span class="badge">+1</span></a></td>
 				<td>{{i.leadName}}</td>
-				<td>{{i.email}}</td>
+				<td>{{i.email()}}</td>
 				<td>{{i.phone}}</td>
                 <td>
                     <form method="post" action="/dereg/institution">
@@ -137,7 +137,7 @@ $( document ).ready(function() {
                     {%endif%}
                 </td>
                 <td>{{i.name}}</td>
-                <td>{{i.email}}</td>
+                <td>{{i.email()}}</td>
                 <td>{{i.phone}}</td>
                 <td>
                     <a href="/mod/judge?j={{j.key.urlsafe()}}">
@@ -234,7 +234,7 @@ $( document ).ready(function() {
               <td>{{i.name}}</td>
               <td>{{t.teamName}}</td>
               <td>{{i.leadName}}</td>
-              <td>{{i.email}}</td>
+              <td>{{i.email()}}</td>
               <td>{{i.phone}}</td>
               <td>{{t.sp1Name}}</td>
               <td>
