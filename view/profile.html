@@ -51,6 +51,16 @@
   }
     </script>
 
+    <script>
+    $(document).ready(function(){
+
+    // bind the button to toggle the table
+    $('#speaks_button').click(function(){
+      $('#speaks_table tr').slice(6).toggle("slow", function(){});
+    });
+});
+    </script>
+
 {% endblock %}
 
 {% block content %}
@@ -178,7 +188,7 @@ Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tourn
 <div class="col-md-12" id="all_tournaments">
   <h2>The Gory Details</h2>
 
-  <table class="table table-striped">
+  <table class="table table-striped" id="speaks_table">
     <tr>
       <th>Tournament</th>
       <th>Team Rank</th>
@@ -190,7 +200,7 @@ Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tourn
     </tr>
 
     {% for r in speaker_records %}
-    <tr>
+    <tr {% if loop.index > 5 %}style="display: none;"{% endif %}>
       <td>{{r.tournament}}<br />{{r.startDate}}</td>
       <td>{{r.teamRank}}</td>
       <td>{{r.speakerRank}}</td>
@@ -207,11 +217,16 @@ Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tourn
     {% endfor %}
   </table>
 
+<button type="button" id="speaks_button" class="btn btn-info">
+  Show All / Just Last 5
+</button>
+
 {% if own_profile %}
   <a href="myProfile/addSpeakerRecord">
-    <button type="button" class="btn btn-success">Add Speaker Record</button>
+    <button type="button" id="speaks_button" class="btn btn-success">Add Speaker Record</button>
   </a>
 {% endif %}
+
 </div>
 {% endif %}
 {% endblock %}
