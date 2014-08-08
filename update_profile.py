@@ -66,7 +66,7 @@ class UpdateProfileHandler(webapp2.RequestHandler):
       form = ProfileForm(self.request.POST)
       if (form.validate()):
         user.full_name = form.name.data
-        user.institution = form.institution.data
+        user.current_institution = form.institution.data
         user.public_profile = form.public.data
         user.put()
         self.redirect('/tournaments')
