@@ -51,7 +51,7 @@ class ProfileHandler(webapp2.RequestHandler):
         return
 
     elif user:
-      requested_user = user
+      display_user = user
       is_self = True
 
       name = user.full_name
@@ -60,14 +60,17 @@ class ProfileHandler(webapp2.RequestHandler):
       if (not name):
         self.redirect('/update_profile')
         return
+
+      logging.info(display_user)
     else:
       self.redirect('/')
       return
 
     #Find all speaker records
-    speaker_q = PerfSpeakerRecord.query(ancestor=requested_user.key).order(-PerfSpeakerRecord.startDate)
+    speaker_q = PerfSpeakerRecord.query(ancestor=display_user.key).order(-PerfSpeakerRecord.startDate)
 
     if speaker_q.count(limit=1) > 0:
+
 
       #Calculate average speaker points
       sumSpeaks = 0
@@ -106,7 +109,9 @@ class ProfileHandler(webapp2.RequestHandler):
       template_values = {
       'user' : user,
       'logout' : tusers.create_logout_url('/'),
-      'empty' : True
+      'empty' : True,
+      'profile' : display_user,
+      'own_profile' : is_self
       }
     template = JINJA_ENVIRONMENT.get_template('view/profile.html')
     self.response.write(template.render(template_values))
