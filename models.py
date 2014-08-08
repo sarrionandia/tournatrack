@@ -289,3 +289,14 @@ class PerfSpeakerRecord(ndb.Model):
 
 	isWin = ndb.BooleanProperty()
 	isBreak = ndb.BooleanProperty()
+
+class PerfJudgeRecord(ndb.Model):
+	"""The performance record of a judge at a tournament"""
+	tournament = ndb.StringProperty()
+	startDate = ndb.DateProperty()
+	chair = ndb.BooleanProperty()
+	broke = ndb.BooleanProperty()
+	outroundChair = ndb.BooleanProperty()
+	CA = ndb.BooleanProperty()
+	DCA = ndb.BooleanProperty()
+	equity = ndb.BoolenaProperty()
