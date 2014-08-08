@@ -69,65 +69,59 @@ class ProfileHandler(webapp2.RequestHandler):
     #Find all speaker records
     speaker_q = PerfSpeakerRecord.query(ancestor=display_user.key).order(-PerfSpeakerRecord.startDate)
 
-    if speaker_q.count(limit=1) > 0:
+    speak_count = speaker_q.count(limit=1000)
+    averageSpeaks = 0
 
-
+    if speak_count > 0:
       #Calculate average speaker points
       sumSpeaks = 0
-      nSpeakerRecords = 0
       for result in speaker_q:
         sumSpeaks += result.averageSpeaks
-        nSpeakerRecords += 1
-        averageSpeaks = sumSpeaks / nSpeakerRecords
+        speak_count += 1
 
-      #Adjust limits for graph
-      nGraph = 5
-      if self.request.get('nGraph'):
-        nGraph = int(self.request.get('nGraph'))
+      averageSpeaks = sumSpeaks / speak_count
 
-      #Find all tournaments won
-      won_q = speaker_q.filter(PerfSpeakerRecord.isWin == True).order(-PerfSpeakerRecord.startDate)
+    #Adjust limits for graph
+    nGraph = 5
+    if self.request.get('nGraph'):
+      nGraph = int(self.request.get('nGraph'))
 
-      #Find all tournaments broken
-      break_q = speaker_q.filter(PerfSpeakerRecord.isBreak == True).order(-PerfSpeakerRecord.startDate)
+    #Find all tournaments won
+    won_q = speaker_q.filter(PerfSpeakerRecord.isWin == True).order(-PerfSpeakerRecord.startDate)
 
-      #Find all judging records
-      judge_q = PerfJudgeRecord.query(ancestor=display_user.key).order(-PerfJudgeRecord.startDate)
-      judge_count = judge_q.count(limit=1000)
+    #Find all tournaments broken
+    break_q = speaker_q.filter(PerfSpeakerRecord.isBreak == True).order(-PerfSpeakerRecord.startDate)
 
-      speak_count = speaker_q.count(limit=1000)
+    #Find all judging records
+    judge_q = PerfJudgeRecord.query(ancestor=display_user.key).order(-PerfJudgeRecord.startDate)
+    judge_count = judge_q.count(limit=1000)
 
-      #Judging achievements
-      judge_achievements = judge_q.filter(PerfJudgeRecord.isAchievement == True).order(-PerfJudgeRecord.startDate)
-      logging.info(judge_achievements.count(limit=1000))
+    speak_count = speaker_q.count(limit=1000)
 
-      template_values = {
-        'user' : user,
-        'logout' : tusers.create_logout_url('/'),
-        'average_speaks' : averageSpeaks,
-        'win_count' : won_q.count(limit=1000),
-        'break_count' : break_q.count(limit=1000),
-        'wins' : won_q,
-        'breaks' : break_q,
-        'speaker_records' : speaker_q,
-        'last_five' : speaker_q.fetch(nGraph),
-        'own_profile' : is_self,
-        'profile' : display_user,
-        'nGraph' : nGraph,
-        'judge_records' : judge_q,
-        'judge_count' : judge_count,
-        'speak_count' : speak_count,
-        'judge_empty' : judge_count < 1,
-        'judge_achievements' : judge_achievements
-        }
-    else:
-      template_values = {
+    #Judging achievements
+    judge_achievements = judge_q.filter(PerfJudgeRecord.isAchievement == True).order(-PerfJudgeRecord.startDate)
+    logging.info(judge_achievements.count(limit=1000))
+
+    template_values = {
       'user' : user,
       'logout' : tusers.create_logout_url('/'),
-      'empty' : True,
+      'average_speaks' : averageSpeaks,
+      'win_count' : won_q.count(limit=1000),
+      'break_count' : break_q.count(limit=1000),
+      'wins' : won_q,
+      'breaks' : break_q,
+      'speaker_records' : speaker_q,
+      'last_five' : speaker_q.fetch(nGraph),
+      'own_profile' : is_self,
       'profile' : display_user,
-      'own_profile' : is_self
-      }
+      'nGraph' : nGraph,
+      'judge_records' : judge_q,
+      'judge_count' : judge_count,
+      'speak_count' : speak_count,
+      'judge_empty' : judge_count < 1,
+      'empty' : speak_count < 1,
+      'judge_achievements' : judge_achievements
+        }
     template = JINJA_ENVIRONMENT.get_template('view/profile.html')
     self.response.write(template.render(template_values))
 
