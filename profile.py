@@ -77,7 +77,6 @@ class ProfileHandler(webapp2.RequestHandler):
       sumSpeaks = 0
       for result in speaker_q:
         sumSpeaks += result.averageSpeaks
-        speak_count += 1
 
       averageSpeaks = sumSpeaks / speak_count
 
