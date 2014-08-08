@@ -15,6 +15,28 @@ indexes:
   properties:
   - name: name
 
+- kind: PerfJudgeRecord
+  ancestor: yes
+  properties:
+  - name: isAchievement
+  - name: startDate
+    direction: desc
+
+- kind: PerfJudgeRecord
+  ancestor: yes
+  properties:
+  - name: isAchievement
+  - name: startDate
+    direction: desc
+  - name: CA
+  - name: DCA
+
+- kind: PerfJudgeRecord
+  ancestor: yes
+  properties:
+  - name: startDate
+    direction: desc
+
 - kind: PerfSpeakerRecord
   ancestor: yes
   properties:

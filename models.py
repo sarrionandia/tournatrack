@@ -299,4 +299,9 @@ class PerfJudgeRecord(ndb.Model):
 	outroundChair = ndb.BooleanProperty()
 	CA = ndb.BooleanProperty()
 	DCA = ndb.BooleanProperty()
-	equity = ndb.BoolenaProperty()
+	equity = ndb.BooleanProperty()
+	isAchievement = ndb.BooleanProperty()
+
+	def isCAShip(self):
+		response = self.DCA or self.CA
+		return response

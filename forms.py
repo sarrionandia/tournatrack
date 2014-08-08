@@ -67,3 +67,14 @@ class SpeakerRecordForm(Form):
 
 	noviceChampion = BooleanField('noviceChampion')
 	noviceBreak = BooleanField('noviceBreak')
+
+class JudgeRecordForm(Form):
+	tournamentName = TextField('tournamentName', [validators.required()])
+	startDate = DateField('startDate', [validators.required()])
+
+	chair = BooleanField('chair')
+	broke = BooleanField('broke')
+	outroundChair = BooleanField('outroundChair')
+	CA = BooleanField('CA')
+	DCA = BooleanField('DCA')
+	equity = BooleanField('Equity')

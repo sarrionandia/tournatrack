@@ -1,0 +1,88 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Add a Speaker Record{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    (function($) {
+        $(document).ready(function(){
+            $(".datepicker").datepicker();
+            $(".datepicker").datepicker( "option", "dateFormat", "yy-mm-dd");
+
+        });
+    })(jQuery);
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>You judged! How did it go?</h2>
+
+<div class="col-md-12">
+    {% if form.errors %}
+    <ul class="errors">
+    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+          {% for error in field_errors %}
+              <li>{{ form[field_name].label }}: {{ error }}</li>
+          {% endfor %}
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form role="form" action="/myProfile/addJudgeRecord" method="post">
+
+      <div class="form-group col-md-6">
+        <label for="tournamentName">Tournament Name</label>
+        {{form.tournamentName(class="form-control", placeholder="e.g. Aberystwyth Open", required="required")}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="tournamentDate">Starting Date of Tournament</label>
+        <div class="input group">
+          {{form.startDate(class="form-control datepicker", required="required", placeholder="yyy-mm-dd")}}
+        </div>
+      </div>
+
+ <div class="col-md-12">
+      <div class="panel panel-success">
+        <div class="panel-heading"><i class="fa fa-gavel"></i>&nbsp;Achievements</div>
+
+        <div class="panel-body">
+          <p>Tick all that apply</p>
+          <div class="checkbox">
+            <label for="CA">{{form.CA(class="checkbox")}}&nbsp;I was the Chief Adjudicator</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="DCA">{{form.DCA(class="checkbox")}}&nbsp;I was the Deputy Chief Adjudicator</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="equity">{{form.equity(class="checkbox")}}&nbsp;I was the Equity Officer</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="chair">{{form.chair(class="checkbox")}}&nbsp;I chaired at least one in-round</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="broke">{{form.broke(class="checkbox")}}&nbsp;I broke as a judge</label>
+          </div>
+
+          <div class="checkbox">
+            <label for="outroundChair">{{form.outroundChair(class="checkbox")}}&nbsp;I was the chair judge of an outround</label>
+          </div>
+
+        </div>
+      </div>
+
+ </div>
+
+
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-primary btn-lg">Add Record</button>
+    </div>
+    </form>
+</div>
+
+{% endblock %}

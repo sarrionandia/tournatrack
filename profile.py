@@ -23,7 +23,7 @@ import logging
 from google.appengine.ext import ndb
 import tusers
 
-from models import PerfSpeakerRecord
+from models import PerfSpeakerRecord, PerfJudgeRecord
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -91,6 +91,16 @@ class ProfileHandler(webapp2.RequestHandler):
       #Find all tournaments broken
       break_q = speaker_q.filter(PerfSpeakerRecord.isBreak == True).order(-PerfSpeakerRecord.startDate)
 
+      #Find all judging records
+      judge_q = PerfJudgeRecord.query(ancestor=display_user.key).order(-PerfJudgeRecord.startDate)
+      judge_count = judge_q.count(limit=1000)
+
+      speak_count = speaker_q.count(limit=1000)
+
+      #Judging achievements
+      judge_achievements = judge_q.filter(PerfJudgeRecord.isAchievement == True).order(-PerfJudgeRecord.startDate)
+      logging.info(judge_achievements.count(limit=1000))
+
       template_values = {
         'user' : user,
         'logout' : tusers.create_logout_url('/'),
@@ -103,8 +113,13 @@ class ProfileHandler(webapp2.RequestHandler):
         'last_five' : speaker_q.fetch(nGraph),
         'own_profile' : is_self,
         'profile' : display_user,
-        'nGraph' : nGraph
-      }
+        'nGraph' : nGraph,
+        'judge_records' : judge_q,
+        'judge_count' : judge_count,
+        'speak_count' : speak_count,
+        'judge_empty' : judge_count < 1,
+        'judge_achievements' : judge_achievements
+        }
     else:
       template_values = {
       'user' : user,

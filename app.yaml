@@ -1,5 +1,5 @@
 application: tournatrack-beta
-version: 5
+version: 6
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -27,6 +27,9 @@ handlers:
 
 - url: /myProfile/deleteSpeakerRecord
   script: delete_speaker_record.app
+
+- url: /myProfile/addJudgeRecord
+  script: add_judge_record.app
 
 - url: /update_profile
   script: update_profile.app

@@ -25,6 +25,26 @@
       }
     </script>
 
+        <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Role', 'Tournaments'],
+          ['Judged',     {{judge_count}}],
+          ['Spoken At',   {{speak_count}}]
+        ]);
+
+        var options = {
+          title: 'Judging to Speaking Ratio'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+    </script>
+
+
     <script type="text/javascript">
     function loadGraph() {
 
@@ -127,6 +147,8 @@
   </div>
 </div>
 
+<div class="col-md-12">
+
 <div class="col-md-6">
   <h2>Broken at {{break_count}} Tournaments</h2>
 
@@ -177,6 +199,7 @@
   {% endif %}
 
 </div>
+</div>
 
 <div class="col-md-12" id="chart_div" style="width: 100%; height: 400px;"></div>
 
@@ -226,7 +249,97 @@ Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tourn
     <button type="button" id="speaks_button" class="btn btn-success">Add Speaker Record</button>
   </a>
 {% endif %}
+{% endif %}
+
+<h1>Judging CV</h1>
 
 </div>
+
+{% if not judge_empty %}
+
+<h2>Judging Achievements</h2>
+<div class="col-md-12">
+  {% for a in judge_achievements %}
+
+  {% if a.equity %}
+  <div class="alert alert-info col-md-6 notCA" role="alert">
+    <i class="fa fa-heart"></i>&nbsp;
+    Equity Officer of {{a.tournament}} : {{a.startDate}}
+  </div>
+  {% endif %}
+
+  {% if a.isCAShip() %}
+  <div class="alert alert-warning col-md-6 caship"  role="alert">
+  <i class="fa fa-star"></i>&nbsp;
+  {% if a.CA %}CA{%else%}DCA{%endif%}
+  of {{a.tournament}} : {{a.startDate}}
+  </div>
+
+  {% elif a.outroundChair %}
+  <div class="alert alert-success col-md-6 notCA" role="alert">
+  <i class="fa fa-gavel"></i>&nbsp;
+  Chair of an Outround at {{a.tournament}} : {{a.startDate}}
+  </div>
+
+  {% elif a.broke %}
+  <div class="alert alert-success col-md-6 notCA" role="alert">
+  <i class="fa fa-gavel"></i>&nbsp;
+  Broke as a judge at {{a.tournament}} : {{a.startDate}}
+  </div>
+
+  {% elif a.chair %}
+  <div class="alert alert-success col-md-6 notCA" role="alert">
+  <i class="fa fa-gavel"></i>&nbsp;
+  Chair of an Inround at {{a.tournament}} : {{a.startDate}}
+  </div>
+  {% endif %}
+
+  {% else %}
+  <p>No achievements yet. Try talking about depth of analysis and auto-fourths
+    during feedback.
+  </p>
+
+  {% endfor %}
+</div>
+
+<h2>{{profile.full_name}} has judged at these {{judge_count}} IVs</h2>
+<ul class="list-group row">
+  {%for j in judge_records %}
+  <li class="list-group-item col-xs-6">{{j.startDate}}: <b>{{j.tournament}}</b>
+  {% if own_profile %}
+  <br />
+    <form action="/myProfile/deleteSpeakerRecord" method="post">
+      <input type="hidden" name="record" value="{{j.key.urlsafe()}}"></input>
+      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+    </form>
+  {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+<br />
+
+{% if own_profile %}
+<a href="/myProfile/addJudgeRecord">
+  <button type="button" class="btn btn-success">
+    Add Judge Record
+  </button>
+</a>
 {% endif %}
+<div id="piechart" style="width: 900px; height: 500px;"></div>
+<br />
+
+{% else %}
+<p>No judging data has been given.<p>
+  {% if own_profile %}
+  <a href="/myProfile/addJudgeRecord">
+    <button type="button" class="btn btn-success">
+      Add Judge Record
+    </button>
+  </a>
+  {% endif %}
+
+{% endif %}
+
+
+</div>
 {% endblock %}
