@@ -257,7 +257,6 @@ Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tourn
 
 {% if not judge_empty %}
 
-<h2>Judging Achievements</h2>
 <div class="col-md-12">
   {% for a in judge_achievements %}
 
@@ -293,11 +292,6 @@ Show last <input type="text" id="graphLimit" size="3" value="{{nGraph}}"/> Tourn
   Chair of an Inround at {{a.tournament}} : {{a.startDate}}
   </div>
   {% endif %}
-
-  {% else %}
-  <p>No achievements yet. Try talking about depth of analysis and auto-fourths
-    during feedback.
-  </p>
 
   {% endfor %}
 </div>
