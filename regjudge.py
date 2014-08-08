@@ -32,16 +32,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class RegHandler(webapp2.RequestHandler):
 	def get(self):
 		user = tusers.get_current_user()
-		
+
 		#Get the requested tournament
 		tid = self.request.get('t')
 		key = ndb.Key('Tournament', int(tid))
 		t = key.get()
-			
+
 		reg = t.preRegRecord().get()
 
 		form = JudgeForm()
-					
+
 		template_values = {
 			'user' : user,
 			't' : t,
@@ -52,7 +52,7 @@ class RegHandler(webapp2.RequestHandler):
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/regjudge.html')
 		self.response.write(template.render(template_values))
-				
+
 
 	def post(self):
 		user = tusers.get_current_user()
@@ -62,7 +62,7 @@ class RegHandler(webapp2.RequestHandler):
 		t = key.get()
 		reg = t.preRegRecord().get()
 
-					
+
 		if user:
 
 			#Check they haven't registered already
@@ -74,7 +74,7 @@ class RegHandler(webapp2.RequestHandler):
 
 			#If valid, create the new judge object
 			if (form.validate()):
-				
+
 				#Check if we are updating an existing judge
 				if not self.request.get('j'):
 					judge = RegisteredIndependentJudge(parent=reg.key)
@@ -90,7 +90,6 @@ class RegHandler(webapp2.RequestHandler):
 
 				judge.name = form.name.data
 				judge.phone = form.phone.data
-				judge.email = form.email.data
 				judge.cv = form.cv.data
 
 				judge.put()
@@ -101,7 +100,7 @@ class RegHandler(webapp2.RequestHandler):
 				attending.tournament = t.key
 				attending.put()
 
-				
+
 				self.redirect('/reg?t=' + tid)
 			else:
 				template_values = {
@@ -116,8 +115,8 @@ class RegHandler(webapp2.RequestHandler):
 				self.response.write(template.render(template_values))
 		else:
 			self.redirect('/reg?t=' + tid)
-		
-	
+
+
 app = webapp2.WSGIApplication([
 	('/reg/judge', RegHandler)
 ], debug=True)

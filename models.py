@@ -59,7 +59,7 @@ class TUser(ndb.Model):
 		-The Tournatrack Lizards
 		"""%self.email_code
 		message.send()
-		
+
 	def verify_email(self, code):
 		if self.email_code == code:
 			self.email_verified = True
@@ -195,7 +195,6 @@ class RegisteredIndependentJudge(ndb.Model):
 	"""Models a participant in the tournament"""
 	name = ndb.StringProperty()
 	cv = ndb.TextProperty()
-	email = ndb.StringProperty()
 	phone = ndb.StringProperty()
 	user = ndb.KeyProperty(kind='TUser')
 
@@ -212,6 +211,9 @@ class RegisteredIndependentJudge(ndb.Model):
 			return True
 		else:
 			return False
+
+	def email(self):
+		return self.user.get().preferredEmail()
 
 class RegisteredOpenTeam(ndb.Model):
 	"""Models an open team in the tournament"""

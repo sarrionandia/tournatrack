@@ -108,7 +108,7 @@ $( document ).ready(function() {
                     {%endif%}
                 </td>
 				<td><emph>Independent</emph></td>
-				<td>{{j.email}}</td>
+				<td>{{j.email()}}</td>
 				<td>{{j.phone}}</td>
                 <td>
                     <a href="/mod/judge?j={{j.key.urlsafe()}}">

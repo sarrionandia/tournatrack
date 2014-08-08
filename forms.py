@@ -31,7 +31,6 @@ class TeamForm(Form):
 # Judge Form model
 class JudgeForm(Form):
 	name = TextField('name', [validators.required()])
-	email = TextField('email', [validators.email()])
 	phone = TextField('phone', [validators.required()])
 	cv = TextAreaField('cv', [validators.optional()])
 
@@ -43,7 +42,7 @@ class ProfileForm(Form):
 	name = TextField('name', [validators.required()])
 	institution = TextField('institution')
 	public = BooleanField('public')
-	email = TextField('email')
+	email = TextField('email', [validators.email()])
 	email_code = TextField('email_code')
 
 class SpeakerRecordForm(Form):
