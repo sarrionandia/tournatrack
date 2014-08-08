@@ -86,6 +86,8 @@
 
 {% if empty %}
 
+{%if own_profile %}
+
 <h1>Speaking Achievements</h2>
 
 <h2>Hey there, newbie.</h2>
@@ -96,6 +98,13 @@
 <a href="myProfile/addSpeakerRecord">
   <button type="button" class="btn btn-success">Add Speaker Record</button>
   </a>
+{% else %}
+<h2>Nothing to see here</h2>
+<p>This user has a public profile, but there is no speaker data. They need to
+  add some data before anything appears here.
+</p>
+
+{% endif %}
 
 {% else %}
 
