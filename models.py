@@ -13,6 +13,13 @@
 # limitations under the License.
 
 from google.appengine.ext import ndb
+from google.appengine.api import mail
+
+import string
+import random
+
+def pin_gen(size=6, chars=string.ascii_uppercase + string.digits):
+	return ''.join(random.choice(chars) for x in range(size))
 
 
 class TUser(ndb.Model):
@@ -22,6 +29,43 @@ class TUser(ndb.Model):
 	full_name = ndb.StringProperty()
 	current_institution = ndb.StringProperty()
 	public_profile = ndb.BooleanProperty()
+	custom_email = ndb.StringProperty()
+	email_code = ndb.StringProperty()
+	email_verified = ndb.BooleanProperty()
+
+	def preferredEmail(self):
+		if self.email_verified and self.custom_email:
+			return self.custom_email
+		else:
+			return self.g_user.email()
+
+	def change_email(self, email):
+		self.email_verified = False
+		self.custom_email = email
+		self.email_code = pin_gen()
+		self.put()
+
+		#Send a verification email
+		message = mail.EmailMessage(sender="Tournatrack <noreply@tournatrack-beta.appspotmail.com",
+																subject="Verify your email address")
+		message.to = self.full_name + ' <' + email + '>'
+		message.body = """
+		This email address has been added to an account on Tournatrack. We will only
+		use it if you take your verification code, and input it to your Account Settings page.
+
+		Your verification code is: %s
+
+		Later!
+		-The Tournatrack Lizards
+		"""%self.email_code
+		message.send()
+		
+	def verify_email(self, code):
+		if self.email_code == code:
+			self.email_verified = True
+			self.email_code = None
+			self.put()
+
 
 class Attending(ndb.Model):
 	"""Models a user attending a tournament

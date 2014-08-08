@@ -1,5 +1,5 @@
-application: tournatrack
-version: 6
+application: tournatrack-beta
+version: 7
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -31,7 +31,7 @@ handlers:
 - url: /myProfile/addJudgeRecord
   script: add_judge_record.app
 
-- url: /update_profile
+- url: /update_profile.*
   script: update_profile.app
 
 - url: /tab

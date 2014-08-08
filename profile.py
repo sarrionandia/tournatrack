@@ -18,7 +18,6 @@ import os
 import string
 import random
 import datetime
-import logging
 
 from google.appengine.ext import ndb
 import tusers
@@ -61,7 +60,6 @@ class ProfileHandler(webapp2.RequestHandler):
         self.redirect('/update_profile')
         return
 
-      logging.info(display_user)
     else:
       self.redirect('/')
       return
@@ -99,7 +97,6 @@ class ProfileHandler(webapp2.RequestHandler):
 
     #Judging achievements
     judge_achievements = judge_q.filter(PerfJudgeRecord.isAchievement == True).order(-PerfJudgeRecord.startDate)
-    logging.info(judge_achievements.count(limit=1000))
 
     template_values = {
       'user' : user,

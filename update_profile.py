@@ -69,7 +69,14 @@ class UpdateProfileHandler(webapp2.RequestHandler):
         user.current_institution = form.institution.data
         user.public_profile = form.public.data
         user.put()
-        self.redirect('/tournaments')
+
+        if form.email.data:
+          user.change_email(form.email.data)
+
+        if form.email_code.data:
+          user.verify_email(form.email_code.data)
+
+        self.redirect('/update_profile')
 
       else:
 
@@ -84,6 +91,21 @@ class UpdateProfileHandler(webapp2.RequestHandler):
     else:
       self.redirect(tusers.create_login_url(self.request.uri))
 
+class ClearEmailHandler(webapp2.RequestHandler):
+  def get(self):
+    user = tusers.get_current_user()
+
+    if user:
+      user.custom_email = None
+      user.email_verified = False
+      user.put()
+      self.redirect('/update_profile')
+
+    else:
+      self.redirect(tusers.create_login_url(self.request.uri))
+
+
 app = webapp2.WSGIApplication([
-  ('/update_profile', UpdateProfileHandler)
+  ('/update_profile', UpdateProfileHandler),
+  ('/update_profile/clear_email', ClearEmailHandler)
 ], debug=True)

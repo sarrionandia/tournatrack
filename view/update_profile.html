@@ -28,6 +28,40 @@
         {{form.institution(class="form-control", placeholder="e.g. University of Warwick")}}
       </div>
 
+      <p>Tournaments will currently send emails to {{user.preferredEmail()}}</p>
+
+      {% if not user.custom_email%}
+      <div class="form-group">
+          <label for="email">Change your email address.</label>
+          {{form.email(class="form-control", placeholder="e.g. yourname@university.ac.uk")}}
+      </div>
+
+      {% elif not user.email_verified %}
+      <div class="form-group">
+        <label for="verify">Your 6 digit verification code</label>
+        <p>
+          You have saved {{user.custom_email}} as your preferred address, but it is not
+          yet verified. We emailed the code to that email address. Input it below to
+          start receiving mail.
+        </p>
+        <a href="/update_profile/clear_email">
+          <button type="button" class="btn btn-danger btn-small">
+            Delete this email address
+          </button>
+        </a>
+
+        {{form.email_code(class="form-control", placeholder="e.g. G5F6YU. Case Sensitive")}}
+      </div>
+
+      {% else %}
+      <a href="/update_profile/clear_email">
+        <button type="button" class="btn btn-danger btn-small">
+          Clear this email address
+        </button>
+      </a>
+
+      {% endif %}
+
       <div class="checkbox">
         <label for="public">Tick to make your profile public </label>
         {{form.public()}}
