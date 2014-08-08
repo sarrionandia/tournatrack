@@ -218,7 +218,6 @@ class RegisteredIndependentJudge(ndb.Model):
 class RegisteredOpenTeam(ndb.Model):
 	"""Models an open team in the tournament"""
 	leadName = ndb.StringProperty()
-	email = ndb.StringProperty()
 	phone = ndb.StringProperty()
 	user = ndb.KeyProperty(kind='TUser')
 	teamName = ndb.StringProperty()
@@ -228,6 +227,9 @@ class RegisteredOpenTeam(ndb.Model):
 	sp2ESL = ndb.BooleanProperty()
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
+
+	def email(self):
+		return self.user.get().preferredEmail()
 
 	def authorised(self, tuser):
 		if self.user == tuser.key:

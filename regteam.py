@@ -33,102 +33,101 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 
 class RegHandler(webapp2.RequestHandler):
-	def get(self):
-		user = tusers.get_current_user()
-		
-		#Get the requested tournament
-		tid = self.request.get('t')
-		key = ndb.Key('Tournament', int(tid))
-		t = key.get()
-			
-		reg = t.preRegRecord().get()
-		
-		form = TeamForm()
-					
-		template_values = {
-			'user' : user,
-			't' : t,
-			'logout' : tusers.create_logout_url('/'),
-			'login' : tusers.create_login_url('/reg/team?t=' + tid),
-			'r' : reg,
-			'form' : form		
-		}
-		template = JINJA_ENVIRONMENT.get_template('view/regteam.html')
-		self.response.write(template.render(template_values))
-				
+  def get(self):
+    user = tusers.get_current_user()
 
-	def post(self):
-		user = tusers.get_current_user()
-		#Get the requested tournament
-		tid = self.request.get('t')
-		key = ndb.Key('Tournament', int(tid))
-		t = key.get()
-		reg = t.preRegRecord().get()
-					
-		if user:
+    #Get the requested tournament
+    tid = self.request.get('t')
+    key = ndb.Key('Tournament', int(tid))
+    t = key.get()
 
-			#Check they haven't registered already
-			if reg.isRegistered(user):
-				self.redirect('/reg?t=' + tid)
-				return
+    reg = t.preRegRecord().get()
 
-			form = TeamForm(self.request.POST)
-			if (form.validate()):
-				
-				#If we are updating an existing registration, update it.
-				if 'teamkey' in self.request.arguments():
-					teamkey = (self.request.get('teamkey'))
-					team = ndb.Key(urlsafe=teamkey).get()
-					
-					#Check they own it
-					if team.user != user.key:
-						self.redirect('/reg?t=' + tid)
-				
-				#Otherwise, make a new team registration
-				else:
-					team = RegisteredOpenTeam(parent=reg.key)
-				
-				team.leadName = form.leadName.data
-				team.phone = form.phone.data
-				team.email = form.email.data
-				team.teamName = form.teamName.data
-				team.sp1Name = form.sp1Name.data
-				team.sp2Name = form.sp2Name.data
-				team.sp1ESL = form.sp1ESL.data
-				team.sp2ESL = form.sp2ESL.data
-				team.sp1Novice = form.sp1Novice.data
-				team.sp2Novice = form.sp2Novice.data
-				team.leadname = form.leadName.data
-				team.user = user.key
-				
-				team.put()
+    form = TeamForm()
 
-				#Add an attendance record
-				attending = Attending(parent=user.key)
-				attending.role = "Open Team"
-				attending.tournament = t.key
-				attending.put()
+    template_values = {
+      'user' : user,
+      't' : t,
+      'logout' : tusers.create_logout_url('/'),
+      'login' : tusers.create_login_url('/reg/team?t=' + tid),
+      'r' : reg,
+      'form' : form
+    }
+    template = JINJA_ENVIRONMENT.get_template('view/regteam.html')
+    self.response.write(template.render(template_values))
 
-				
-				self.redirect('/reg?t=' + tid)
-			else:
-				logging.info('invalid form')
-				template_values = {
-					'user' : user,
-					't' : t,
-					'logout' : tusers.create_logout_url('/'),
-					'login' : tusers.create_login_url('/reg/team?t=' + tid),
-					'r' : reg,
-					'form' : form		
-				}
-				template = JINJA_ENVIRONMENT.get_template('view/regteam.html')
-				self.response.write(template.render(template_values))
-			
-			
-		else:
-			self.redirect('/reg?t=' + tid)
-		
-	
+
+  def post(self):
+    user = tusers.get_current_user()
+    #Get the requested tournament
+    tid = self.request.get('t')
+    key = ndb.Key('Tournament', int(tid))
+    t = key.get()
+    reg = t.preRegRecord().get()
+
+    if user:
+
+      form = TeamForm(self.request.POST)
+      if (form.validate()):
+
+        #If we are updating an existing registration, update it.
+        if 'teamkey' in self.request.arguments():
+          teamkey = (self.request.get('teamkey'))
+          team = ndb.Key(urlsafe=teamkey).get()
+
+          #Check they own it
+          if team.user != user.key:
+            self.redirect('/reg?t=' + tid)
+
+        #Otherwise, make a new team registration
+        else:
+          #Check they haven't registered already
+          if reg.isRegistered(user):
+            self.redirect('/reg?t=' + tid)
+            return
+
+          team = RegisteredOpenTeam(parent=reg.key)
+
+        team.leadName = form.leadName.data
+        team.phone = form.phone.data
+        team.teamName = form.teamName.data
+        team.sp1Name = form.sp1Name.data
+        team.sp2Name = form.sp2Name.data
+        team.sp1ESL = form.sp1ESL.data
+        team.sp2ESL = form.sp2ESL.data
+        team.sp1Novice = form.sp1Novice.data
+        team.sp2Novice = form.sp2Novice.data
+        team.leadname = form.leadName.data
+        team.user = user.key
+
+        team.put()
+
+        #Add an attendance record
+        attending = Attending(parent=user.key)
+        attending.role = "Open Team"
+        attending.tournament = t.key
+        attending.put()
+
+
+        self.redirect('/reg?t=' + tid)
+      else:
+        logging.info('invalid form')
+        template_values = {
+          'user' : user,
+          't' : t,
+          'logout' : tusers.create_logout_url('/'),
+          'login' : tusers.create_login_url('/reg/team?t=' + tid),
+          'r' : reg,
+          'form' : form
+        }
+        template = JINJA_ENVIRONMENT.get_template('view/regteam.html')
+        self.response.write(template.render(template_values))
+
+
+    else:
+      self.redirect('/reg?t=' + tid)
+
+
 app = webapp2.WSGIApplication([
-	('/reg/team', RegHandler)
+  ('/reg/team', RegHandler)
 ], debug=True)

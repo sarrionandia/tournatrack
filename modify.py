@@ -151,7 +151,6 @@ class TeamHandler(webapp2.RequestHandler):
 
 			if isinstance(team, RegisteredOpenTeam ):
 				form.leadName.data = team.leadName
-				form.email.data = team.email
 				form.phone.data = team.phone
 				reg = t_key.parent().get()
 
@@ -159,7 +158,6 @@ class TeamHandler(webapp2.RequestHandler):
 				institution = team.key.parent().get()
 				form.leadName.data = institution.leadName
 				form.phone.data = institution.phone
-				form.email.data = institution.email
 				reg = t_key.parent().parent().get()
 
 			t = reg.key.parent().get()
@@ -197,7 +195,6 @@ class TeamHandler(webapp2.RequestHandler):
 		if (isinstance(team, InstitutionTeam)):
 			institution = team.key.parent().get()
 			form.leadName.data = institution.leadName
-			form.email.data = institution.email
 			form.phone.data = institution.phone
 
 			reg = institution.key.parent().get()
@@ -214,7 +211,6 @@ class TeamHandler(webapp2.RequestHandler):
 			if (form.validate()):
 
 				team.leadName = form.leadName.data
-				team.email = form.email.data
 				team.phone = form.phone.data
 				team.teamName = form.teamName.data
 				team.sp1Name = form.sp1Name.data
