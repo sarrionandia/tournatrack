@@ -137,6 +137,9 @@ class SendHandler(webapp2.RequestHandler):
             comm.add_to(owner.preferredEmail())
             comm.add_to_name(owner.full_name)
 
+        #Add the owner
+        comm.add_to(user.preferredEmail())
+        comm.add_to_name(user.full_name)
 
         sendGrid.send(comm)
 
@@ -145,16 +148,8 @@ class SendHandler(webapp2.RequestHandler):
           'user' : user,
           't' : t,
           'logout' : tusers.create_logout_url('/'),
-          'r' : reg,
-          'ijudges' : iJudges,
-          'jcount' : reg.totalJudgeCount(),
-          'teams' : teams,
-          'institutions' : institutions,
-          'tcount' : reg.totalTeamCount(),
-          'icount' : institutions.count(limit=500),
-          'mbody' : self.request.get('mbody')
         }
-        template = JINJA_ENVIRONMENT.get_template('view/recipients.html')
+        template = JINJA_ENVIRONMENT.get_template('view/message_sent.html')
         self.response.write(template.render(template_values))
 
       else:
