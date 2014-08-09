@@ -78,7 +78,7 @@ class TournamentInfoHandler(webapp2.RequestHandler):
           t.blurb = form.blurb.data
           t.contact_email = form.email.data
           t.homepage = form.homepage.data
-          t.facebook = form.homepage.data
+          t.facebook = form.facebook.data
           t.put()
           self.redirect('/tournament_instance?t_key=' + str(t.key.id()))
         else:

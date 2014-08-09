@@ -49,6 +49,7 @@ class HubHandler(webapp2.RequestHandler):
 			'ist' : ist,
 			'isi' : isi,
 			'regd' : (isj!=None) or (ist!=None) or (isi!=None),
+      'contact_available' : t.facebook or t.contact_email or t.homepage
 		}
 		template = JINJA_ENVIRONMENT.get_template('view/hub.html')
 		self.response.write(template.render(template_values))

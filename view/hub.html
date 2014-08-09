@@ -35,12 +35,32 @@
 		{{t.end.strftime('%d/%m/%Y')}}
 	</div>
 
+	{% if contact_available %}
 	<div class="alert alert-info col-xs-12" style="margin-top: 1em;">
 		<h3 style="margin-top: 0;">Get in Touch</h3>
-		<button class="btn btn-info"><b class="fa fa-pencil"></b>&nbsp;Email</button>
-		<button class="btn btn-info"><b class="fa fa-external-link"></b>&nbsp;Homepage</button>
-		<button class="btn btn-info"><b class="fa fa-facebook"></b>&nbsp;Facebook</button>
+		{% if t.contact_email %}
+		<a href="mailto:{{t.contact_email}}">
+			<button class="btn btn-info">
+				<b class="fa fa-pencil"></b>&nbsp;Email
+			</button>
+		</a>
+		{% endif %}
+		{% if t.homepage %}
+		<a href="{{t.homepage}}">
+			<button class="btn btn-info">
+				<b class="fa fa-external-link"></b>&nbsp;Homepage
+			</button>
+		</a>
+		{% endif %}
+		{% if t.facebook %}
+		<a href="{{t.facebook}}">
+			<button class="btn btn-info">
+				<b class="fa fa-facebook"></b>&nbsp;Facebook
+			</button>
+		</a>
+		{% endif %}
 	</div>
+	{% endif %}
 
 	{% if regd %}
 	<div class="alert alert-success col-xs-12">
