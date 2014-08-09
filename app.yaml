@@ -19,6 +19,9 @@ handlers:
 - url: /mod/.*
   script: modify.app
 
+- url: /comms.*
+  script: comms.app
+
 - url: /myProfile
   script: profile.app
 

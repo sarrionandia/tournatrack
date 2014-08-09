@@ -1,0 +1,35 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Communicate{% endblock %}
+
+
+{% block content %}
+	<h1><i class="fa fa-bullhorn"></i> {{t.name}} : Communicate</h1>
+
+	<p>
+		Here you can get in touch with the people at your tournament
+	</p>
+
+	<h2>Email the Pre-Reg List</h2>
+	<p>
+		Everybody on the pre-registration list will receive your email
+	</p>
+
+	<div class="form-group col-md-12">
+		<label for="subject">Subject</label>
+		<input class="form-control" name="subject" disabled="true" value="{{t.name}}" />
+	</div>
+
+	<form method="post" action="/comms/recipients?t={{t.key.id()}}">
+
+		<div class="form-group col-md-12">
+			<label for="body">Message Body</label>
+			<textarea class="form-control" rows="12" name="mbody"></textarea>
+		</div>
+
+		<button type="submit" class="btn btn-info"><i class="fa fa-envelope"></i>&nbsp;Choose Recipients</button>
+	</form>
+
+
+
+
+{% endblock %}

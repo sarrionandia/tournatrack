@@ -1,5 +1,10 @@
 # Compiled files
 *.pyc
 
+*.DS_Store
+
 #IDE folder
 .idea/
+
+#settings
+*.ini
