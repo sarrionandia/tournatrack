@@ -46,7 +46,7 @@ class TUser(ndb.Model):
 		self.put()
 
 		#Send a verification email
-		message = mail.EmailMessage(sender="Tournatrack <noreply@tournatrack-beta.appspotmail.com",
+		message = mail.EmailMessage(sender="Tournatrack <noreply@tournatrack.appspotmail.com",
 																subject="Verify your email address")
 		message.to = self.full_name + ' <' + email + '>'
 		message.body = """
@@ -90,8 +90,11 @@ class Tournament(ndb.Model):
 
 	#Return the blurb with newlines
 	def blurbDisplay(self):
-		r = '<br />'
-		return self.blurb.replace('\r\n',r).replace('\n\r',r).replace('\r',r).replace('\n',r)
+		if self.blurb:
+			r = '<br />'
+			return self.blurb.replace('\r\n',r).replace('\n\r',r).replace('\r',r).replace('\n',r)
+		else:
+			return None
 
 	#Return a list of rooms attached to the tournament
 	def rooms(self):

@@ -25,37 +25,45 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 class HubHandler(webapp2.RequestHandler):
-	def get(self):
-		user = tusers.get_current_user()
+  def get(self):
+    user = tusers.get_current_user()
 
-		#Get the requested tournament
-		tid = self.request.get('t')
-		key = ndb.Key('Tournament', int(tid))
-		t = key.get()
+    #Get the requested tournament
+    tid = self.request.get('t')
+    key = ndb.Key('Tournament', int(tid))
+    t = key.get()
 
-		reg = t.preRegRecord().get()
+    reg = t.preRegRecord().get()
 
-		isj = reg.isJudge(user)
-		ist = reg.isOpenTeam(user)
-		isi = reg.isInstitution(user)
+    #This page relies on the reg record, but it might not exist in some
+    #older tournaments. Check it exists before proceding.
+    if (reg == None):
+      reg = PreRegRecord(parent=t.key)
+      reg.open = False
+      reg.put()
 
-		template_values = {
-			'user' : user,
-			't' : t,
-			'logout' : tusers.create_logout_url('/'),
-			'login' : tusers.create_login_url('/hub?t=' + tid),
-			'r' : reg,
-			'isj' : isj,
-			'ist' : ist,
-			'isi' : isi,
-			'regd' : (isj!=None) or (ist!=None) or (isi!=None),
+
+    isj = reg.isJudge(user)
+    ist = reg.isOpenTeam(user)
+    isi = reg.isInstitution(user)
+
+    template_values = {
+      'user' : user,
+      't' : t,
+      'logout' : tusers.create_logout_url('/'),
+      'login' : tusers.create_login_url('/hub?t=' + tid),
+      'r' : reg,
+      'isj' : isj,
+      'ist' : ist,
+      'isi' : isi,
+      'regd' : (isj!=None) or (ist!=None) or (isi!=None),
       'contact_available' : t.facebook or t.contact_email or t.homepage
-		}
-		template = JINJA_ENVIRONMENT.get_template('view/hub.html')
-		self.response.write(template.render(template_values))
+    }
+    template = JINJA_ENVIRONMENT.get_template('view/hub.html')
+    self.response.write(template.render(template_values))
 
 
 
 app = webapp2.WSGIApplication([
-	('/hub', HubHandler)
+  ('/hub', HubHandler)
 ], debug=True)

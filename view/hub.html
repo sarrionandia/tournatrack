@@ -6,7 +6,15 @@
 
 <div class="col-md-6">
 	<h2>About this tournament</h2>
+	{% if t.blurb %}
 	<p>{{t.blurbDisplay() | safe}}</p>
+	{% else %}
+	<p>
+		{{t.name}} is a debating competition hosted on Tournatrack. Information will
+	appear on this page when the convenors of the tournament upload it.
+	</p>
+	{% endif %}
+
 </div>
 
 <div class="col-md-6">
