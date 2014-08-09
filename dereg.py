@@ -35,7 +35,7 @@ class DeregTeamHandler(webapp2.RequestHandler):
 			if t.authorised(user):
 				if key.kind() == 'RegisteredOpenTeam':
 					#Remove the attendance record
-					q = Attending.query(ancestor=user.key)
+					q = Attending.query(ancestor=t.user)
 					q.filter(Attending.tournament == key.parent().parent())
 					q.get(keys_only=True).delete()
 
@@ -56,7 +56,7 @@ class DeregJudgeHandler(webapp2.RequestHandler):
 			if j.authorised(user):
 				if key.kind() == 'RegisteredIndependentJudge':
 					#Remove the attendance record
-					q = Attending.query(ancestor=user.key)
+					q = Attending.query(ancestor=j.user)
 					q.filter(Attending.tournament == key.parent().parent())
 					q.get(keys_only=True).delete()
 
@@ -74,7 +74,7 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 
 		if institution.authorised(user):
 			#Remove the attendance record
-			q = Attending.query(ancestor=user.key)
+			q = Attending.query(ancestor=i.user)
 			q.filter(Attending.tournament == key.parent().parent())
 			try:
 				q.get(keys_only=True).delete()
