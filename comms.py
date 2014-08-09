@@ -121,27 +121,40 @@ class SendHandler(webapp2.RequestHandler):
           for t in teams:
             owner = t.user.get()
             comm.add_to(owner.preferredEmail())
-            comm.add_to_name(owner.full_name)
+
+            if owner.full_name:
+              comm.add_to_name(owner.full_name)
+            else:
+              comm.add_to_name("Debater")
 
         #Add judges if necessary
         if self.request.get('judges'):
           for j in iJudges:
             owner = j.user.get()
             comm.add_to(owner.preferredEmail())
-            comm.add_to_name(owner.full_name)
+
+            if owner.full_name:
+              comm.add_to_name(owner.full_name)
+            else:
+              comm.add_to_name("Debater")
 
         #Add institutions if necessary
-        if self.request.get('institutions'):
+          logging.info("Going to institutions")
           for i in institutions:
             owner = i.user.get()
             comm.add_to(owner.preferredEmail())
-            comm.add_to_name(owner.full_name)
+
+            if owner.full_name:
+              comm.add_to_name(owner.full_name)
+            else:
+              comm.add_to_name("Debater")
+
 
         #Add the owner
         comm.add_to(user.preferredEmail())
         comm.add_to_name(user.full_name)
 
-        sendGrid.send(comm)
+        logging.info(sendGrid.send(comm))
 
 
         template_values = {
