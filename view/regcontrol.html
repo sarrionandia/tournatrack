@@ -131,7 +131,7 @@ $( document ).ready(function() {
 				<td>
                     {{j.name}}&nbsp;
                     {%if j.cv%}
-                    <a id="myLink"  data-toggle="modal"
+                    <a id="myLink"  data-toggle="modal" href="/judgecv?t={{t.key.id()}}&j={{j.key.urlsafe()}}"
                        data-target="#myModal">
                     <span class="badge">CV</span></a>
                     {%endif%}

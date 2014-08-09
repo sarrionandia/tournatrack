@@ -19,6 +19,8 @@ from google.appengine.ext import ndb
 import tusers
 import jinja2
 
+import logging
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -26,34 +28,36 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 
 class JudgeCVHandler(webapp2.RequestHandler):
-	def get(self):
-		user = tusers.get_current_user()
-		
-		if user:
-			#Get the requested tournament
-			tid = self.request.get('t')
-			key = ndb.Key('Tournament', int(tid))
-			t = key.get()
+  def get(self):
+    user = tusers.get_current_user()
 
-			#Get the judge object
-			j = self.request.get('j')
-			j_key = ndb.Key(urlsafe=j)
-			judge = j_key.get()
+    if user:
+      #Get the requested tournament
+      tid = self.request.get('t')
+      key = ndb.Key('Tournament', int(tid))
+      t = key.get()
 
-			#If they are authorised, show the CV
-			if user.key in t.owner:
-				template_values = {
-						'judge': judge
-				}
-				template = JINJA_ENVIRONMENT.get_template('view/judgecv.html')
-				self.response.write(template.render(template_values))
-				return
+      #Get the judge object
+      j = self.request.get('j')
+      j_key = ndb.Key(urlsafe=j)
+      judge = j_key.get()
 
-			else:
-				self.redirect('/tournaments')
-		else:
-			self.redirect(tusers.create_login_url(self.request.uri))
+      logging.info(judge)
+
+      #If they are authorised, show the CV
+      if user.key in t.owner:
+        template_values = {
+            'judge': judge
+        }
+        template = JINJA_ENVIRONMENT.get_template('view/judgecv.html')
+        self.response.write(template.render(template_values))
+        return
+
+      else:
+        self.redirect('/tournaments')
+    else:
+      self.redirect(tusers.create_login_url(self.request.uri))
 
 app = webapp2.WSGIApplication([
-	('/judgecv', JudgeCVHandler)
+  ('/judgecv', JudgeCVHandler)
 ], debug=True)
