@@ -82,6 +82,12 @@ class Tournament(ndb.Model):
 	end = ndb.DateProperty()
 	customRoomStatus = ndb.StringProperty(repeated=True)
 
+	#Information to be displayed
+	blurb = ndb.TextProperty()
+	facebook = ndb.StringProperty()
+	homepage = ndb.StringProperty()
+	contact_email = ndb.StringProperty()
+
 	#Return a list of rooms attached to the tournament
 	def rooms(self):
 		return Room.query(ancestor=self.key).order(Room.name)

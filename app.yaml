@@ -115,7 +115,7 @@ handlers:
 - url: /tournaments
   script: tournaments.app
 
-- url: /tournament_instance
+- url: /tournament_instance.*
   script: tournamentinstance.app
 
 - url: .*

@@ -2,11 +2,64 @@
 {% block title %}{{t.name}}{% endblock %}
 
 {% block content %}
-	<h1>{{t.name}}</h1>
+  <h1>{{t.name}}</h1>
 
-<h2><a href="/trackgrid?t={{t.key.id()}}"><i class="fa fa-table fa-fw"></i> View tracking grid</a></i><br>
-<a href="/trackpin?t={{t.key.id()}}"><i class="fa fa-asterisk fa-fw"></i> Tracking Password</a><br>
-<a href="/trackurls?t={{t.key.id()}}"><i class="fa fa-link fa-fw"></i> Runner links</a></li><br>
-<a href="/room?t={{t.key.id()}}"><i class="fa fa-gavel fa-fw "></i> Rooms</a></h2>
+  <div class="col-md-6">
+    <h3>Tournament Details </h3>
+    <p>
+      Add some general information about your tournament. This will be visible
+      to everybody.
+    </p>
+
+		{% if form.errors %}
+		<ul class="errors">
+		{% for field_name, field_errors in form.errors|dictsort if field_errors %}
+					{% for error in field_errors %}
+							<li>{{ form[field_name].label }}: {{ error }}</li>
+					{% endfor %}
+		{% endfor %}
+		</ul>
+		{% endif %}
+
+		<form role="form" action="/tournament_instance/update_info?t_key={{t.key.id()}}" method="post">
+
+			<div class="form-group">
+				<label for="name">Contact Email Address</label>
+				{{form.email(class="form-control", placeholder="e.g. convenor@reallycooltournament.com")}}
+			</div>
+
+			<div class="form-group">
+				<label for="name">Link to Website</label>
+				{{form.homepage(class="form-control", placeholder="e.g. http://www.reallycooltournament.com")}}
+			</div>
+
+			<div class="form-group">
+				<label for="name">Link to Facebook Event / Page</label>
+				{{form.facebook(class="form-control", placeholder="e.g. http://www.facebook.com/events/xxxxxxxx")}}
+			</div>
+
+			<div class="form-group">
+				<label for="name">Description of Tournament</label>
+				{{form.blurb(class="form-control", placeholder="Location, CA Team, Registration Fee, etc.", rows="8")}}
+			</div>
+
+			<button type="submit" class="btn btn-success">Save Information</button>
+    </form>
+
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        {{t.name}} on Tournatrack
+      </div>
+      <div class="panel-body">
+        <p>
+          This is your control panel for {{t.name}}. The options along the
+          top of the page will let you manage various aspects of your tournament.
+        </p>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

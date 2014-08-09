@@ -78,3 +78,9 @@ class JudgeRecordForm(Form):
 	CA = BooleanField('CA')
 	DCA = BooleanField('DCA')
 	equity = BooleanField('Equity')
+
+class TournamentInfoForm(Form):
+	blurb = TextAreaField('blurb', [validators.optional()])
+	facebook = TextField('facebook', [validators.url(require_tld=True),validators.optional()])
+	homepage = TextField('homepage', [validators.url(require_tld=True),validators.optional()])
+	email = TextField('email', [validators.email(), validators.optional()])
