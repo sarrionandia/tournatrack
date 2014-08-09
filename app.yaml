@@ -118,6 +118,9 @@ handlers:
 - url: /tournament_instance.*
   script: tournamentinstance.app
 
+- url: /hub.*
+  script: hub.app
+
 - url: .*
   script: main.app
 

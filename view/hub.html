@@ -1,0 +1,79 @@
+{% extends "view/rootpage.html" %}
+{% block title %}{{t.name}} on Tournatrack{% endblock %}
+{% block content %}
+
+<h1>{{t.name}}</h1>
+
+<div class="col-md-6">
+	<h2>About this tournament</h2>
+	<p>{{t.blurbDisplay() | safe}}</p>
+</div>
+
+<div class="col-md-6">
+	<h2>More Information</h2>
+	<div class="col-xs-4">
+		<a href="http://tournatrack.appspot.com/hub?t={{t.key.id()}}" title="Add to Calendar" class="addthisevent">
+				Add to Calendar
+				<span class="_start">{{t.start.strftime('%d-%m-%Y')}}</span>
+				<span class="_end">{{t.end.strftime('%d-%m-%Y')}}</span>
+				<span class="_zonecode">35</span>
+				<span class="_summary">{{t.name}}</span>
+				<span class="_description">A debating tournament on Tournatrack</span>
+				<span class="_organizer_email">{{t.contact_email}}</span>
+				<span class="_facebook_event">{{t.facebook}}</span>
+				<span class="_all_day_event">true</span>
+				<span class="_date_format">DD/MM/YYYY</span>
+		</a>
+	</div>
+	<div class="col-xs-4">
+		<h3 style="margin-top: 0;">Starts on</h3>
+		{{t.start.strftime('%d/%m/%Y')}}
+	</div>
+
+	<div class="col-xs-4">
+		<h3 style="margin-top: 0;">Ends on</h3>
+		{{t.end.strftime('%d/%m/%Y')}}
+	</div>
+
+	<div class="alert alert-info col-xs-12" style="margin-top: 1em;">
+		<h3 style="margin-top: 0;">Get in Touch</h3>
+		<button class="btn btn-info"><b class="fa fa-pencil"></b>&nbsp;Email</button>
+		<button class="btn btn-info"><b class="fa fa-external-link"></b>&nbsp;Homepage</button>
+		<button class="btn btn-info"><b class="fa fa-facebook"></b>&nbsp;Facebook</button>
+	</div>
+
+	{% if regd %}
+	<div class="alert alert-success col-xs-12">
+		You have already registered for this tournament!
+		<br />
+		<a href='/reg?t={{t.key.id()}}'>
+			<button type="button" class="btn btn-info">
+				<b class="fa fa-keyboard-o" ></b>&nbsp;Update Registration
+			</button>
+		</a>
+	</div>
+	{% else %}
+
+	{% if r.open %}
+	<div class="alert alert-success col-xs-12">
+		Registration is currently open.
+		<br />
+		<a href='/reg?t={{t.key.id()}}'>
+			<button type="button" class="btn btn-info">
+				Register Now
+			</button>
+		</a>
+	</div>
+	{% else %}
+	<div class="alert alert-danger col-xs-12">
+		Registration is not currently open.
+	</div>
+
+	{% endif %}
+	{% endif %}
+
+
+</div>
+
+<script type="text/javascript" src="https://addthisevent.com/libs/1.5.8/ate.min.js"></script>
+{% endblock %}

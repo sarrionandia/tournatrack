@@ -88,6 +88,11 @@ class Tournament(ndb.Model):
 	homepage = ndb.StringProperty()
 	contact_email = ndb.StringProperty()
 
+	#Return the blurb with newlines
+	def blurbDisplay(self):
+		r = '<br />'
+		return self.blurb.replace('\r\n',r).replace('\n\r',r).replace('\r',r).replace('\n',r)
+
 	#Return a list of rooms attached to the tournament
 	def rooms(self):
 		return Room.query(ancestor=self.key).order(Room.name)
