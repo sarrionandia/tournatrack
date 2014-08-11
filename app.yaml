@@ -1,5 +1,5 @@
 application: tournatrack
-version: 7
+version: testing
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -21,6 +21,9 @@ handlers:
 
 - url: /comms.*
   script: comms.app
+
+- url: /directory
+  script: directory.app
 
 - url: /myProfile
   script: profile.app
