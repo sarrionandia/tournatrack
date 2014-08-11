@@ -139,11 +139,11 @@
 {% else %}
 
 
-<h2>Average Speaker Score: {{average_speaks}}</h2>
+<h2>Average Speaker Score: {{'%0.2f' % average_speaks | float}}</h2>
 <div class="progress">
   <div class="progress-bar progress-bar-success" role="progressbar"
    aria-valuenow="{{average_speaks}}" aria-valuemin="0" aria-valuemax="100" style="width: {{average_speaks}}%">
-    <span class="sr-only">{{average_speaks}} Average</span>
+    <span class="sr-only">{{'%0.2f' % average_speaks | float}} Average</span>
   </div>
 </div>
 
