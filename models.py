@@ -33,6 +33,7 @@ class TUser(ndb.Model):
 	email_code = ndb.StringProperty()
 	email_verified = ndb.BooleanProperty()
 	phone = ndb.StringProperty()
+	basic_info = ndb.ComputedProperty(lambda self: self.full_name and self.phone)
 
 	def preferredEmail(self):
 		if self.email_verified and self.custom_email:

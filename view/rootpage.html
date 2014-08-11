@@ -90,8 +90,69 @@
 
 <div class="container">
     <div id="content">
+
+      {% if ((not user) or (user.basic_info)) %}
+
         {% block content %}
         {% endblock %}
+      {% else %}
+
+      <h1>We need some information from you</h1>
+
+      <div class="col-md-6">
+          <h3>Some Details</h3>
+          <form role="form" action="/update_profile" method="post">
+
+            <div class="alert alert-info">
+
+              The information in this box is mandatory if you want to use Tournatrack.
+
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input name="name" class="form-control", placeholder="Your Name", required="required" />
+            </div>
+
+            <div class="form-group">
+              <label for="name">Your Phone Number</label>
+              <input name="phone" class="form-control", placeholder="Telephone Number", required="required" />
+            </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="institution">Your Current Institution (optional)</label>
+              <input name="institution" class="form-control", placeholder="e.g. University of Warwick", required="required" />
+            </div>
+
+            <div class="checkbox">
+              <label for="public">Tick to make your Debater CV Public </label>
+              <input checked="" id="public" name="public" type="checkbox" value="y">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Details</button>
+
+
+      </div>
+
+      <div class="col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Your Profile</div>
+        <div class="panel-body">
+          <p>
+           Before you can use Tournatrack, you must
+           fill in some basic details about yourself.
+         </p>
+         <p>
+           Complete the form on the left to supply us with those details, then re-visit
+           the page you were trying to access.
+         </p>
+         </div>
+       </div>
+
+      </form>
+
+
+      {% endif %}
     </div>
 
     <div class="alert alert-danger col-md-12">
