@@ -18,14 +18,14 @@
 
     <form role="form" action="/update_profile" method="post">
 
+      <div class="alert alert-info">
+
+        The information in this box is mandatory if you want to register for
+        a tournament.
+
       <div class="form-group">
         <label for="name">Your Name</label>
         {{form.name(class="form-control", placeholder="Your Name", required="required")}}
-      </div>
-
-      <div class="form-group">
-        <label for="institution">Your Current Institution (optional)</label>
-        {{form.institution(class="form-control", placeholder="e.g. University of Warwick")}}
       </div>
 
       <div class="form-group">
@@ -33,60 +33,75 @@
         {{form.phone(class="form-control", placeholder="Telephone Number", required="required")}}
       </div>
 
-      <p>Tournaments will currently send emails to {{user.preferredEmail()}}</p>
-
-      {% if not user.custom_email%}
-      <div class="form-group">
-          <label for="email">Change your email address.</label>
-          {{form.email(class="form-control", placeholder="e.g. yourname@university.ac.uk")}}
       </div>
 
-      {% elif not user.email_verified %}
       <div class="form-group">
-        <label for="verify">Your 6 digit verification code</label>
-        <p>
-          You have saved {{user.custom_email}} as your preferred address, but it is not
-          yet verified. We emailed the code to that email address. Input it below to
-          start receiving mail.
-        </p>
-        <a href="/update_profile/clear_email">
-          <button type="button" class="btn btn-danger btn-small">
-            Delete this email address
-          </button>
-        </a>
-
-        {{form.email_code(class="form-control", placeholder="e.g. G5F6YU. Case Sensitive")}}
+        <label for="institution">Your Current Institution (optional)</label>
+        {{form.institution(class="form-control", placeholder="e.g. University of Warwick")}}
       </div>
-
-      {% else %}
-      <a href="/update_profile/clear_email">
-        <button type="button" class="btn btn-danger btn-small">
-          Clear this email address
-        </button>
-      </a>
-
-      {% endif %}
 
       <div class="checkbox">
         <label for="public">Tick to make your Debater CV Public </label>
         {{form.public()}}
       </div>
 
-      <button type="submit" class="btn btn-primary">Save Details</button>
-
-    </form>
 </div>
 
 <div class="col-md-6">
 <div class="panel panel-primary">
   <div class="panel-heading">Your Profile</div>
 	<div class="panel-body">
-     Before you can make your public profile, you must fill in some
-     basic details about yourself.
-
-     Complete the form on the left, then try to re-access the public
-     profile feature.
+    <p>
+     Before you can register for a tournament or make your Debater CV, you must
+     fill in some basic details about yourself.
+   </p>
+   <p>
+     Complete the form on the left to supply us with those details, then re-visit
+     the page you were trying to access.
+   </p>
    </div>
+ </div>
+
+   <div class="alert alert-info">
+     <h3>Your Email</h3>
+
+   <p>Tournaments will currently send emails to {{user.preferredEmail()}}</p>
+
+   {% if not user.custom_email%}
+   <div class="form-group">
+       <label for="email">Change your email address.</label>
+       {{form.email(class="form-control", placeholder="e.g. yourname@university.ac.uk")}}
+   </div>
+
+   {% elif not user.email_verified %}
+   <div class="form-group">
+     <label for="verify">Your 6 digit verification code</label>
+     <p>
+       You have saved {{user.custom_email}} as your preferred address, but it is not
+       yet verified. We emailed the code to that email address. Input it below to
+       start receiving mail.
+     </p>
+     <a href="/update_profile/clear_email">
+       <button type="button" class="btn btn-danger btn-small">
+         Delete this email address
+       </button>
+     </a>
+
+     {{form.email_code(class="form-control", placeholder="e.g. G5F6YU. Case Sensitive")}}
+   </div>
+
+   {% else %}
+   <a href="/update_profile/clear_email">
+     <button type="button" class="btn btn-danger btn-small">
+       Clear this email address
+     </button>
+   </a>
+
+   {% endif %}
+
+ </div>
 </div>
-</div>
+<button type="submit" class="btn btn-primary">Save Details</button>
+
+</form>
   {% endblock %}
