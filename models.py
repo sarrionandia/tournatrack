@@ -209,7 +209,6 @@ class PreRegRecord(ndb.Model):
 class RegisteredIndependentJudge(ndb.Model):
 	"""Models a participant in the tournament"""
 	name = ndb.StringProperty()
-	cv = ndb.TextProperty()
 	phone = ndb.StringProperty()
 	user = ndb.KeyProperty(kind='TUser')
 
@@ -304,7 +303,6 @@ class InstitutionTeam(ndb.Model):
 class InstitutionJudge(ndb.Model):
 	"""A judge attached to an institution"""
 	name = ndb.StringProperty()
-	cv = ndb.TextProperty()
 
 	#Check if the user is authorised to modify
 	def authorised(self, tuser):

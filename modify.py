@@ -43,12 +43,10 @@ class JudgeHandler(webapp2.RequestHandler):
 
 		if judge.authorised(user):
 			form.name.data = judge.name
-			form.cv.data = judge.cv
 
 			if isinstance(judge, InstitutionJudge):
 				institution = j_key.parent().get()
 				t = j_key.parent().parent().parent().get()
-				form.email.data = institution.email
 				form.phone.data = institution.phone
 
 				reg = j_key.parent().parent().get()
@@ -105,7 +103,6 @@ class JudgeHandler(webapp2.RequestHandler):
 
 				judge.name = form.name.data
 				judge.phone = form.phone.data
-				judge.cv = form.cv.data
 
 				judge.put()
 

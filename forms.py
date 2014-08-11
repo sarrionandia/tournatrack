@@ -31,7 +31,6 @@ class TeamForm(Form):
 class JudgeForm(Form):
 	name = TextField('name', [validators.required()])
 	phone = TextField('phone', [validators.required()])
-	cv = TextAreaField('cv', [validators.optional()])
 
 #Custom Room Status Form model
 class CustomStatusForm(Form):

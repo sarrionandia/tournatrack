@@ -28,10 +28,10 @@
 }
 
     </script>
-	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Judge Registration</h2>	
-	
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Judge Registration</h2>
+
 	{% if user %}
-	
+
 	<div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class=""><i class="fa fa-building-o"></i> {{isi.name}}</h3>
@@ -43,13 +43,10 @@
 					Name
 				</th>
 				<th>
-					CV
-				</th>
-				<th>
 					Delete
 				</th>
 			</tr>
-			
+
 			{% for j in judges %}
 			<form method="post" action="updatejudges?t={{t.key.id()}}">
 			<tr>
@@ -57,19 +54,14 @@
 					<input type="text" class="form-control" name="{{j.key.id()}}_n" placeholder="Judge's Name" value="{{j.name}}" />
 				</td>
 				<td>
-					<textarea class="form-control" rows="3" name="{{j.key.id()}}_c">
-						{% if j.cv %}{{j.cv}}{% endif %}
-					</textarea>
-				</td>
-				<td>
 	        	    <button type="button" onclick="post_to_url('/dereg/judge', {'j_key':'{{j.key.urlsafe()}}'})"
                             class="btn btn-danger">Deregister</button>
 				</td>
 			<tr>
 			{% endfor %}
-			
+
 		</table>
-		
+
 		<div class="panel-footer">
 			<input type="hidden" name="reg_key" value="{{reg_key}}" />
 			<input type="hidden" name="updating" value="j"/>
@@ -85,14 +77,14 @@
 		</form>
 
 	</div>
-    
-	
-	
+
+
+
 	{% else %}
-	
+
 		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
-	
+
 	{% endif %}
-	
-		
+
+
 {% endblock %}

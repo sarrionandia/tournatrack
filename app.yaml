@@ -73,9 +73,6 @@ handlers:
 - url: /reg/judge
   script: regjudge.app
 
-- url: /judgecv
-  script: judgecv.app
-
 - url: /reg
   script: reg.app
 

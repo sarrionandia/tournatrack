@@ -98,7 +98,6 @@ class RegHandler(webapp2.RequestHandler):
 
         judge.name = form.name.data
         judge.phone = form.phone.data
-        judge.cv = form.cv.data
 
         judge.put()
 

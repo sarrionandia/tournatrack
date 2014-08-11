@@ -36,11 +36,6 @@
 			    	<input type="tel" name="phone" class="form-control" id="phone" placeholder="Call me maybe" required value="{{isj.phone}}">
 			  	</div>
 
-				<div class="form-group col-md-12">
-			    	<label for="name">Your judging CV</label>
-			    	<textarea  name="cv" class="form-control" id="cv" placeholder="Don't be modest..." rows="5">{% if isj.cv %}{{isj.cv}}{%endif%}</textarea>
-			  	</div>
-
 	      </div>
 	      <div class="modal-footer">
 				<input type="hidden" name="t" value="{{t.key.id()}}" />

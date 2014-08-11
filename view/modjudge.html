@@ -38,7 +38,7 @@
 
                 {% else %}
 
-                <div class="form-group col-md-6">
+          <div class="form-group col-md-6">
 			    	<label for="phone">Phone</label>
 			    	{{form.phone(class="form-control", placeholder="Phone Number")}}
 			  	</div>
@@ -48,11 +48,6 @@
                 <div class="form-group col-md-6">
 			    	<label for="name">Name of Judge</label>
 			    	{{form.name(class="form-control", placeholder="Name of Judge")}}
-			  	</div>
-
-				<div class="form-group col-md-12">
-			    	<label for="name">Your judging CV</label>
-			    	{{form.cv(class="form-control", placeholder="Don't be modest...", rows="5")}}
 			  	</div>
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
