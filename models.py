@@ -208,8 +208,9 @@ class PreRegRecord(ndb.Model):
 
 class RegisteredIndependentJudge(ndb.Model):
 	"""Models a participant in the tournament"""
-	name = ndb.StringProperty()
-	phone = ndb.StringProperty()
+	name = ndb.ComputedProperty(lambda self: self.user.get().full_name)
+	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
+	cv_public = ndb.ComputedProperty(lambda self: self.user.get().public_profile)
 	user = ndb.KeyProperty(kind='TUser')
 
 	def prefs(self):

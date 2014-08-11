@@ -74,7 +74,7 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 
 		if institution.authorised(user):
 			#Remove the attendance record
-			q = Attending.query(ancestor=i.user)
+			q = Attending.query(ancestor=institution.user)
 			q.filter(Attending.tournament == key.parent().parent())
 			try:
 				q.get(keys_only=True).delete()

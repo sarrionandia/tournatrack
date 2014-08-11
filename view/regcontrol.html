@@ -94,20 +94,16 @@ $( document ).ready(function() {
 				<th>Institution</th>
 				<th>Email</th>
 				<th>Phone</th>
-                <th>Modify</th>
-                <th>Deregister</th>
+        <th>Deregister</th>
 			</tr>
 			{% for j in ijudges %}
 			<tr>
-				<td>{{j.name}}</td>
+				<td>
+          {{j.name}}
+          {% if j.cv_public%}&nbsp;<a href="/myProfile?d={{j.user.id()}}" target="_blank"><span class="badge">CV</span></a></td>{%endif%}
 				<td><emph>Independent</emph></td>
 				<td>{{j.email()}}</td>
 				<td>{{j.phone}}</td>
-                <td>
-                    <a href="/mod/judge?j={{j.key.urlsafe()}}">
-                        <button type="button" class="btn btn-warning">Modify</button>
-                    </a>
-                </td>
                 <td>
                     <form method="post" action="/dereg/judge">
 				        <input type="hidden" name="j_key" value="{{j.key.urlsafe()}}" />
@@ -125,12 +121,6 @@ $( document ).ready(function() {
                 <td>{{i.name}}</td>
                 <td>{{i.email()}}</td>
                 <td>{{i.phone}}</td>
-                <td>
-                    <a href="/mod/judge?j={{j.key.urlsafe()}}">
-                        <button type="button" class="btn btn-warning">Modify</button>
-                    </a>
-                </td>
-
                 <td>
                     <form method="post" action="/dereg/judge">
 				        <input type="hidden" name="j_key" value="{{j.key.urlsafe()}}" />

@@ -17,40 +17,32 @@
 		</div>
 		<div class="panel panel-body">
 
-			<h3>Judge not that ye be not judged</h3>
-
-            {% if form.errors %}
-			    <ul class="errors">
-			        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
-			            {% for error in field_errors %}
-			                <li>{{ form[field_name].label }}: {{ error }}</li>
-			            {% endfor %}
-			        {% endfor %}
-			    </ul>
-			{% endif %}
-
+			<h3>Independent Adjudicator</h3>
 
 			<form role="form" action="/reg/judge?t={{t.key.id()}}" method="post">
 
-				<div class="form-group col-md-6">
-			    	<label for="name">Your Name</label>
-			    	{{form.name(class="form-control", placeholder="Your Name")}}
-			  	</div>
-
-				<div class="form-group col-md-6">
-			    	<label for="name">Your Phone Number</label>
-			    	{{form.phone(class="form-control", placeholder="Call me maybe")}}
-			  	</div>
-
 				<p>
-					The tournament administrators will be able to email whichever address is
-					listed in your account. Right now, that is {{user.preferredEmail()}}.
-					You can change this address in your profile settings, at the top-right
-					hand corner of every page.
+					The following information will be sent to the convenors of {{t.name}}. This information
+				comes from your Tournatrack profile, you may change this information at any time in
+				your profile settings.
 				</p>
 
+				<div class="form-group col-md-6">
+					<label for="name">Name</label>
+					<input class="form-control" disabled value="{{user.full_name}}" />
+				</div>
 
-			  <button type="submit" class="btn btn-primary">Submit</button>
+				<div class="form-group col-md-6">
+					<label for="phone">Telephone Number</label>
+					<input class="form-control" disabled value="{{user.phone}}" />
+				</div>
+
+			<p>The convenors of {{t.name}}
+					<b>{%if user.public_profile %}will{%else%}will not{%endif%}</b>
+					be able to see your Debater CV, because of your profile settings.
+			</p>
+
+			 <button type="submit" class="btn btn-primary brn-lg">Register as a Judge</button>
 
 			</form>
 
