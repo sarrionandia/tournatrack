@@ -28,6 +28,11 @@
         {{form.institution(class="form-control", placeholder="e.g. University of Warwick")}}
       </div>
 
+      <div class="form-group">
+        <label for="name">Your Phone Number</label>
+        {{form.phone(class="form-control", placeholder="Telephone Number", required="required")}}
+      </div>
+
       <p>Tournaments will currently send emails to {{user.preferredEmail()}}</p>
 
       {% if not user.custom_email%}
@@ -63,7 +68,7 @@
       {% endif %}
 
       <div class="checkbox">
-        <label for="public">Tick to make your profile public </label>
+        <label for="public">Tick to make your Debater CV Public </label>
         {{form.public()}}
       </div>
 

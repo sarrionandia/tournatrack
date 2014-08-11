@@ -41,11 +41,13 @@ class UpdateProfileHandler(webapp2.RequestHandler):
       name = user.full_name
       current_institution = user.current_institution
       public = user.public_profile
+      phone = user.phone
 
       form = ProfileForm()
       form.name.data = name
       form.institution.data = current_institution
       form.public.data = public
+      form.phone.data = phone
 
       template_values = {
         'user' : user,
@@ -68,6 +70,7 @@ class UpdateProfileHandler(webapp2.RequestHandler):
         user.full_name = form.name.data
         user.current_institution = form.institution.data
         user.public_profile = form.public.data
+        user.phone = form.phone.data
         user.put()
 
         if form.email.data:

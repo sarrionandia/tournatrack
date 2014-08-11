@@ -43,6 +43,7 @@ class ProfileForm(Form):
 	public = BooleanField('public')
 	email = TextField('email', [validators.email(), validators.optional()])
 	email_code = TextField('email_code')
+	phone = TextField('phone')
 
 class SpeakerRecordForm(Form):
 	tournamentName = TextField('tournamentName', [validators.required()])

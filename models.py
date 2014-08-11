@@ -32,6 +32,7 @@ class TUser(ndb.Model):
 	custom_email = ndb.StringProperty()
 	email_code = ndb.StringProperty()
 	email_verified = ndb.BooleanProperty()
+	phone = ndb.StringProperty()
 
 	def preferredEmail(self):
 		if self.email_verified and self.custom_email:
