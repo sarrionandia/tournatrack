@@ -53,14 +53,10 @@ class TeamHandler(webapp2.RequestHandler):
 			institution = None
 
 			if isinstance(team, RegisteredOpenTeam ):
-				form.leadName.data = team.leadName
-				form.phone.data = team.phone
 				reg = t_key.parent().get()
 
 			elif isinstance(team, InstitutionTeam):
 				institution = team.key.parent().get()
-				form.leadName.data = institution.leadName
-				form.phone.data = institution.phone
 				reg = t_key.parent().parent().get()
 
 			t = reg.key.parent().get()
@@ -97,9 +93,6 @@ class TeamHandler(webapp2.RequestHandler):
 		# with this method, as that data belongs to the Institution
 		if (isinstance(team, InstitutionTeam)):
 			institution = team.key.parent().get()
-			form.leadName.data = institution.leadName
-			form.phone.data = institution.phone
-
 			reg = institution.key.parent().get()
 
 		elif (isinstance(team, RegisteredOpenTeam)):
@@ -113,8 +106,6 @@ class TeamHandler(webapp2.RequestHandler):
 			#If valid, update the team object
 			if (form.validate()):
 
-				team.leadName = form.leadName.data
-				team.phone = form.phone.data
 				team.teamName = form.teamName.data
 				team.sp1Name = form.sp1Name.data
 				team.sp2Name = form.sp2Name.data
@@ -143,6 +134,5 @@ class TeamHandler(webapp2.RequestHandler):
 			self.redirect(self.request.referer)
 
 app = webapp2.WSGIApplication([
-	('/mod/judge', JudgeHandler),
 	('/mod/team', TeamHandler)
 ], debug=True)

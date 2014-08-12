@@ -31,15 +31,31 @@
 
 			<form role="form" action="/reg/team?t={{t.key.id()}}" method="post">
 
-				<div class="form-group col-md-6">
-			    	<label for="name">Lead Person's Name</label>
-			    	{{form.leadName(class="form-control", placeholder="Who can we get in touch with?")}}
-			  	</div>
+<div class="alert alert-warning col-md-12">
+					<h3>Are these your details?</h3>
 
-				<div class="form-group col-md-6">
-			    	<label for="phone">Phone Number</label>
-					{{form.phone(class="form-control", placeholder="Call me maybe")}}
-			  	</div>
+					<p>
+						The following information will be sent to the convenors of {{t.name}}. This information
+					comes from your Tournatrack profile, you may change this information at any time in
+					your <a href="/update_profile" target="_blank">profile settings</a>.
+					</p>
+
+					<div class="form-group col-md-12">
+						<label for="name">Name</label>
+						<input class="form-control" disabled value="{{user.full_name}}" />
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="phone">Telephone Number</label>
+						<input class="form-control" disabled value="{{user.phone}}" />
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="phone">Email</label>
+						<input class="form-control" disabled value="{{user.preferredEmail()}}" />
+					</div>
+
+				</div>
 
 				<div class="form-group col-md-12">
 			    	<label for="teamName">Your Team Name</label>

@@ -88,7 +88,7 @@ class RegHandler(webapp2.RequestHandler):
 
           team = RegisteredOpenTeam(parent=reg.key)
           team.user = user.key
-          
+
           #Add an attendance record
           attending = Attending(parent=user.key)
           attending.role = "Open Team"
@@ -96,8 +96,6 @@ class RegHandler(webapp2.RequestHandler):
           attending.put()
 
 
-        team.leadName = form.leadName.data
-        team.phone = form.phone.data
         team.teamName = form.teamName.data
         team.sp1Name = form.sp1Name.data
         team.sp2Name = form.sp2Name.data
@@ -105,7 +103,6 @@ class RegHandler(webapp2.RequestHandler):
         team.sp2ESL = form.sp2ESL.data
         team.sp1Novice = form.sp1Novice.data
         team.sp2Novice = form.sp2Novice.data
-        team.leadname = form.leadName.data
         team.user = user.key
 
         team.put()

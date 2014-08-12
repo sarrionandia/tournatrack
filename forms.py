@@ -16,8 +16,6 @@ from wtforms import Form, TextField, TextAreaField, BooleanField, IntegerField, 
 
 #Team Form model
 class TeamForm(Form):
-	leadName = TextField('leadName', [validators.Required()])
-	phone = TextField('phone', [validators.Required()])
 	teamName = TextField('teamName')
 	sp1Name = TextField('sp1Name')
 	sp1Novice = BooleanField('sp1Novice')

@@ -233,14 +233,18 @@ class RegisteredIndependentJudge(ndb.Model):
 
 class RegisteredOpenTeam(ndb.Model):
 	"""Models an open team in the tournament"""
-	leadName = ndb.StringProperty()
-	phone = ndb.StringProperty()
+	leadName = ndb.ComputedProperty(lambda self: self.user.get().full_name)
+	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
 	user = ndb.KeyProperty(kind='TUser')
+
 	teamName = ndb.StringProperty()
+
 	sp1Name = ndb.StringProperty()
 	sp2Name = ndb.StringProperty()
+
 	sp1ESL = ndb.BooleanProperty()
 	sp2ESL = ndb.BooleanProperty()
+
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
 

@@ -54,8 +54,6 @@ class RegHandler(webapp2.RequestHandler):
 		# modify teams form
 		if (ist):
 			form = TeamForm()
-			form.leadName.data = ist.leadName
-			form.phone.data = ist.phone
 			form.teamName.data = ist.teamName
 			form.sp1Name.data = ist.sp1Name
 			form.sp2Name.data = ist.sp2Name
