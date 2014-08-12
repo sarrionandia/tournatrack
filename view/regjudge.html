@@ -21,21 +21,32 @@
 
 			<form role="form" action="/reg/judge?t={{t.key.id()}}" method="post">
 
-				<p>
-					The following information will be sent to the convenors of {{t.name}}. This information
-				comes from your Tournatrack profile, you may change this information at any time in
-				your profile settings.
-				</p>
+				<div class="alert alert-warning col-md-12">
+					<h3>Are these your details?</h3>
 
-				<div class="form-group col-md-6">
-					<label for="name">Name</label>
-					<input class="form-control" disabled value="{{user.full_name}}" />
+					<p>
+						The following information will be sent to the convenors of {{t.name}}. This information
+					comes from your Tournatrack profile, you may change this information at any time in
+					your <a href="/update_profile" target="_blank">profile settings</a>.
+					</p>
+
+					<div class="form-group col-md-12">
+						<label for="name">Name</label>
+						<input class="form-control" disabled value="{{user.full_name}}" />
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="phone">Telephone Number</label>
+						<input class="form-control" disabled value="{{user.phone}}" />
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="phone">Email</label>
+						<input class="form-control" disabled value="{{user.preferredEmail()}}" />
+					</div>
+
 				</div>
 
-				<div class="form-group col-md-6">
-					<label for="phone">Telephone Number</label>
-					<input class="form-control" disabled value="{{user.phone}}" />
-				</div>
 
 			<p>The convenors of {{t.name}}
 					<b>{%if user.public_profile %}will{%else%}will not{%endif%}</b>
