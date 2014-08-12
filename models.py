@@ -239,6 +239,9 @@ class RegisteredOpenTeam(ndb.Model):
 
 	teamName = ndb.StringProperty()
 
+	sp1Key = ndb.KeyProperty(kind='Tuser')
+	sp2Key = ndb.KeyProperty(kind='Tuser')
+
 	sp1Name = ndb.StringProperty()
 	sp2Name = ndb.StringProperty()
 
