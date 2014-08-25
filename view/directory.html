@@ -1,0 +1,18 @@
+{% extends "view/rootpage.html" %}
+{% block title %}Tournatrack Directory{% endblock %}
+{% block content %}
+
+<h1>All Public Profiles</h1>
+
+<p>This last may not be completely live, changes may take some time
+	to propagate</p>
+
+<ul>
+	{% for p in public_profiles %}
+
+	<li><a href='/myProfile?d={{p.key.id()}}'>{{p.full_name}}</a></li>
+
+	{% endfor%}
+</ul
+
+{% endblock %}

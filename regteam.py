@@ -68,6 +68,7 @@ class RegHandler(webapp2.RequestHandler):
     if user:
 
       form = TeamForm(self.request.POST)
+
       if (form.validate()):
 
         #If we are updating an existing registration, update it.
@@ -94,7 +95,6 @@ class RegHandler(webapp2.RequestHandler):
           attending.role = "Open Team"
           attending.tournament = t.key
           attending.put()
-
 
         team.teamName = form.teamName.data
         team.sp1Name = form.sp1Name.data

@@ -62,36 +62,50 @@
 					{{form.teamName(class="form-control", placeholder="The best ones contain in-jokes")}}
 			  	</div>
 
+					<div class="alert alert-info col-md-12">
+						<h3>Speaker Details</h3>
+						<p>
+							For each speaker you must provide either their name, or their
+							Tournatrack DebaterID. If you use their DebaterID, this tournament
+							will be linked to their account, and  they will receive updates from
+							the tournament convenors. You can find your DebaterID at the top of your
+							Debater CV.
+						</p>
+					</div>
+
 				<div class="well well-lg col-md-6">
 					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 1</h2>
-					<div class="form-group">
+					<div class="form-group col-md-12">
 						<label for="sp1Name">Name</label>
 						{{form.sp1Name(class="form-control", value="Speaker 1")}}
 					</div>
-					<label class="col-md-3">
+					<label class="col-md-6">
 					    Novice? {{form.sp1Novice(class="form-control")}}
 					</label>
-					<label class="col-md-3">
+					<label class="col-md-6">
 					    ESL? {{form.sp1ESL(class="form-control")}}
 					</label>
+
 				</div>
 				<div class="well well-lg col-md-6">
 					<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 2</h2>
-					<div class="form-group">
+					<div class="form-group col-md-12">
 						<label for="sp2Name">Name</label>
 						{{form.sp2Name(class="form-control", value="Speaker 2")}}
 					</div>
-					<label class="col-md-3">
+					<label class="col-md-6">
 					    Novice? {{form.sp2Novice(class="form-control")}}
 					</label>
-					<label class="col-md-3">
+					<label class="col-md-6">
 					    ESL? {{form.sp2ESL(class="form-control")}}
 					</label>
 
+
 				</div>
 
+				<div class="col-md-12">
 			   	<button type="submit" class="btn btn-primary">Submit</button>
-
+				</div>
 			</form>
 
 		</div>

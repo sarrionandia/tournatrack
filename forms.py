@@ -24,6 +24,10 @@ class TeamForm(Form):
 	sp2Novice = BooleanField('sp2Novice')
 	sp2ESL = BooleanField('sp2ESL')
 
+	sp1Key = TextField('sp1Key')
+	sp2Key = TextField('sp2Key')
+
+
 
 # Judge Form model
 class JudgeForm(Form):
