@@ -28,6 +28,102 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+class JudgeHandler(webapp2.RequestHandler):
+	def get(self):
+		user = tusers.get_current_user()
+		form = JudgeForm()
+
+		j = self.request.get('j')
+		j_key = ndb.Key(urlsafe=j)
+		judge = j_key.get()
+
+		reg = None
+
+		institution = None
+
+		if judge.authorised(user):
+			form.name.data = judge.name
+			form.cv.data = judge.cv
+
+			if isinstance(judge, InstitutionJudge):
+				institution = j_key.parent().get()
+				t = j_key.parent().parent().parent().get()
+				form.phone.data = institution.phone
+
+				reg = j_key.parent().parent().get()
+
+			elif isinstance(judge, RegisteredIndependentJudge):
+				reg = j_key.parent().get()
+				form.phone.data = judge.phone
+
+			t = reg.key.parent().get()
+
+			template_values = {
+				'user' : user,
+				't' : t,
+				'logout' : tusers.create_logout_url('/'),
+				'login' : tusers.create_login_url('/mod/judge?j=' + j),
+				'r' : reg,
+				'form' : form,
+				'j' : j_key.urlsafe(),
+				'institution' : institution
+			}
+			template = JINJA_ENVIRONMENT.get_template('view/modjudge.html')
+			self.response.write(template.render(template_values))
+			return
+		else:
+			self.redirect(self.request.referer)
+
+
+	def post(self):
+		user = tusers.get_current_user()
+		form = JudgeForm(self.request.POST)
+
+		j = self.request.get('j')
+		j_key = ndb.Key(urlsafe=j)
+		judge = j_key.get()
+
+		reg = None
+		institution = None
+
+		if judge.authorised(user):
+
+
+			if isinstance(judge, InstitutionJudge):
+				institution = j_key.parent().get()
+				reg = institution.key.parent().get()
+
+				form.phone.data = institution.phone
+
+			elif isinstance(judge, RegisteredIndependentJudge):
+				reg = j_key.parent().get()
+
+			t = reg.key.parent().get()
+
+			if (form.validate()):
+
+				judge.name = form.name.data
+				judge.phone = form.phone.data
+				judge.cv = form.cv.data
+
+				judge.put()
+
+				self.redirect('/reg_control?t=' + str(t.key.id()))
+			else:
+				template_values = {
+					'user' : user,
+					't' : t,
+					'logout' : tusers.create_logout_url('/'),
+					'login' : tusers.create_login_url('/mod/judge?j=' + j),
+					'r' : reg,
+					'form' : form,
+					'institution' : institution,
+				}
+				template = JINJA_ENVIRONMENT.get_template('view/modjudge.html')
+				self.response.write(template.render(template_values))
+		else:
+			self.redirect(self.request.referer)
+
 #Handles the modification of teams
 class TeamHandler(webapp2.RequestHandler):
 	def get(self):
@@ -53,10 +149,14 @@ class TeamHandler(webapp2.RequestHandler):
 			institution = None
 
 			if isinstance(team, RegisteredOpenTeam ):
+				form.leadName.data = team.leadName
+				form.phone.data = team.phone
 				reg = t_key.parent().get()
 
 			elif isinstance(team, InstitutionTeam):
 				institution = team.key.parent().get()
+				form.leadName.data = institution.leadName
+				form.phone.data = institution.phone
 				reg = t_key.parent().parent().get()
 
 			t = reg.key.parent().get()
@@ -93,6 +193,9 @@ class TeamHandler(webapp2.RequestHandler):
 		# with this method, as that data belongs to the Institution
 		if (isinstance(team, InstitutionTeam)):
 			institution = team.key.parent().get()
+			form.leadName.data = institution.leadName
+			form.phone.data = institution.phone
+
 			reg = institution.key.parent().get()
 
 		elif (isinstance(team, RegisteredOpenTeam)):
@@ -106,6 +209,8 @@ class TeamHandler(webapp2.RequestHandler):
 			#If valid, update the team object
 			if (form.validate()):
 
+				team.leadName = form.leadName.data
+				team.phone = form.phone.data
 				team.teamName = form.teamName.data
 				team.sp1Name = form.sp1Name.data
 				team.sp2Name = form.sp2Name.data
@@ -134,5 +239,6 @@ class TeamHandler(webapp2.RequestHandler):
 			self.redirect(self.request.referer)
 
 app = webapp2.WSGIApplication([
+	('/mod/judge', JudgeHandler),
 	('/mod/team', TeamHandler)
 ], debug=True)
