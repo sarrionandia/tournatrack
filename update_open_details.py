@@ -16,6 +16,8 @@ import webapp2
 import jinja2
 import os
 
+import logging
+
 from google.appengine.ext import ndb
 import tusers
 
@@ -90,6 +92,13 @@ class OpenDetailsHandler(webapp2.RequestHandler):
       team.sp2ESL = form.sp2ESL.data
       team.sp1Novice = form.sp1Novice.data
       team.sp2Novice = form.sp2Novice.data
+
+      #Check for debaterID links
+      if form.sp1Key.data:
+        logging.info('sp1')
+        team.linkSpeaker(1, form.sp1Key.data)
+      if form.sp2Key.data:
+        team.linkSpeaker(2, form.sp2Key.data)
 
       team.put()
       self.redirect('/hub?t=' + tid)

@@ -33,9 +33,9 @@ $(document).ready(function () {
 function bind1(spk) {
 	var id = $('#sp' + spk + 'Key').val();
 
-	$('#sp' + spk + 'Key').prop('disabled', true);
-	$('#useMe' + spk).prop('disabled', true);
-	$('#link' + spk).prop('disabled', true);
+	$('#sp' + spk + 'Key').prop('readonly', true);
+	$('#useMe' + spk).prop('readonly', true);
+	$('#link' + spk).prop('readonly', true);
 
 
 	$.get("../checkID?id=" + id, function(data, status){
@@ -45,7 +45,7 @@ function bind1(spk) {
 
 		if (problem == 'None') {
 			$('#link' + spk + 'error').prop('hidden', true);
-			$('#sp' + spk + 'Name').prop('disabled', true);
+			$('#sp' + spk + 'Name').prop('readonly', true);
 			$('#sp' + spk + 'Name').val(d['name']);
 
 			$('#useMe' + spk).hide();
@@ -56,9 +56,9 @@ function bind1(spk) {
 		}
 
 		else {
-			$('#sp' + spk + 'Key').prop('disabled', false);
-			$('#useMe' + spk).prop('disabled', false);
-			$('#link' + spk).prop('disabled', false);
+			$('#sp' + spk + 'Key').prop('readonly', false);
+			$('#useMe' + spk).prop('readonly', false);
+			$('#link' + spk).prop('readonly', false);
 
 			$('#link' + spk + 'error').text(problem);
 			$('#link' + spk + 'error').prop('hidden', false);
@@ -69,10 +69,10 @@ function bind1(spk) {
 
 function clear1(spk){
 	$('#link' + spk + 'Success').hide();
-	$('#sp' + spk + 'Key').prop('disabled', false);
-	$('#useMe' + spk).prop('disabled', false);
-	$('#link' + spk).prop('disabled', false);
-	$('#sp' + spk + 'Name').prop('disabled', false);
+	$('#sp' + spk + 'Key').prop('readonly', false);
+	$('#useMe' + spk).prop('readonly', false);
+	$('#link' + spk).prop('readonly', false);
+	$('#sp' + spk + 'Name').prop('readonly', false);
 	$('#sp' + spk + 'Name').val('');
 	$('#sp' + spk + 'Key').val('');
 	$('#clear' + spk).hide();
@@ -158,7 +158,7 @@ function clear1(spk){
 
 								</div>
 
-								<input class="form-control" placeholder="DebaterID" id="sp1Key" />
+								{{form.sp1Key(class="form-control", id="sp1Key", placeholder="e..g 1721287")}}
 								<div class="alert alert-success" id="link1Success" style="display: none;">
 									The DebaterID was successfully linked. Save your changes below.
 								</div>
@@ -219,7 +219,7 @@ function clear1(spk){
 
 			</div>
 
-			<input class="form-control" placeholder="DebaterID" id="sp2Key" />
+			<input class="form-control" placeholder="DebaterID" id="sp2Key" name="sp2Key" />
 			<div class="alert alert-success" id="link2Success" style="display: none;">
 				The DebaterID was successfully linked. Save your changes below.
 			</div>

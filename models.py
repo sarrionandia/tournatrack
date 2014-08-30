@@ -265,6 +265,32 @@ class RegisteredOpenTeam(ndb.Model):
 	def institutionName(self):
 		return "Composite"
 
+	#Link a speaker to a registered team
+	def linkSpeaker(self, speaker, dID):
+		key = ndb.Key('TUser', int(dID))
+		debater = key.get()
+		if debater.basic_info:
+			if speaker == 1:
+				self.sp1Key = key
+			elif speaker == 2:
+				self.sp2Key = key
+			else:
+				return False
+			self.put()
+			return True
+		else:
+			return False
+
+	def linkSpeaker2(self, dID):
+		def linkSpeaker1(self, dID):
+			key = ndb.Key('TUser', int(dID))
+			debater = key.get()
+			if debater.basic_info:
+				self.sp1Key = key
+				return True
+			else:
+				return False
+
 class RegisteredInstitution(ndb.Model):
 	"""Models an institution registered for the tournment"""
 	name = ndb.StringProperty()
