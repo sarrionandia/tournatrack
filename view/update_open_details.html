@@ -99,10 +99,6 @@ function clear1(spk){
 			{% endif %}
 
 			<form role="form" action="/reg/update_open_details?t={{t.key.id()}}" method="post">
-				<div class="form-group col-md-12">
-						<label for="teamName">Your Team Name</label>
-					{{form.teamName(class="form-control", placeholder="The best ones contain in-jokes")}}
-				</div>
 
 <div class="alert alert-warning col-md-12">
 					<h3>Contact Information</h3>
@@ -130,6 +126,10 @@ function clear1(spk){
 
 				</div>
 
+				<div class="form-group col-md-12">
+						<label for="teamName">Your Team Name</label>
+					{{form.teamName(class="form-control", placeholder="The best ones contain in-jokes")}}
+				</div>
 
 						<h3>Speaker Details</h3>
 						<p>
