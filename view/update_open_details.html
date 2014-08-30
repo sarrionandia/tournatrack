@@ -158,7 +158,7 @@ function clear1(spk){
 
 								</div>
 								{% if ist.sp1Key %}
-								{{form.sp1Key(class="form-control", id="sp1Key", placeholder="e..g 1721287", readonly="true")}}
+								{{form.sp1Key(class="form-control", id="sp1Key", placeholder="e.g 1721287", readonly="true")}}
 								<div class="alert alert-success" id="link1Success" style="display: none;">
 									The DebaterID was successfully linked. Save your changes below.
 								</div>
@@ -166,7 +166,7 @@ function clear1(spk){
 								<button class="btn btn-info" type="button" id="useMe1" style="display: none;">Use My DebaterID</button>
 								<button class="btn btn-danger" type="button" id="clear1">Unlink DebaterID</button>
 								{% else %}
-								{{form.sp1Key(class="form-control", id="sp1Key", placeholder="e..g 1721287")}}
+								{{form.sp1Key(class="form-control", id="sp1Key", placeholder="e.g 1721287")}}
 								<div class="alert alert-success" id="link1Success" style="display: none;">
 									The DebaterID was successfully linked. Save your changes below.
 								</div>
@@ -232,11 +232,11 @@ function clear1(spk){
 
 			</div>
 			{% if ist.sp2Key %}
-			{{form.sp2Key(class="form-control", id="sp2Key", placeholder="e..g 1721287", readonly="true")}}
+			{{form.sp2Key(class="form-control", id="sp2Key", placeholder="e.g 1721287", readonly="true")}}
 			<button class="btn btn-info" type="button" id="link2" style="display: none;">Link DebaterID</button>
 			<button class="btn btn-danger" type="button" id="clear2">Unlink DebaterID</button>
 			{% else %}
-			{{form.sp2Key(class="form-control", id="sp2Key", placeholder="e..g 1721287")}}
+			{{form.sp2Key(class="form-control", id="sp2Key", placeholder="e.g 1721287")}}
 			<button class="btn btn-info" type="button" id="link2">Link DebaterID</button>
 			<button class="btn btn-danger" type="button" id="clear2" style="display: none;">Unlink DebaterID</button>
 			{% endif %}
