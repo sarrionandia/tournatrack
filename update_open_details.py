@@ -49,12 +49,17 @@ class OpenDetailsHandler(webapp2.RequestHandler):
     if (ist):
       form = TeamForm()
       form.teamName.data = ist.teamName
-      form.sp1Name.data = ist.sp1Name
-      form.sp2Name.data = ist.sp2Name
+      form.sp1Name.data = ist.speaker1()
+      form.sp2Name.data = ist.speaker2()
       form.sp1Novice.data = ist.sp1Novice
       form.sp2Novice.data = ist.sp2Novice
       form.sp1ESL.data = ist.sp1ESL
       form.sp2ESL.data = ist.sp2ESL
+
+      if ist.sp1Key:
+        form.sp1Key.data = ist.sp1Key.id()
+      if ist.sp2Key:
+        form.sp2Key.data = ist.sp2Key.id()
 
     else:
       self.redirect('/reg?t=' + tid)
@@ -85,6 +90,19 @@ class OpenDetailsHandler(webapp2.RequestHandler):
     if team:
       form = TeamForm(self.request.POST)
 
+      #Check for debaterID links
+      if form.sp1Key.data:
+        team.linkSpeaker(1, form.sp1Key.data)
+      else:
+        team.sp1Key = None
+        team.sp1Name = None
+      if form.sp2Key.data:
+        team.linkSpeaker(2, form.sp2Key.data)
+      else:
+        team.sp2Key = None
+        team.sp2Name = None
+
+
       team.teamName = form.teamName.data
       team.sp1Name = form.sp1Name.data
       team.sp2Name = form.sp2Name.data
@@ -93,12 +111,8 @@ class OpenDetailsHandler(webapp2.RequestHandler):
       team.sp1Novice = form.sp1Novice.data
       team.sp2Novice = form.sp2Novice.data
 
-      #Check for debaterID links
-      if form.sp1Key.data:
-        logging.info('sp1')
-        team.linkSpeaker(1, form.sp1Key.data)
-      if form.sp2Key.data:
-        team.linkSpeaker(2, form.sp2Key.data)
+
+
 
       team.put()
       self.redirect('/hub?t=' + tid)

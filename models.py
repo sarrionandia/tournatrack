@@ -245,6 +245,19 @@ class RegisteredOpenTeam(ndb.Model):
 	sp1Name = ndb.StringProperty()
 	sp2Name = ndb.StringProperty()
 
+	#Speaker names accounting for linked accounts
+	def speaker1(self):
+		if self.sp1Key:
+			return self.sp1Key.get().full_name
+		else:
+			return self.sp1Name
+
+	def speaker2(self):
+		if self.sp2Key:
+			return self.sp2Key.get().full_name
+		else:
+			return self.sp2Name
+
 	sp1ESL = ndb.BooleanProperty()
 	sp2ESL = ndb.BooleanProperty()
 
