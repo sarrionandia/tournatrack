@@ -42,7 +42,18 @@ class OpenDetailsHandler(webapp2.RequestHandler):
 
     reg = t.preRegRecord().get()
 
-    ist = reg.isOpenTeam(user)
+    ist = None
+
+    team_code = self.request.get('team')
+
+    #If a manual team code has been provided, use it
+    if (team_code):
+      t_key = ndb.Key(urlsafe=team_code)
+      ist = t_key.get()
+
+    #Otherwise use the team that they are registered as
+    else:
+      ist = reg.isOpenTeam(user)
 
     # If they are already registered as a team, pre-populate the
     # modify teams form
@@ -85,7 +96,20 @@ class OpenDetailsHandler(webapp2.RequestHandler):
     t = key.get()
     reg = t.preRegRecord().get()
 
-    team = reg.isOpenTeam(user)
+    team = None
+    team_code = self.request.get('team')
+
+    #If a manual team code has been provided, use it
+    if (team_code):
+      t_key = ndb.Key(urlsafe=team_code)
+      selected_team = t_key.get()
+
+      if user.key in t.owner or user.key == selected_team.user:
+        team = selected_team
+
+    #Otherwise use the team that they are registered as
+    else:
+      team = reg.isOpenTeam(user)
 
     if team:
       form = TeamForm(self.request.POST)

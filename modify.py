@@ -149,8 +149,6 @@ class TeamHandler(webapp2.RequestHandler):
 			institution = None
 
 			if isinstance(team, RegisteredOpenTeam ):
-				form.leadName.data = team.leadName
-				form.phone.data = team.phone
 				reg = t_key.parent().get()
 
 			elif isinstance(team, InstitutionTeam):

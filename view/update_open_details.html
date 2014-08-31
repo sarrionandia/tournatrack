@@ -99,6 +99,7 @@ function clear1(spk){
 			{% endif %}
 
 			<form role="form" action="/reg/update_open_details?t={{t.key.id()}}" method="post">
+				<input type="hidden" name="team" value="{{ist.key.urlsafe()}}" />
 
 <div class="alert alert-warning col-md-12">
 					<h3>Contact Information</h3>

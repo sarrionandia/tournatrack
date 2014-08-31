@@ -148,39 +148,39 @@ $( document ).ready(function() {
                 <th>Modify</th>
                 <th>Delete</th>
 			</tr>
-			{% for t in teams %}
+			{% for team in teams %}
 			<tr>
 				<td><emph>Independent</emph></td>
-				<td>{{t.teamName}}</td>
-				<td>{{t.leadName}}</td>
-				<td>{{t.email()}}</td>
-				<td>{{t.phone}}</td>
+				<td>{{team.teamName}}</td>
+				<td>{{team.leadName}}</td>
+				<td>{{team.email()}}</td>
+				<td>{{team.phone}}</td>
 				<td>
-					{{t.speaker1()}}
+					{{team.speaker1()}}
 				</td>
 				<td>
-					{% if t.sp1ESL %}
+					{% if team.sp1ESL %}
 					<a href="#" class="tooltip-act" title="English as a Second Language" data-original-title="Tooltip">
 					<i class="fa fa-globe"></i>
 					</a>
 					{% endif %}
 
-					{% if t.sp1Novice %}
+					{% if team.sp1Novice %}
 					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
 					<i class="fa fa-certificate"></i>
 					</a>
 					{% endif %}
 				</td>
 				<td>
-					{{t.speaker2()}}
+					{{team.speaker2()}}
 				</td>
 				<td>
-					{% if t.sp2ESL %}
+					{% if team.sp2ESL %}
 					<a href="#" class="tooltip-act" title="English as a Second Language" data-original-title="Tooltip">
 					<i class="fa fa-globe" id="globe"></i>
 					</a>
 					{% endif %}
-					{% if t.sp2Novice %}
+					{% if team.sp2Novice %}
 					<a href="#" class="tooltip-act" title="Novice Speaker" data-original-title="Tooltip">
 					<i class="fa fa-certificate"></i>
 					</a>
@@ -188,13 +188,13 @@ $( document ).ready(function() {
 				</td>
 
                 <td>
-                    <a href="/mod/team?t={{t.key.urlsafe()}}">
+                    <a href="/reg/update_open_details?team={{team.key.urlsafe()}}&amp;t={{t.key.id()}}">
                         <button type="button" class="btn btn-warning">Modify</button>
                     </a>
                 </td>
                  <td>
                     <form method="post" action="/dereg/team">
-				        <input type="hidden" name="t_key" value="{{t.key.urlsafe()}}" />
+				        <input type="hidden" name="t_key" value="{{team.key.urlsafe()}}" />
 	        	        <button type="submit" class="btn btn-danger">Deregister</button>
 			        </form>
                 </td>
