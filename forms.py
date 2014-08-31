@@ -27,7 +27,10 @@ class TeamForm(Form):
 	sp1Key = TextField('sp1Key')
 	sp2Key = TextField('sp2Key')
 
-
+class InstRegForm(Form):
+	leadName = TextField('leadName', [validators.Required()])
+	phone = TextField('phone', [validators.Required()])
+	name = TextField('name', [validators.Required()])
 
 # Judge Form model
 class JudgeForm(Form):

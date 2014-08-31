@@ -20,7 +20,7 @@ import logging
 from google.appengine.ext import ndb
 import tusers
 
-from wtforms import Form, TextField, validators
+from forms import InstRegForm
 
 from models import RegisteredInstitution, InstitutionTeam, InstitutionJudge, Attending
 
@@ -30,11 +30,6 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 MAX_REG = 20
-
-class InstRegForm(Form):
-  leadName = TextField('leadName', [validators.Required()])
-  phone = TextField('phone', [validators.Required()])
-  name = TextField('name', [validators.Required()])
 
 class RegHandler(webapp2.RequestHandler):
   def get(self):
