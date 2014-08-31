@@ -307,8 +307,8 @@ class RegisteredOpenTeam(ndb.Model):
 class RegisteredInstitution(ndb.Model):
 	"""Models an institution registered for the tournment"""
 	name = ndb.StringProperty()
-	leadName = ndb.StringProperty()
-	phone = ndb.StringProperty()
+	leadName = ndb.ComputedProperty(lambda self: self.user.get().full_name)
+	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
 	user = ndb.KeyProperty(kind='TUser')
 
 	def email(self):
