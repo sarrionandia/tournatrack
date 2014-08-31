@@ -64,8 +64,6 @@ class RegHandler(webapp2.RequestHandler):
 
 		elif (isi):
 			form = InstRegForm()
-			form.leadName.data = isi.leadName
-			form.phone.data = isi.phone
 			iJudges = isi.judges()
 			iJudgeCount = iJudges.count(limit=500)
 			iTeams = isi.teams()

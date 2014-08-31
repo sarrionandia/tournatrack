@@ -43,6 +43,7 @@ class RegHandler(webapp2.RequestHandler):
     reg = t.preRegRecord().get()
 
     form = InstRegForm()
+    form.name.data = user.current_institution
 
     template_values = {
       'user' : user,
@@ -93,8 +94,6 @@ class RegHandler(webapp2.RequestHandler):
           attending.tournament = t.key
           attending.put()
 
-        inst.leadName = form.leadName.data
-        inst.phone = form.phone.data
         inst.name = form.name.data
         inst.user = user.key
 
