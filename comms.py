@@ -99,7 +99,7 @@ class SendHandler(webapp2.RequestHandler):
         mail_from = "Tournatrack"
         subject = t.name
         body = self.request.get('mbody')
-        body += "\n******\nYou are receiving this email because you registered for the %s at http://tournatrack.appspot.com"%t.name
+        body += "\n******\nYou are receiving this email because you registered for the %s at http://tournatrack.com"%t.name
 
         logging.info(body)
 
