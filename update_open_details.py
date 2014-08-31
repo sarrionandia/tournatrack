@@ -96,6 +96,8 @@ class OpenDetailsHandler(webapp2.RequestHandler):
     t = key.get()
     reg = t.preRegRecord().get()
 
+    isOwner = user.key in t.owner
+
     team = None
     team_code = self.request.get('team')
 
@@ -104,7 +106,7 @@ class OpenDetailsHandler(webapp2.RequestHandler):
       t_key = ndb.Key(urlsafe=team_code)
       selected_team = t_key.get()
 
-      if user.key in t.owner or user.key == selected_team.user:
+      if isOwner or user.key == selected_team.user:
         team = selected_team
 
     #Otherwise use the team that they are registered as
@@ -139,7 +141,11 @@ class OpenDetailsHandler(webapp2.RequestHandler):
 
 
       team.put()
-      self.redirect('/hub?t=' + tid)
+
+      if not isOwner:
+        self.redirect('/hub?t=' + tid)
+      else:
+        self.redirect('/reg_control?t=' + tid)
 
 
     else:
