@@ -29,94 +29,64 @@
 
     </script>
 
-	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Team Registration</h2>	
-	
+	<h2><i class="fa fa-keyboard-o"></i> {{t.name}} Team Registration</h2>
+
 	{% if user %}
-	
+
 	<div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class=""><i class="fa fa-building-o"></i> {{isi.name}}</h3>
+            <h3 class=""><i class="fa fa-building-o"></i> {{isi.name}} Teams</h3>
     	</div>
 
-        <form method="post" action="/updateteams?t={{t.key.id()}}">
 
 		<div class="panel-body">
-			
-			{%for team in teams %}
-			<h3>Team {{loop.index}}</h3>
-			<div class="form-group col-md-12">
-		    	<label for="teamName">Team Name</label>
-		    	<input type="text" name="{{team.key.id()}}_n" class="form-control" placeholder="Team Name"
-		 			{% if team.teamName %}value="{{team.teamName}}"{%endif%}>
-		  	</div>
-		
-			<div class="well well-lg col-md-6">
-				<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 1</h2>
-				<div class="form-group">
-					<label for="sp1Name">Name</label>
-					<input type="text" class="form-control" name="{{team.key.id()}}_sp1n" placeholder="First speaker's name" 
-							{% if team.sp1Name %} value="{{team.sp1Name}}"{% endif %}/>
-				</div>
-				<label class="col-md-3">
-				    Novice? <input type="checkbox" name="{{team.key.id()}}_sp1nov" 
-						{%if team.sp1Novice%}checked{%endif%}/>
-				</label>
-				<label class="col-md-3">
-				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp1ESL"
-					{%if team.sp1ESL%}checked{%endif%}/>
-				
-				</label>
-				
-			</div>
-			
-			<div class="well well-lg col-md-6">
-				<h2><span class="glyphicon glyphicon-user "></span>&nbsp;Speaker 2</h2>
-				<div class="form-group">
-					<label for="sp1Name">Name</label>
-					<input type="text" class="form-control" name="{{team.key.id()}}_sp2n" placeholder="Second speaker's name" 
-							{% if team.sp2Name %} value="{{team.sp2Name}}"{% endif %}/>
-					
-				</div>
-				<label class="col-md-3">
-				    Novice? <input type="checkbox" name="{{team.key.id()}}_sp2nov"
-					{%if team.sp2Novice%}checked{%endif%}/>
-				
-				</label>
-				<label class="col-md-3">
-				    ESL? <input type="checkbox" name="{{team.key.id()}}_sp2ESL"
-					{%if team.sp2ESL%}checked{%endif%}/>
-				</label>
-				
-			</div>
-	        	<button type="button" onclick="post_to_url('/dereg/team', {'t_key':'{{team.key.urlsafe()}}'})"
-                        class="btn btn-danger">Deregister</button>
-			{% endfor %}
-			
+
+      <table class="table">
+        <tr>
+          <th>Team Name</th>
+          <th>Speaker 1</th>
+          <th>Speaker 2</th>
+          <th>Modify</th>
+          <th>Deregister</th>
+        </tr>
+
+    		{%for team in teams %}
+        <tr>
+          <td>{{team.teamName}}</td>
+          <td>{{team.speaker1()}}</td>
+          <td>{{team.speaker2()}}</td>
+          <td>
+            <a href="/reg/update_team_details?t={{t.key.urlsafe()}}&amp;team={{team.key.urlsafe()}}"
+            <button type="button" class="btn btn-warning">Modify</button>
+          </td>
+          <td>
+    	        	<button type="button" onclick="post_to_url('/dereg/team', {'t_key':'{{team.key.urlsafe()}}'})"
+                            class="btn btn-danger">Deregister</button>
+          </td>
+        </tr>
+    		{% endfor %}
+      </table>
+
 		</div>
 
-		
+
 		<div class="panel-footer">
 			<input type="hidden" name="reg_key" value="{{reg_key}}" />
 			<input type="hidden" name="updating" value="t"/>
-			<a href="/reg?t={{t.key.id()}}">
-				<button type="button" class="btn btn-warning">Cancel</button>
-			</a>
             <a href="/add_to_reg?i={{isi.key.urlsafe()}}&type=t">
             	<button type="button" class="btn btn-info" {% if not r.open %}disabled="True">{% endif %}>Add Another Team</button>
             </a>
-			<button type="submit" class="btn btn-success">Save changes</button>
-		</div>
-		</form>
+	</div>
 
 	</div>
-    
-	
-	
+
+
+
 	{% else %}
-	
+
 		You need to <a href="{{login}}">sign in</a> with your Google account to register for this tournament.
-	
+
 	{% endif %}
-	
-		
+
+
 {% endblock %}

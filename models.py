@@ -337,10 +337,57 @@ class InstitutionTeam(ndb.Model):
 	teamName = ndb.StringProperty()
 	sp1Name = ndb.StringProperty()
 	sp2Name = ndb.StringProperty()
+	sp1Key = ndb.KeyProperty(kind='TUser')
+	sp2Key = ndb.KeyProperty(kind='TUser')
 	sp1ESL = ndb.BooleanProperty()
 	sp2ESL = ndb.BooleanProperty()
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
+
+	#The user of the institution responsible for the team
+	@property
+	def user(self):
+		return self.key.parent().get().user
+
+	#Speaker names accounting for linked accounts
+	def speaker1(self):
+		if self.sp1Key:
+			return self.sp1Key.get().full_name
+		else:
+			return self.sp1Name
+
+	def speaker2(self):
+		if self.sp2Key:
+			return self.sp2Key.get().full_name
+		else:
+			return self.sp2Name
+
+	#Link a speaker to a registered team
+	def linkSpeaker(self, speaker, dID):
+		key = ndb.Key('TUser', int(dID))
+		debater = key.get()
+		if debater.basic_info:
+			if speaker == 1:
+				self.sp1Key = key
+			elif speaker == 2:
+				self.sp2Key = key
+			else:
+				return False
+			self.put()
+			return True
+		else:
+			return False
+
+	def linkSpeaker2(self, dID):
+		def linkSpeaker1(self, dID):
+			key = ndb.Key('TUser', int(dID))
+			debater = key.get()
+			if debater.basic_info:
+				self.sp1Key = key
+				return True
+			else:
+				return False
+
 
 	def authorised(self, tuser):
 		return self.key.parent().get().user == tuser.key or  tuser.key in self.key.parent().parent().parent().get().owner

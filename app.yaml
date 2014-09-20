@@ -19,8 +19,8 @@ handlers:
 - url: /mod/.*
   script: modify.app
 
-- url: /reg/update_open_details
-  script: update_open_details.app
+- url: /reg/update_team_details
+  script: update_team_details.app
 
 - url: /checkID
   script: check_id.app
