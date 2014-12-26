@@ -200,6 +200,10 @@ class RegisteredEntity(ndb.Model):
 	def tournament(self):
 		return self.key.parent().parent()
 
+	def email(self):
+		return self.user.get().preferredEmail()
+
+
 class RegisteredIndependentJudge(RegisteredEntity):
 	"""Models a participant in the tournament"""
 	name = ndb.ComputedProperty(lambda self: self.user.get().full_name)
@@ -219,9 +223,6 @@ class RegisteredIndependentJudge(RegisteredEntity):
 			return True
 		else:
 			return False
-
-	def email(self):
-		return self.user.get().preferredEmail()
 
 class RegisteredOpenTeam(RegisteredEntity):
 	"""Models an open team in the tournament"""
@@ -254,9 +255,6 @@ class RegisteredOpenTeam(RegisteredEntity):
 
 	sp1Novice = ndb.BooleanProperty()
 	sp2Novice = ndb.BooleanProperty()
-
-	def email(self):
-		return self.user.get().preferredEmail()
 
 	def authorised(self, tuser):
 		if self.user == tuser.key:
@@ -301,8 +299,6 @@ class RegisteredInstitution(RegisteredEntity):
 	leadName = ndb.ComputedProperty(lambda self: self.user.get().full_name)
 	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
 
-	def email(self):
-		return self.user.get().preferredEmail()
 	#Return a query of all of the teams attached to the institution
 	def teams(self):
 		return InstitutionTeam.query(ancestor=self.key)
