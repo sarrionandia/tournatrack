@@ -22,7 +22,7 @@ import datetime
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament, Attending
+from models import Tournament
 
 from forms import ProfileForm
 

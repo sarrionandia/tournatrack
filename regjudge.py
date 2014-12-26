@@ -21,7 +21,7 @@ import tusers
 
 from wtforms import Form, TextField, TextAreaField, validators
 
-from models import RegisteredIndependentJudge, Attending
+from models import RegisteredIndependentJudge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -67,12 +67,6 @@ class RegHandler(webapp2.RequestHandler):
 
       judge = RegisteredIndependentJudge(parent=reg.key)
       judge.user = user.key
-
-      #Add an attendance record
-      attending = Attending(parent=user.key)
-      attending.role = "Judge"
-      attending.tournament = t.key
-      attending.put()
 
       judge.put()
 

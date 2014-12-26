@@ -22,7 +22,7 @@ import tusers
 
 from forms import InstRegForm
 
-from models import RegisteredInstitution, InstitutionTeam, InstitutionJudge, Attending
+from models import RegisteredInstitution, InstitutionTeam, InstitutionJudge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -87,12 +87,6 @@ class RegHandler(webapp2.RequestHandler):
 
           inst = RegisteredInstitution(parent=reg.key)
           inst.user = user.key
-
-          #Add an attendance record
-          attending = Attending(parent=user.key)
-          attending.role = "Institution"
-          attending.tournament = t.key
-          attending.put()
 
         inst.name = form.name.data
         inst.user = user.key

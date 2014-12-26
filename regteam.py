@@ -21,7 +21,7 @@ import logging
 from google.appengine.ext import ndb
 import tusers
 
-from models import RegisteredOpenTeam, Attending
+from models import RegisteredOpenTeam
 from forms import TeamForm
 
 EMAIL_REGEX = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
@@ -89,12 +89,6 @@ class RegHandler(webapp2.RequestHandler):
 
           team = RegisteredOpenTeam(parent=reg.key)
           team.user = user.key
-
-          #Add an attendance record
-          attending = Attending(parent=user.key)
-          attending.role = "Open Team"
-          attending.tournament = t.key
-          attending.put()
 
         team.teamName = form.teamName.data
         team.sp1Name = form.sp1Name.data

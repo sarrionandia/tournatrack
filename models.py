@@ -68,13 +68,6 @@ class TUser(ndb.Model):
 			self.email_code = None
 			self.put()
 
-
-class Attending(ndb.Model):
-	"""Models a user attending a tournament
-	The parent of the object will be the TUser attending """
-	role = ndb.StringProperty()
-	tournament=ndb.KeyProperty(kind='Tournament')
-
 class Tournament(ndb.Model):
 	"""Models an individual tournament"""
 	name = ndb.StringProperty()
@@ -114,12 +107,6 @@ class Tournament(ndb.Model):
 		preReg = self.preRegRecord().get()
 		if preReg:
 			preReg.destroy()
-
-		#Get rid of all of the attendance records
-		q = Attending.query()
-		q.filter(Attending.tournament == self.key)
-		keys = q.fetch(keys_only=True)
-		ndb.delete_multi(keys)
 
 		self.key.delete()
 

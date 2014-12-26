@@ -20,8 +20,6 @@ from google.appengine.ext import ndb
 import tusers
 import logging
 
-from models import Attending
-
 #Handles the deregistration of open teams
 class DeregTeamHandler(webapp2.RequestHandler):
 	def post(self):
@@ -33,12 +31,6 @@ class DeregTeamHandler(webapp2.RequestHandler):
 			t = key.get()
 
 			if t.authorised(user):
-				if key.kind() == 'RegisteredOpenTeam':
-					#Remove the attendance record
-					q = Attending.query(ancestor=t.user)
-					q.filter(Attending.tournament == key.parent().parent())
-					q.get(keys_only=True).delete()
-
 				key.delete()
 		self.redirect(self.request.referer)
 
@@ -54,12 +46,6 @@ class DeregJudgeHandler(webapp2.RequestHandler):
 
 			#Delete from the database
 			if j.authorised(user):
-				if key.kind() == 'RegisteredIndependentJudge':
-					#Remove the attendance record
-					q = Attending.query(ancestor=j.user)
-					q.filter(Attending.tournament == key.parent().parent())
-					q.get(keys_only=True).delete()
-
 				key.delete()
 
 		self.redirect(self.request.referer)
@@ -73,14 +59,6 @@ class DeregInstitutionHandler(webapp2.RequestHandler):
 		institution = key.get()
 
 		if institution.authorised(user):
-			#Remove the attendance record
-			q = Attending.query(ancestor=institution.user)
-			q.filter(Attending.tournament == key.parent().parent())
-			try:
-				q.get(keys_only=True).delete()
-			except:
-				logging.info("No key for attendance record")
-
 			institution.destroy()
 
 		self.redirect(self.request.referer)
