@@ -18,11 +18,12 @@ import os
 import string
 import random
 import datetime
+import logging
 
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament, PreRegRecord, RegisteredIndependentJudge
+from models import Tournament, PreRegRecord, RegisteredEntity
 
 def pin_gen(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for x in range(size))
@@ -31,6 +32,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
+def tournament_for_registration(reg):
+	return reg.tournament().get_async()
 
 class TournamentsHandler(webapp2.RequestHandler):
 	def get(self):
@@ -41,10 +45,16 @@ class TournamentsHandler(webapp2.RequestHandler):
 			#Get a list of tournaments that the user owns
 			owner_q = Tournament.query(Tournament.owner == user.key)
 
+			#Tournaments that the user has registered for
+			reg_q = RegisteredEntity.query(RegisteredEntity.user == user.key)
+			attending = reg_q.map(tournament_for_registration)
+			logging.info(attending)
+
 			template_values = {
 				'user' : user,
 				'tournaments' : owner_q,
-				'logout' : tusers.create_logout_url('/')
+				'logout' : tusers.create_logout_url('/'),
+				'attending' : attending
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from google.appengine.ext import ndb
+from google.appengine.ext.ndb import polymodel
 from google.appengine.api import mail
 
 import string
@@ -195,7 +196,7 @@ class PreRegRecord(ndb.Model):
 		return nJudges
 
 """Superclass for registered judges, teams, institutions"""
-class RegisteredEntity(ndb.Model):
+class RegisteredEntity(polymodel.PolyModel):
 	user = ndb.KeyProperty(kind='TUser')
 	def tournament(self):
 		return self.key.parent().parent()

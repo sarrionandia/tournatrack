@@ -71,13 +71,22 @@
 
 
 <div class="col-md-5">
-    <h3>Tournaments you are attending</h3>
+    <h3>Tournaments you are registered for</h3>
     <table class="table table-striped table-bordered" >
         <tr>
             <th>Tournament</th>
             <th>Date</th>
-            <th>Registered as</th>
         </tr>
+
+        {% for t in attending %}
+        <tr>
+            <td>
+                <a href="/tournament_instance?t_key={{t.key.id()}}">{{t.name}}</a>
+            </td>
+            <td>{{t.start}}</td>
+        </tr>
+
+        {% endfor %}
     </table>
 </div>
 
