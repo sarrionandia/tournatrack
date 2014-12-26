@@ -194,12 +194,17 @@ class PreRegRecord(ndb.Model):
 			nJudges = nJudges + i.judges().count(limit=1000)
 		return nJudges
 
-class RegisteredIndependentJudge(ndb.Model):
+"""Superclass for registered judges, teams, institutions"""
+class RegisteredEntity(ndb.Model):
+	user = ndb.KeyProperty(kind='TUser')
+	def tournament(self):
+		return self.key.parent().parent()
+
+class RegisteredIndependentJudge(RegisteredEntity):
 	"""Models a participant in the tournament"""
 	name = ndb.ComputedProperty(lambda self: self.user.get().full_name)
 	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
 	cv_public = ndb.ComputedProperty(lambda self: self.user.get().public_profile)
-	user = ndb.KeyProperty(kind='TUser')
 
 	def prefs(self):
 		return RegisteredPreferences.query(ancestor=self.key).get()
@@ -218,11 +223,10 @@ class RegisteredIndependentJudge(ndb.Model):
 	def email(self):
 		return self.user.get().preferredEmail()
 
-class RegisteredOpenTeam(ndb.Model):
+class RegisteredOpenTeam(RegisteredEntity):
 	"""Models an open team in the tournament"""
 	leadName = ndb.ComputedProperty(lambda self: self.user.get().full_name)
 	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
-	user = ndb.KeyProperty(kind='TUser')
 
 	teamName = ndb.StringProperty()
 
@@ -291,12 +295,11 @@ class RegisteredOpenTeam(ndb.Model):
 			else:
 				return False
 
-class RegisteredInstitution(ndb.Model):
+class RegisteredInstitution(RegisteredEntity):
 	"""Models an institution registered for the tournment"""
 	name = ndb.StringProperty()
 	leadName = ndb.ComputedProperty(lambda self: self.user.get().full_name)
 	phone = ndb.ComputedProperty(lambda self: self.user.get().phone)
-	user = ndb.KeyProperty(kind='TUser')
 
 	def email(self):
 		return self.user.get().preferredEmail()

@@ -22,7 +22,7 @@ import datetime
 from google.appengine.ext import ndb
 import tusers
 
-from models import Tournament, PreRegRecord
+from models import Tournament, PreRegRecord, RegisteredIndependentJudge
 
 def pin_gen(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for x in range(size))
@@ -44,7 +44,7 @@ class TournamentsHandler(webapp2.RequestHandler):
 			template_values = {
 				'user' : user,
 				'tournaments' : owner_q,
-				'logout' : tusers.create_logout_url('/'),
+				'logout' : tusers.create_logout_url('/')
 			}
 			template = JINJA_ENVIRONMENT.get_template('view/tournaments.html')
 			self.response.write(template.render(template_values))
